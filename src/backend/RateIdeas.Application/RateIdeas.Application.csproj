@@ -6,4 +6,25 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Commons\Mappers\" />
+    <Folder Include="Categories\" />
+    <Folder Include="Ideas\" />
+    <Folder Include="Comments\" />
+    <Folder Include="Assets\" />
+    <Folder Include="CommentVotes\" />
+    <Folder Include="IdeaVotes\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.3.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjectionFixed" Version="5.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RateIdeas.Domain\RateIdeas.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

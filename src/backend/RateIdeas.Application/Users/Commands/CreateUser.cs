@@ -1,0 +1,41 @@
+﻿namespace RateIdeas.Application.Users.Commands;
+
+public record CreateUserCommand : IRequest<UserResultDto>
+{
+    public CreateUserCommand(CreateUserCommand command)
+    {
+        Image = command.Image;
+        Email = command.Email;
+        LastName = command.LastName;
+        FirstName = command.FirstName;
+        DateOfBirth = command.DateOfBirth;
+        Password = command.Password;
+    }
+
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+    public DateTimeOffset DateOfBirth { get; set; }
+    public IFormFile Image { get; set; } = default!;
+}
+
+public class CreateUserCommandHandler(IMapper mapper,
+    IRepository<User> repository) : IRequestHandler<CreateUserCommand, UserResultDto>
+{
+    public async Task<UserResultDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    {
+        var entity = await repository.SelectAsync(entity => entity.Email == request.Email);
+        if (entity is not null)
+            throw new AlreadyExistException($"User Already exist user command create with telegram id: {request.Email} | create user with return result");
+
+        entity = mapper.Map<User>(request);
+        entity.CreatedAt = TimeHelper.GetDateTime();
+        entity.DateOfBirth = request.DateOfBirth.AddHours(TimeConstants.UTC);
+
+        await repository.InsertAsync(entity);
+        await repository.SaveAsync();
+
+        return mapper.Map<UserResultDto>(entity);
+    }
+}
