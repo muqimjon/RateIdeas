@@ -1,0 +1,6 @@
+@RateIdeas.WebApi_HostAddress = http://localhost:5147
+
+GET {{RateIdeas.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
