@@ -7,9 +7,9 @@ public record CreateUserCommand : IRequest<UserResultDto>
         Image = command.Image;
         Email = command.Email;
         LastName = command.LastName;
+        Password = command.Password;
         FirstName = command.FirstName;
         DateOfBirth = command.DateOfBirth;
-        Password = command.Password;
     }
 
     public string FirstName { get; set; } = string.Empty;
@@ -30,8 +30,10 @@ public class CreateUserCommandHandler(IMapper mapper,
             throw new AlreadyExistException($"User Already exist user command create with telegram id: {request.Email} | create user with return result");
 
         entity = mapper.Map<User>(request);
+
+        entity.PasswordHash = PasswordHasher.Encrypt(request.Password);
         entity.CreatedAt = TimeHelper.GetDateTime();
-        entity.DateOfBirth = request.DateOfBirth.AddHours(TimeConstants.UTC);
+        entity.DateOfBirth = TimeHelper.ToLocalize(request.DateOfBirth);
 
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
