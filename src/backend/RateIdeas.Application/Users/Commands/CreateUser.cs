@@ -27,13 +27,13 @@ public class CreateUserCommandHandler(IMapper mapper,
     {
         var entity = await repository.SelectAsync(entity => entity.Email == request.Email);
         if (entity is not null)
-            throw new AlreadyExistException($"User Already exist user command create with telegram id: {request.Email} | create user with return result");
+            throw new AlreadyExistException($"User Already exist user command create with email: {request.Email} | create user");
 
         entity = mapper.Map<User>(request);
 
+        entity.DateOfBirth = TimeHelper.ToLocalize(request.DateOfBirth);
         entity.PasswordHash = PasswordHasher.Encrypt(request.Password);
         entity.CreatedAt = TimeHelper.GetDateTime();
-        entity.DateOfBirth = TimeHelper.ToLocalize(request.DateOfBirth);
 
         await repository.InsertAsync(entity);
         await repository.SaveAsync();

@@ -1,6 +1,5 @@
-﻿namespace RateIdeas.Application.Users.Commands
+﻿namespace RateIdeas.Application.Users.Commands;
+
+public class UpdateUser
 {
-    public class UpdateUser
-    {
-    }
 }
