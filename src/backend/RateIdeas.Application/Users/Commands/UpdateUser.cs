@@ -32,6 +32,21 @@ public class UpdateUserCommandHandler(IMapper mapper,
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | User update");
 
         mapper.Map(request, entity);
+
+        if (request.Image is not null)
+        {
+            new DeleteAsset(entity.Image);
+            var uploadedImage = new CreateAsset(request.Image);
+            var createdImage = new Asset
+            {
+                FileName = uploadedImage.FileName,
+                FilePath = uploadedImage.FilePath,
+            };
+
+            entity.ImageId = uploadedImage.Id;
+            entity.Image = createdImage;
+        }
+
         entity.DateOfBirth = TimeHelper.ToLocalize(request.DateOfBirth);
 
         repository.Update(entity);

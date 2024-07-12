@@ -13,6 +13,7 @@ public class DeleteUserCommandHandler(IRepository<User> repository) : IRequestHa
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
             ?? throw new NotFoundException($"user is not exist with id {request.Id} | delete user");
 
+        new DeleteAsset(entity.Image);
         repository.Delete(entity);
         return await repository.SaveAsync() > 0;
     }

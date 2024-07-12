@@ -31,6 +31,19 @@ public class CreateUserCommandHandler(IMapper mapper,
 
         entity = mapper.Map<User>(request);
 
+        if (request.Image is not null)
+        {
+            var uploadedImage =  new CreateAsset(request.Image);
+            var createdImage = new Asset
+            {
+                FileName = uploadedImage.FileName,
+                FilePath = uploadedImage.FilePath,
+            };
+
+            entity.ImageId = uploadedImage.Id;
+            entity.Image = createdImage;
+        }
+
         entity.DateOfBirth = TimeHelper.ToLocalize(request.DateOfBirth);
         entity.PasswordHash = PasswordHasher.Encrypt(request.Password);
         entity.CreatedAt = TimeHelper.GetDateTime();
