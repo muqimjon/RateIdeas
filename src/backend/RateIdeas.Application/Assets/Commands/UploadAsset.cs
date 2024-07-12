@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using RateIdeas.Application.Assets.DTOs;
+﻿using RateIdeas.Application.Assets.DTOs;
 
 namespace RateIdeas.Application.Assets.Commands;
 
 public record UploadAssetCommand : IRequest<AssetResultDto>
 {
-    public UploadAssetCommand(UploadAssetCommand command)
+    public UploadAssetCommand(IFormFile formFile)
     {
-           FormFile = command.FormFile;
+           FormFile = formFile;
     }
     public IFormFile FormFile { get; set; } = default!;
 }

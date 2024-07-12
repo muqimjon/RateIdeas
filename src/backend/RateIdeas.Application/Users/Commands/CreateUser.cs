@@ -1,4 +1,6 @@
-﻿namespace RateIdeas.Application.Users.Commands;
+﻿using RateIdeas.Application.Assets.Commands;
+
+namespace RateIdeas.Application.Users.Commands;
 
 public record CreateUserCommand : IRequest<UserResultDto>
 {
@@ -21,7 +23,8 @@ public record CreateUserCommand : IRequest<UserResultDto>
 }
 
 public class CreateUserCommandHandler(IMapper mapper,
-    IRepository<User> repository) : IRequestHandler<CreateUserCommand, UserResultDto>
+    IRepository<User> repository,
+    IMediator mediator) : IRequestHandler<CreateUserCommand, UserResultDto>
 {
     public async Task<UserResultDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
@@ -33,7 +36,7 @@ public class CreateUserCommandHandler(IMapper mapper,
 
         if (request.Image is not null)
         {
-            var uploadedImage =  new CreateAsset(request.Image);
+            var uploadedImage = await mediator.Send(new UploadAssetCommand(request.Image), cancellationToken);
             var createdImage = new Asset
             {
                 FileName = uploadedImage.FileName,

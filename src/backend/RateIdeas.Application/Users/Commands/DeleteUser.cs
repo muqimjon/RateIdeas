@@ -1,4 +1,6 @@
-﻿namespace RateIdeas.Application.Users.Commands;
+﻿using RateIdeas.Application.Assets.Commands;
+
+namespace RateIdeas.Application.Users.Commands;
 
 public record DeleteUserCommand : IRequest<bool>
 {
@@ -6,14 +8,15 @@ public record DeleteUserCommand : IRequest<bool>
     public long Id { get; set; }
 }
 
-public class DeleteUserCommandHandler(IRepository<User> repository) : IRequestHandler<DeleteUserCommand, bool>
+public class DeleteUserCommandHandler(IRepository<User> repository,
+    IMediator mediator) : IRequestHandler<DeleteUserCommand, bool>
 {
     public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
             ?? throw new NotFoundException($"user is not exist with id {request.Id} | delete user");
 
-        new DeleteAsset(entity.Image);
+        await mediator.Send(new DeleteAssetCommand(request.Id), cancellationToken);
         repository.Delete(entity);
         return await repository.SaveAsync() > 0;
     }
