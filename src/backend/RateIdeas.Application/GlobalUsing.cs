@@ -8,3 +8,7 @@ global using RateIdeas.Application.Commons.Exceptions;
 global using RateIdeas.Application.Commons.Interfaces;
 global using RateIdeas.Application.Commons.Constants;
 global using RateIdeas.Application.Commons.Helpers;
+global using Microsoft.Extensions.DependencyInjection;
+global using RateIdeas.Application.Commons.Mappers;
+global using RateIdeas.Application.Users.Commands;
+global using RateIdeas.Application.Users.Queries;

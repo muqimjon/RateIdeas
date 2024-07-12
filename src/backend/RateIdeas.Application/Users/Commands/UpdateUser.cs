@@ -2,7 +2,7 @@
 
 namespace RateIdeas.Application.Users.Commands;
 
-public record UpdateUserCommand : IRequest<int>
+public record UpdateUserCommand : IRequest<UserResultDto>
 {
     public UpdateUserCommand(UpdateUserCommand command)
     {
@@ -27,9 +27,9 @@ public record UpdateUserCommand : IRequest<int>
 public class UpdateUserCommandHandler(IMapper mapper,
     IRepository<User> repository,
     IMediator mediator) :
-    IRequestHandler<UpdateUserCommand, int>
+    IRequestHandler<UpdateUserCommand, UserResultDto>
 {
-    public async Task<int> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<UserResultDto> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | User update");
@@ -53,6 +53,8 @@ public class UpdateUserCommandHandler(IMapper mapper,
         entity.DateOfBirth = TimeHelper.ToLocalize(request.DateOfBirth);
 
         repository.Update(entity);
-        return await repository.SaveAsync();
+        await repository.SaveAsync();
+
+        return mapper.Map<UserResultDto>(entity);
     }
 }
