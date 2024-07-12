@@ -11,10 +11,10 @@ public class Idea : Auditable
     public long? ImageId { get; set; }
     public Asset Image { get; set; } = default!;
 
-    public int CategoryId { get; set; }
+    public long CategoryId { get; set; }
     public Category Category { get; set; } = default!;
 
-    public int UserId { get; set; }
+    public long UserId { get; set; }
     public User User { get; set; } = default!;
 
     public ICollection<Comment> Comments { get; set; } = default!;

@@ -6,7 +6,7 @@ public record CreateUserCommand : IRequest<UserResultDto>
 {
     public CreateUserCommand(CreateUserCommand command)
     {
-        Image = command.Image;
+        FormFile = command.FormFile;
         Email = command.Email;
         LastName = command.LastName;
         Password = command.Password;
@@ -19,7 +19,7 @@ public record CreateUserCommand : IRequest<UserResultDto>
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public DateTimeOffset DateOfBirth { get; set; }
-    public IFormFile Image { get; set; } = default!;
+    public IFormFile FormFile { get; set; } = default!;
 }
 
 public class CreateUserCommandHandler(IMapper mapper,
@@ -34,9 +34,9 @@ public class CreateUserCommandHandler(IMapper mapper,
 
         entity = mapper.Map<User>(request);
 
-        if (request.Image is not null)
+        if (request.FormFile is not null)
         {
-            var uploadedImage = await mediator.Send(new UploadAssetCommand(request.Image), cancellationToken);
+            var uploadedImage = await mediator.Send(new UploadAssetCommand(request.FormFile), cancellationToken);
             var createdImage = new Asset
             {
                 FileName = uploadedImage.FileName,
