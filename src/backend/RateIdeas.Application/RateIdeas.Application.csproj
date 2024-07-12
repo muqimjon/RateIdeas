@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Assets\Queries\" />
     <Folder Include="Commons\Mappers\" />
     <Folder Include="Categories\" />
     <Folder Include="Ideas\" />
     <Folder Include="Comments\" />
-    <Folder Include="Assets\" />
     <Folder Include="CommentVotes\" />
     <Folder Include="IdeaVotes\" />
   </ItemGroup>
