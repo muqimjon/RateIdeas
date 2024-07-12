@@ -1,6 +1,5 @@
 ﻿global using MediatR;
 global using RateIdeas.Domain.Entities;
-global using RateIdeas.Domain.Entities.Votes;
 global using RateIdeas.Application.Users.DTOs;
 
 global using AutoMapper;

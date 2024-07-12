@@ -1,4 +1,7 @@
-﻿namespace RateIdeas.Application.Users.DTOs;
+﻿using RateIdeas.Domain.Entities.Comments;
+using RateIdeas.Domain.Entities.Ideas;
+
+namespace RateIdeas.Application.Users.DTOs;
 
 public class UserResultDto
 {

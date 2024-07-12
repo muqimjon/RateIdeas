@@ -1,5 +1,6 @@
 ﻿using RateIdeas.Domain.Common;
-using RateIdeas.Domain.Entities.Votes;
+using RateIdeas.Domain.Entities.Comments;
+using RateIdeas.Domain.Entities.Ideas;
 
 namespace RateIdeas.Domain.Entities;
 
@@ -14,6 +15,7 @@ public class User : Auditable
     public long? ImageId { get; set; }
     public Asset Image { get; set; } = default!;
 
+    public ICollection<SavedIdea> SavedIdeas { get; set; } = default!;
     public ICollection<Idea> Users { get; set; } = default!;
     public ICollection<IdeaVote> Votes { get; set; } = default!;
     public ICollection<Comment> Comments { get; set; } = default!;

@@ -1,4 +1,5 @@
 ﻿using RateIdeas.Domain.Common;
+using RateIdeas.Domain.Entities.Ideas;
 
 namespace RateIdeas.Domain.Entities;
 

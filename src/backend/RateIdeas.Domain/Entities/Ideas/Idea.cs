@@ -1,7 +1,7 @@
 ﻿using RateIdeas.Domain.Common;
-using RateIdeas.Domain.Entities.Votes;
+using RateIdeas.Domain.Entities.Comments;
 
-namespace RateIdeas.Domain.Entities;
+namespace RateIdeas.Domain.Entities.Ideas;
 
 public class Idea : Auditable
 {

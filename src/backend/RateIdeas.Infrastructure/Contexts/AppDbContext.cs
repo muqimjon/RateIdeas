@@ -1,6 +1,7 @@
 ﻿using RateIdeas.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using RateIdeas.Domain.Entities.Votes;
+using RateIdeas.Domain.Entities.Ideas;
+using RateIdeas.Domain.Entities.Comments;
 
 namespace RateIdeas.Infrastructure.Contexts;
 
