@@ -13,8 +13,9 @@ public class DeleteUserCommandHandler(IRepository<User> repository,
 {
     public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"user is not exist with id {request.Id} | delete user");
+        var entity = await repository.SelectAsync(entity => entity.Id == request.Id);
+        if(entity is null)
+            return false;
 
         await mediator.Send(new DeleteAssetCommand(request.Id), cancellationToken);
         repository.Delete(entity);

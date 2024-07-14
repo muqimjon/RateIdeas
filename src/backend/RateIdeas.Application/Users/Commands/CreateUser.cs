@@ -12,14 +12,16 @@ public record CreateUserCommand : IRequest<UserResultDto>
         Password = command.Password;
         FirstName = command.FirstName;
         DateOfBirth = command.DateOfBirth;
+        UserName = command.UserName;
     }
 
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
+    public string UserName { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public DateTimeOffset DateOfBirth { get; set; }
-    public IFormFile FormFile { get; set; } = default!;
+    public IFormFile? FormFile { get; set; }
 }
 
 public class CreateUserCommandHandler(IMapper mapper,

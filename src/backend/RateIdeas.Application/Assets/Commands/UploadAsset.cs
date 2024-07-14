@@ -11,6 +11,7 @@ public record UploadAssetCommand : IRequest<AssetResultDto>
     public IFormFile FormFile { get; set; } = default!;
 }
 
+#nullable disable
 public class UploadAssetCommandHandler(IMapper mapper,
     IRepository<Asset> repository,
     IHttpContextAccessor httpContextAccessor) : IRequestHandler<UploadAssetCommand, AssetResultDto>
