@@ -33,7 +33,15 @@ public class UpdateUserCommandHandler(IMapper mapper,
 {
     public async Task<UserResultDto> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
+        var entity = await repository.SelectAsync(entity => entity.Email.Equals(request.Email, StringComparison.OrdinalIgnoreCase));
+        if (entity is not null)
+            throw new AlreadyExistException($"Bunday email bilan avval ro'yxatdan o'tilgan{request.Email}");
+
+        entity = await repository.SelectAsync(entity => entity.UserName.Equals(request.UserName, StringComparison.OrdinalIgnoreCase));
+        if (entity is not null)
+            throw new AlreadyExistException($"Bunday UserName bilan avval ro'yxatdan o'tilgan: {request.UserName}");
+
+        entity = await repository.SelectAsync(entity => entity.Id == request.Id)
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | User update");
 
         mapper.Map(request, entity);
