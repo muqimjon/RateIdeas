@@ -1,4 +1,5 @@
-﻿using RateIdeas.Domain.Entities.Comments;
+﻿using RateIdeas.Application.Assets.DTOs;
+using RateIdeas.Domain.Entities.Comments;
 using RateIdeas.Domain.Entities.Ideas;
 
 namespace RateIdeas.Application.Users.DTOs;
@@ -11,7 +12,7 @@ public class UserResultDto
     public string Email { get; set; } = string.Empty;
     public DateTimeOffset DateOfBirth { get; set; }
 
-    public Asset Image { get; set; } = default!;
+    public AssetResultDto Image { get; set; } = default!;
     public ICollection<Idea> Users { get; set; } = default!;
     public ICollection<IdeaVote> Votes { get; set; } = default!;
     public ICollection<Comment> Comments { get; set; } = default!;

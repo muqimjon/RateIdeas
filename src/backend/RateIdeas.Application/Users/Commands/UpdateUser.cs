@@ -7,7 +7,7 @@ public record UpdateUserCommand : IRequest<UserResultDto>
     public UpdateUserCommand(UpdateUserCommand command)
     {
         Id = command.Id;
-        Image = command.Image;
+        FormFile = command.FormFile;
         Email = command.Email;
         LastName = command.LastName;
         Password = command.Password;
@@ -21,7 +21,7 @@ public record UpdateUserCommand : IRequest<UserResultDto>
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public DateTimeOffset DateOfBirth { get; set; }
-    public IFormFile Image { get; set; } = default!;
+    public IFormFile FormFile { get; set; } = default!;
 }
 
 public class UpdateUserCommandHandler(IMapper mapper,
@@ -36,10 +36,10 @@ public class UpdateUserCommandHandler(IMapper mapper,
 
         mapper.Map(request, entity);
 
-        if (request.Image is not null)
+        if (request.FormFile is not null)
         {
             await mediator.Send(new DeleteAssetCommand(request.Id), cancellationToken);
-            var uploadedImage = await mediator.Send(new UploadAssetCommand(request.Image), cancellationToken);
+            var uploadedImage = await mediator.Send(new UploadAssetCommand(request.FormFile), cancellationToken);
             var createdImage = new Asset
             {
                 FileName = uploadedImage.FileName,
@@ -50,7 +50,7 @@ public class UpdateUserCommandHandler(IMapper mapper,
             entity.Image = createdImage;
         }
 
-        entity.DateOfBirth = TimeHelper.ToLocalize(request.DateOfBirth);
+        entity.DateOfBirth = TimeHelper.ToLocalize(entity.DateOfBirth);
 
         repository.Update(entity);
         await repository.SaveAsync();

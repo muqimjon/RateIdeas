@@ -16,13 +16,13 @@ public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : Au
 
     public async Task InsertAsync(T entity)
     {
-        entity.CreatedAt = TimeHelper.GetDateTime();
+        entity.CreatedAt = DateTimeOffset.UtcNow;
         await Table.AddAsync(entity);
     }
 
     public void Update(T entity)
     {
-        entity.UpdatedAt = TimeHelper.GetDateTime();
+        entity.UpdatedAt = DateTimeOffset.UtcNow;
         Table.Entry(entity).State = EntityState.Modified;
     }
 

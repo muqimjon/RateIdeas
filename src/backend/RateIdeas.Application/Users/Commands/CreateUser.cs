@@ -47,9 +47,8 @@ public class CreateUserCommandHandler(IMapper mapper,
             entity.Image = createdImage;
         }
 
-        entity.DateOfBirth = TimeHelper.ToLocalize(request.DateOfBirth);
+        entity.DateOfBirth = entity.DateOfBirth.UtcDateTime;
         entity.PasswordHash = PasswordHasher.Encrypt(request.Password);
-        entity.CreatedAt = TimeHelper.GetDateTime();
 
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
