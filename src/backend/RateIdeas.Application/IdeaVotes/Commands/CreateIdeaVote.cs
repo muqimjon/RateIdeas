@@ -1,8 +1,8 @@
-﻿namespace RateIdeas.Application.SavedIdeas.Commands;
+﻿namespace RateIdeas.Application.IdeaVotes.Commands;
 
-public record CreateSavedIdeaCommand : IRequest<SavedIdeaResultDto>
+public record CreateIdeaVoteCommand : IRequest<IdeaVoteResultDto>
 {
-    public CreateSavedIdeaCommand(CreateSavedIdeaCommand command)
+    public CreateIdeaVoteCommand(CreateIdeaVoteCommand command)
     {
         IdeaId = command.IdeaId;
         UserId = command.UserId;
@@ -13,15 +13,15 @@ public record CreateSavedIdeaCommand : IRequest<SavedIdeaResultDto>
     public long UserId { get; set; }
 }
 
-public class CreateSavedIdeaCommandHandler(IMapper mapper,
+public class CreateIdeaVoteCommandHandler(IMapper mapper,
     IRepository<Idea> ideaRepository,
     IRepository<User> userRepository,
-    IRepository<SavedIdea> repository) : IRequestHandler<CreateSavedIdeaCommand, SavedIdeaResultDto>
+    IRepository<IdeaVote> repository) : IRequestHandler<CreateIdeaVoteCommand, IdeaVoteResultDto>
 {
-    public async Task<SavedIdeaResultDto> Handle(CreateSavedIdeaCommand request,
+    public async Task<IdeaVoteResultDto> Handle(CreateIdeaVoteCommand request,
         CancellationToken cancellationToken)
     {
-        var entity = mapper.Map<SavedIdea>(request);
+        var entity = mapper.Map<IdeaVote>(request);
 
         entity.Idea = await ideaRepository.SelectAsync(i => i.Id.Equals(request.IdeaId))
             ?? throw new NotFoundException($"{nameof(Idea)} is not found by ID={request.IdeaId}");
@@ -32,6 +32,6 @@ public class CreateSavedIdeaCommandHandler(IMapper mapper,
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
 
-        return mapper.Map<SavedIdeaResultDto>(entity);
+        return mapper.Map<IdeaVoteResultDto>(entity);
     }
 }

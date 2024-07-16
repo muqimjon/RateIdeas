@@ -43,11 +43,32 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetAllIdeasQuery, IEnumerable<IdeaResultDto>>, GetAllIdeasQueryHandler>();
 
 
+        // Saved idea
+        services.AddScoped<IRequestHandler<CreateSavedIdeaCommand, SavedIdeaResultDto>, CreateSavedIdeaCommandHandler>();
+
+        services.AddScoped<IRequestHandler<UpdateSavedIdeaCommand, SavedIdeaResultDto>, UpdateSavedIdeaCommandHandler>();
+
+        services.AddScoped<IRequestHandler<DeleteSavedIdeaCommand, bool>, DeleteSavedIdeaCommandHandler>();
+
+        services.AddScoped<IRequestHandler<GetSavedIdeaQuery, SavedIdeaResultDto>, GetSavedIdeaQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAllSavedIdeasQuery, IEnumerable<SavedIdeaResultDto>>, GetAllSavedIdeasQueryHandler>();
+
+
+        // Idea vote
+        services.AddScoped<IRequestHandler<CreateIdeaVoteCommand, IdeaVoteResultDto>, CreateIdeaVoteCommandHandler>();
+
+        services.AddScoped<IRequestHandler<UpdateIdeaVoteCommand, IdeaVoteResultDto>, UpdateIdeaVoteCommandHandler>();
+
+        services.AddScoped<IRequestHandler<DeleteIdeaVoteCommand, bool>, DeleteIdeaVoteCommandHandler>();
+
+        services.AddScoped<IRequestHandler<GetIdeaVoteQuery, IdeaVoteResultDto>, GetIdeaVoteQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAllIdeaVotesQuery, IEnumerable<IdeaVoteResultDto>>, GetAllIdeaVotesQueryHandler>();
+
+
         // Asset
         services.AddScoped<IRequestHandler<UploadAssetCommand, AssetResultDto>, UploadAssetCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteAssetCommand, bool>, DeleteAssetCommandHendler>();
-
 
 
         return services;

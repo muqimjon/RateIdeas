@@ -2,9 +2,9 @@
 
 public record GetSavedIdeaQuery : IRequest<SavedIdeaResultDto>
 {
-    public GetSavedIdeaQuery(long userId)
+    public GetSavedIdeaQuery(long id)
     {
-        Id = userId;
+        Id = id;
     }
 
     public long Id { get; set; }

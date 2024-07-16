@@ -2,9 +2,9 @@
 
 public record GetCommentQuery : IRequest<CommentResultDto>
 {
-    public GetCommentQuery(long userId)
+    public GetCommentQuery(long id)
     {
-        Id = userId;
+        Id = id;
     }
 
     public long Id { get; set; }

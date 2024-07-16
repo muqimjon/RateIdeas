@@ -2,9 +2,9 @@
 
 public record GetCategoryQuery : IRequest<CategoryResultDto>
 {
-    public GetCategoryQuery(long userId)
+    public GetCategoryQuery(long id)
     {
-        Id = userId;
+        Id = id;
     }
 
     public long Id { get; set; }
