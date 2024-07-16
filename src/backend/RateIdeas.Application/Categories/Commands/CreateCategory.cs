@@ -4,16 +4,12 @@ public record CreateCategoryCommand : IRequest<UserResultDto>
 {
     public CreateCategoryCommand(CreateCategoryCommand command)
     {
-        Title = command.Title;
-        UserId = command.UserId;
+        Name = command.Name;
         FormFile = command.FormFile;
-        CategoryId = command.CategoryId;
         Description = command.Description;
     }
-    public string Title { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public long CategoryId { get; set; }
-    public long UserId { get; set; }
     public IFormFile? FormFile { get; set; } = default!;
 }
 

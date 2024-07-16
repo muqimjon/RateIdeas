@@ -5,18 +5,14 @@ public record UpdateCategoryCommand : IRequest<UserResultDto>
     public UpdateCategoryCommand(UpdateCategoryCommand command)
     {
         Id = command.Id;
+        Name = command.Name;
         FormFile = command.FormFile;
-        Title = command.Title;
         Description = command.Description;
-        CategoryId = command.CategoryId;
-        UserId = command.UserId;
     }
 
     public long Id { get; set; }
-    public string Title { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public long CategoryId { get; set; }
-    public long UserId { get; set; }
     public IFormFile? FormFile { get; set; } = default!;
 }
 
