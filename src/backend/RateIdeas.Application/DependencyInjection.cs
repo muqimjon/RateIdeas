@@ -1,4 +1,9 @@
-﻿namespace RateIdeas.Application;
+﻿using RateIdeas.Application.Categories.Commands;
+using RateIdeas.Application.Categories.Queries;
+using RateIdeas.Application.Ideas.Commands;
+using RateIdeas.Application.Ideas.Queries;
+
+namespace RateIdeas.Application;
 
 public static class DependencyInjection
 {
@@ -19,6 +24,28 @@ public static class DependencyInjection
 
         services.AddScoped<IRequestHandler<GetUserQuery, UserResultDto>, GetUserQueryHandler>();
         services.AddScoped<IRequestHandler<GetAllUsersQuery, IEnumerable<UserResultDto>>, GetAllUsersQueryHandler>();
+
+
+        // Category
+        services.AddScoped<IRequestHandler<CreateCategoryCommand, CategoryResultDto>, CreateCategoryCommandHandler>();
+
+        services.AddScoped<IRequestHandler<UpdateCategoryCommand, CategoryResultDto>, UpdateCategoryCommandHandler>();
+
+        services.AddScoped<IRequestHandler<DeleteCategoryCommand, bool>, DeleteCategoryCommandHandler>();
+
+        services.AddScoped<IRequestHandler<GetCategoryQuery, CategoryResultDto>, GetCategoryQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAllCategoriesQuery, IEnumerable<CategoryResultDto>>, GetAllCategoriesQueryHandler>();
+
+
+        // Idea
+        services.AddScoped<IRequestHandler<CreateIdeaCommand, IdeaResultDto>, CreateIdeaCommandHandler>();
+        
+        services.AddScoped<IRequestHandler<UpdateIdeaCommand, IdeaResultDto>,  UpdateIdeaCommandHandler>();
+
+        services.AddScoped<IRequestHandler<DeleteIdeaCommand, bool>, DeleteIdeaCommandHandler>();
+
+        services.AddScoped<IRequestHandler<GetIdeaQuery, IdeaResultDto>,  GetIdeaQueryHandler>();
+        services.AddScoped < IRequestHandler<GetAllIdeasQuery, IEnumerable<IdeaResultDto>>, GetAllIdeasQueryHandler>();
 
 
         // Asset

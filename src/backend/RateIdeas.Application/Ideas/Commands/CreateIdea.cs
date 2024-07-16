@@ -1,6 +1,6 @@
 ﻿namespace RateIdeas.Application.Ideas.Commands;
 
-public record CreateIdeaCommand : IRequest<UserResultDto>
+public record CreateIdeaCommand : IRequest<IdeaResultDto>
 {
     public CreateIdeaCommand(CreateIdeaCommand command)
     {
@@ -19,9 +19,9 @@ public record CreateIdeaCommand : IRequest<UserResultDto>
 
 public class CreateIdeaCommandHandler(IMapper mapper,
     IRepository<Idea> repository,
-    IMediator mediator) : IRequestHandler<CreateIdeaCommand, UserResultDto>
+    IMediator mediator) : IRequestHandler<CreateIdeaCommand, IdeaResultDto>
 {
-    public async Task<UserResultDto> Handle(CreateIdeaCommand request, CancellationToken cancellationToken)
+    public async Task<IdeaResultDto> Handle(CreateIdeaCommand request, CancellationToken cancellationToken)
     {
         var entity = mapper.Map<Idea>(request);
 

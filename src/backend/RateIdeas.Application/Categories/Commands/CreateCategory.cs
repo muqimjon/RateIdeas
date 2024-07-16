@@ -1,6 +1,6 @@
 ﻿namespace RateIdeas.Application.Categories.Commands;
 
-public record CreateCategoryCommand : IRequest<UserResultDto>
+public record CreateCategoryCommand : IRequest<CategoryResultDto>
 {
     public CreateCategoryCommand(CreateCategoryCommand command)
     {
@@ -15,9 +15,9 @@ public record CreateCategoryCommand : IRequest<UserResultDto>
 
 public class CreateCategoryCommandHandler(IMapper mapper,
     IRepository<Category> repository,
-    IMediator mediator) : IRequestHandler<CreateCategoryCommand, UserResultDto>
+    IMediator mediator) : IRequestHandler<CreateCategoryCommand, CategoryResultDto>
 {
-    public async Task<UserResultDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<CategoryResultDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = mapper.Map<Category>(request);
 

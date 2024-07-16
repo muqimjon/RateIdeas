@@ -1,6 +1,6 @@
 ﻿namespace RateIdeas.Application.Categories.Commands;
 
-public record UpdateCategoryCommand : IRequest<UserResultDto>
+public record UpdateCategoryCommand : IRequest<CategoryResultDto>
 {
     public UpdateCategoryCommand(UpdateCategoryCommand command)
     {
@@ -19,9 +19,9 @@ public record UpdateCategoryCommand : IRequest<UserResultDto>
 public class UpdateCategoryCommandHandler(IMapper mapper,
     IRepository<Category> repository,
     IMediator mediator) :
-    IRequestHandler<UpdateCategoryCommand, UserResultDto>
+    IRequestHandler<UpdateCategoryCommand, CategoryResultDto>
 {
-    public async Task<UserResultDto> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<CategoryResultDto> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
             ?? throw new NotFoundException($"This Category is not found by id: {request.Id} | Category update");
@@ -45,6 +45,6 @@ public class UpdateCategoryCommandHandler(IMapper mapper,
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
 
-        return mapper.Map<UserResultDto>(entity);
+        return mapper.Map<CategoryResultDto>(entity);
     }
 }
