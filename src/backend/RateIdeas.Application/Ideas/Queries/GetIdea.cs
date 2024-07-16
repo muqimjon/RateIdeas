@@ -15,5 +15,5 @@ public class GetIdeaQueryHandler(IRepository<Idea> repository, IMapper mapper)
 {
     public async Task<IdeaResultDto> Handle(GetIdeaQuery request, CancellationToken cancellationToken)
         => mapper.Map<IdeaResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id)))
-            ?? throw new NotFoundException($"Idea is not found with ID = {request.Id}");
+            ?? throw new NotFoundException($"{nameof(Idea)} is not found with ID={request.Id}");
 }

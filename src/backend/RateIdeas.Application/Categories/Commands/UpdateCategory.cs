@@ -24,7 +24,7 @@ public class UpdateCategoryCommandHandler(IMapper mapper,
     public async Task<CategoryResultDto> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"This Category is not found by id: {request.Id}");
+            ?? throw new NotFoundException($"{nameof(Category)} is not found with ID={request.Id}");
 
         mapper.Map(request, entity);
 

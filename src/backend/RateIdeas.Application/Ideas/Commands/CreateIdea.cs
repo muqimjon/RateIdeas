@@ -19,12 +19,20 @@ public record CreateIdeaCommand : IRequest<IdeaResultDto>
 
 public class CreateIdeaCommandHandler(IMapper mapper,
     IRepository<Idea> repository,
+    IRepository<User> userRepository,
+    IRepository<Category> categoryRepository,
     IMediator mediator) : IRequestHandler<CreateIdeaCommand, IdeaResultDto>
 {
     public async Task<IdeaResultDto> Handle(CreateIdeaCommand request,
         CancellationToken cancellationToken)
     {
         var entity = mapper.Map<Idea>(request);
+
+        entity.Category = await categoryRepository.SelectAsync(i => i.Id.Equals(request.CategoryId))
+            ?? throw new NotFoundException($"{nameof(Category)} is not found by ID={request.CategoryId}");
+
+        entity.User = await userRepository.SelectAsync(i => i.Id.Equals(request.UserId))
+            ?? throw new NotFoundException($"{nameof(User)} is not found by ID={request.UserId}");
 
         if (request.FormFile is not null)
         {

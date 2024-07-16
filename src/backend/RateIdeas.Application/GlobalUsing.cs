@@ -17,6 +17,7 @@ global using RateIdeas.Application.Ideas.Commands;
 global using RateIdeas.Application.Ideas.DTOs;
 global using RateIdeas.Application.Ideas.Queries;
 global using RateIdeas.Application.IdeaVotes.DTOs;
+global using RateIdeas.Application.SavedIdeas.DTOs;
 global using RateIdeas.Application.Users.Commands;
 global using RateIdeas.Application.Users.DTOs;
 global using RateIdeas.Application.Users.Queries;

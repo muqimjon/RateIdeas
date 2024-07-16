@@ -5,11 +5,11 @@ public record UpdateIdeaCommand : IRequest<IdeaResultDto>
     public UpdateIdeaCommand(UpdateIdeaCommand command)
     {
         Id = command.Id;
-        FormFile = command.FormFile;
         Title = command.Title;
-        Description = command.Description;
-        CategoryId = command.CategoryId;
         UserId = command.UserId;
+        FormFile = command.FormFile;
+        CategoryId = command.CategoryId;
+        Description = command.Description;
     }
 
     public long Id { get; set; }
@@ -22,13 +22,21 @@ public record UpdateIdeaCommand : IRequest<IdeaResultDto>
 
 public class UpdateIdeaCommandHandler(IMapper mapper,
     IRepository<Idea> repository,
+    IRepository<User> userRepository,
+    IRepository<Category> categoryRepository,
     IMediator mediator) : IRequestHandler<UpdateIdeaCommand, IdeaResultDto>
 {
     public async Task<IdeaResultDto> Handle(UpdateIdeaCommand request,
         CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id.Equals(request.Id))
-            ?? throw new NotFoundException($"This Idea is not found by ID={request.Id}");
+            ?? throw new NotFoundException($"{nameof(Idea)} is not found by ID={request.Id}");
+
+        entity.Category = await categoryRepository.SelectAsync(i => i.Id.Equals(request.CategoryId))
+            ?? throw new NotFoundException($"{nameof(Category)} is not found by ID={request.CategoryId}");
+
+        entity.User = await userRepository.SelectAsync(i => i.Id.Equals(request.UserId))
+            ?? throw new NotFoundException($"{nameof(User)} is not found by ID={request.UserId}");
 
         mapper.Map(request, entity);
 

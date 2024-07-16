@@ -1,8 +1,8 @@
-﻿namespace RateIdeas.Application.Categories.Commands;
+﻿namespace RateIdeas.Application.SavedIdeas.Commands;
 
-public record UpdateCommentCommand : IRequest<CommentResultDto>
+public record UpdateSavedIdeaCommand : IRequest<SavedIdeaResultDto>
 {
-    public UpdateCommentCommand(UpdateCommentCommand command)
+    public UpdateSavedIdeaCommand(UpdateSavedIdeaCommand command)
     {
         Id = command.Id;
         IdeaId = command.IdeaId;
@@ -16,16 +16,16 @@ public record UpdateCommentCommand : IRequest<CommentResultDto>
     public long UserId { get; set; }
 }
 
-public class UpdateCommentCommandHandler(IMapper mapper,
+public class UpdateSavedIdeaCommandHandler(IMapper mapper,
     IRepository<Idea> ideaRepository,
     IRepository<User> userRepository,
-    IRepository<Comment> repository) : IRequestHandler<UpdateCommentCommand, CommentResultDto>
+    IRepository<SavedIdea> repository) : IRequestHandler<UpdateSavedIdeaCommand, SavedIdeaResultDto>
 {
-    public async Task<CommentResultDto> Handle(UpdateCommentCommand request,
+    public async Task<SavedIdeaResultDto> Handle(UpdateSavedIdeaCommand request,
         CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"{nameof(Comment)} is not found by id={request.Id}");
+            ?? throw new NotFoundException($"The SavedIdea is not found by id={request.Id}");
 
         entity.Idea = await ideaRepository.SelectAsync(i => i.Id.Equals(request.IdeaId))
             ?? throw new NotFoundException($"{nameof(Idea)} is not found by ID={request.IdeaId}");
@@ -38,6 +38,6 @@ public class UpdateCommentCommandHandler(IMapper mapper,
         repository.Update(entity);
         await repository.SaveAsync();
 
-        return mapper.Map<CommentResultDto>(entity);
+        return mapper.Map<SavedIdeaResultDto>(entity);
     }
 }

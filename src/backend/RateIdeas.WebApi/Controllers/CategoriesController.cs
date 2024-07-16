@@ -8,20 +8,20 @@ public class CategoriesController(IMediator mediator) : BaseController
 {
     [HttpPost("create")]
     [ProducesResponseType(typeof(CategoryResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(CreateCategoryCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create(CreateCategoryCommand command,
+        CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(
-            new CreateCategoryCommand(command), cancellationToken)
+            Data = await mediator.Send(new CreateCategoryCommand(command), cancellationToken)
         });
 
     [HttpPut("update")]
     [ProducesResponseType(typeof(CategoryResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Update(UpdateCategoryCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(UpdateCategoryCommand command,
+        CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(
-            new UpdateCategoryCommand(command), cancellationToken)
+            Data = await mediator.Send(new UpdateCategoryCommand(command), cancellationToken)
         });
 
     [HttpDelete("delete/{id:long}")]
@@ -29,8 +29,7 @@ public class CategoriesController(IMediator mediator) : BaseController
     public async Task<IActionResult> Delete(long id, CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(
-            new DeleteCategoryCommand(id), cancellationToken)
+            Data = await mediator.Send(new DeleteCategoryCommand(id), cancellationToken)
         });
 
     [HttpGet("get/{categoryId:long}")]
@@ -38,8 +37,7 @@ public class CategoriesController(IMediator mediator) : BaseController
     public async Task<IActionResult> Get(long categoryId, CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(
-            new GetCategoryQuery(categoryId), cancellationToken)
+            Data = await mediator.Send(new GetCategoryQuery(categoryId), cancellationToken)
         });
 
     [HttpGet("get-all")]
@@ -47,7 +45,6 @@ public class CategoriesController(IMediator mediator) : BaseController
     public async Task<IActionResult> GetForApplication(CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(
-            new GetAllCategoriesQuery(), cancellationToken)
+            Data = await mediator.Send(new GetAllCategoriesQuery(), cancellationToken)
         });
 }
