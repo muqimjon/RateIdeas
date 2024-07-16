@@ -1,11 +1,11 @@
-﻿using RateIdeas.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using RateIdeas.Domain.Entities.Ideas;
+﻿using Microsoft.EntityFrameworkCore;
+using RateIdeas.Domain.Entities;
 using RateIdeas.Domain.Entities.Comments;
+using RateIdeas.Domain.Entities.Ideas;
 
 namespace RateIdeas.Infrastructure.Contexts;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options) 
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Idea> Ideas { get; set; }

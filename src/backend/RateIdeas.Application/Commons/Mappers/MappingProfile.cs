@@ -1,7 +1,4 @@
-﻿using RateIdeas.Application.Assets.Commands;
-using RateIdeas.Application.Assets.DTOs;
-
-namespace RateIdeas.Application.Commons.Mappers;
+﻿namespace RateIdeas.Application.Commons.Mappers;
 
 public class MappingProfile : Profile
 {
@@ -10,7 +7,7 @@ public class MappingProfile : Profile
         // User
         CreateMap<CreateUserCommand, User>();
         CreateMap<UpdateUserCommand, User>();
-        CreateMap<User, UserResultDto>();
+        CreateMap<User, IdeaResultDto>();
 
         // Asset
         CreateMap<Asset, AssetResultDto>();

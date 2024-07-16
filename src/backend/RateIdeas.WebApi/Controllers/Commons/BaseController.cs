@@ -1,6 +1,6 @@
-﻿global using MediatR;
+﻿global using EcoLink.WebApi.Controllers.Commons;
+global using MediatR;
 global using Microsoft.AspNetCore.Mvc;
-global using EcoLink.WebApi.Controllers.Commons;
 
 namespace EcoLink.WebApi.Controllers.Commons;
 

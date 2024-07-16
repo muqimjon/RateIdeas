@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RateIdeas.Application.Commons.Helpers;
 using RateIdeas.Application.Commons.Interfaces;
 using RateIdeas.Domain.Common;
 using RateIdeas.Infrastructure.Contexts;

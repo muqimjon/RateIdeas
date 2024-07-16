@@ -1,5 +1,5 @@
-using RateIdeas.Application;
 using MedX.Service.Extensions;
+using RateIdeas.Application;
 using RateIdeas.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

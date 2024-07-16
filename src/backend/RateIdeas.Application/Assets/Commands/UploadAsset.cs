@@ -1,12 +1,10 @@
-﻿using RateIdeas.Application.Assets.DTOs;
-
-namespace RateIdeas.Application.Assets.Commands;
+﻿namespace RateIdeas.Application.Assets.Commands;
 
 public record UploadAssetCommand : IRequest<AssetResultDto>
 {
     public UploadAssetCommand(IFormFile formFile)
     {
-           FormFile = formFile;
+        FormFile = formFile;
     }
     public IFormFile FormFile { get; set; } = default!;
 }
@@ -31,6 +29,7 @@ public class UploadAssetCommandHandler(IMapper mapper,
         {
             await request.FormFile.CopyToAsync(fileStream, cancellationToken);
         }
+
         var imageUrl = $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}/Images/{fileName}";
 
         var asset = new Asset()

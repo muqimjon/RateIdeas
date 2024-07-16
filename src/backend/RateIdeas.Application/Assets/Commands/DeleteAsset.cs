@@ -4,7 +4,7 @@ public record DeleteAssetCommand : IRequest<bool>
 {
     public DeleteAssetCommand(long id)
     {
-         Id = id;
+        Id = id;
     }
     public long Id { get; set; }
 }
@@ -13,8 +13,10 @@ public class DeleteAssetCommandHendler(IRepository<Asset> repository) : IRequest
 {
     public async Task<bool> Handle(DeleteAssetCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.Id.Equals(request.Id))
-            ?? throw new NotFoundException($"The Asset is not found with id:{request.Id}");
+        var entity = await repository.SelectAsync(entity => entity.Id.Equals(request.Id));
+
+        if (entity is null)
+            return false;
 
         string path = Path.Combine(PathHelper.WebRootPath, "Images", entity.FileName);
 

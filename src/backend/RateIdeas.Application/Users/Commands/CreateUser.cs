@@ -1,8 +1,6 @@
-﻿using RateIdeas.Application.Assets.Commands;
+﻿namespace RateIdeas.Application.Users.Commands;
 
-namespace RateIdeas.Application.Users.Commands;
-
-public record CreateUserCommand : IRequest<UserResultDto>
+public record CreateUserCommand : IRequest<IdeaResultDto>
 {
     public CreateUserCommand(CreateUserCommand command)
     {
@@ -26,15 +24,15 @@ public record CreateUserCommand : IRequest<UserResultDto>
 
 public class CreateUserCommandHandler(IMapper mapper,
     IRepository<User> repository,
-    IMediator mediator) : IRequestHandler<CreateUserCommand, UserResultDto>
+    IMediator mediator) : IRequestHandler<CreateUserCommand, IdeaResultDto>
 {
-    public async Task<UserResultDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<IdeaResultDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.Email.Equals(request.Email, StringComparison.OrdinalIgnoreCase));
+        var entity = await repository.SelectAsync(entity => entity.Email.ToLower().Equals(request.Email.ToLower()));
         if (entity is not null)
             throw new AlreadyExistException($"User is Already exist user command create with email: {request.Email} | create user");
 
-        entity = await repository.SelectAsync(entity => entity.UserName.Equals(request.UserName, StringComparison.OrdinalIgnoreCase));
+        entity = await repository.SelectAsync(entity => entity.UserName.ToLower().Equals(request.UserName.ToLower()));
         if (entity is not null)
             throw new AlreadyExistException($"User is Already exist user command create with UserName: {request.UserName} | create user");
 
@@ -59,6 +57,6 @@ public class CreateUserCommandHandler(IMapper mapper,
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
 
-        return mapper.Map<UserResultDto>(entity);
+        return mapper.Map<IdeaResultDto>(entity);
     }
 }

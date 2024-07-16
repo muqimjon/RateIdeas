@@ -1,6 +1,4 @@
-﻿using RateIdeas.Application.Assets.Commands;
-
-namespace RateIdeas.Application.Users.Commands;
+﻿namespace RateIdeas.Application.Users.Commands;
 
 public record DeleteUserCommand : IRequest<bool>
 {
@@ -13,9 +11,8 @@ public class DeleteUserCommandHandler(IRepository<User> repository,
 {
     public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.Id == request.Id);
-        if(entity is null)
-            return false;
+        var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
+            ?? throw new NotFoundException($"This User is not found by id: {request.Id} | Delete User");
 
         await mediator.Send(new DeleteAssetCommand(request.Id), cancellationToken);
         repository.Delete(entity);

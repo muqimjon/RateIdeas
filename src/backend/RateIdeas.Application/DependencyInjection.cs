@@ -1,7 +1,4 @@
-﻿using RateIdeas.Application.Assets.Commands;
-using RateIdeas.Application.Assets.DTOs;
-
-namespace RateIdeas.Application;
+﻿namespace RateIdeas.Application;
 
 public static class DependencyInjection
 {
@@ -14,14 +11,14 @@ public static class DependencyInjection
 
 
         // User
-        services.AddScoped<IRequestHandler<CreateUserCommand, UserResultDto>, CreateUserCommandHandler>();
+        services.AddScoped<IRequestHandler<CreateUserCommand, IdeaResultDto>, CreateUserCommandHandler>();
 
-        services.AddScoped<IRequestHandler<UpdateUserCommand, UserResultDto>, UpdateUserCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateUserCommand, IdeaResultDto>, UpdateUserCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();
 
-        services.AddScoped<IRequestHandler<GetUserQuery, UserResultDto>, GetUserQueryHandler>();
-        services.AddScoped<IRequestHandler<GetAllUsersQuery, IEnumerable<UserResultDto>>, GetAllUsersQueryHandler>();
+        services.AddScoped<IRequestHandler<GetUserQuery, IdeaResultDto>, GetUserQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAllUsersQuery, IEnumerable<IdeaResultDto>>, GetAllUsersQueryHandler>();
 
 
         // Asset

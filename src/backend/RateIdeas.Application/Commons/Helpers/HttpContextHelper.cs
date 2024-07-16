@@ -2,7 +2,7 @@
 
 public class HttpContextHelper
 {
-    #nullable disable
+#nullable disable
     public static IHttpContextAccessor Accessor { get; set; } // CS8597
 
     private static HttpContext HttpContext => Accessor?.HttpContext;
