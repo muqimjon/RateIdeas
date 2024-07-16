@@ -1,4 +1,4 @@
-﻿namespace RateCategorys.Application.Categorys.Commands;
+﻿namespace RateIdeas.Application.Categories.Commands;
 
 public record CreateCategoryCommand : IRequest<UserResultDto>
 {

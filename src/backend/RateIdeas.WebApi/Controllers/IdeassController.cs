@@ -4,7 +4,7 @@ using RateIdeas.Application.Ideas.Queries;
 
 namespace RateIdeas.WebApi.Controllers.Ideas;
 
-public class IdeassController(IMediator mediator) : BaseController
+public class IdeasController(IMediator mediator) : BaseController
 {
     [HttpPost("create")]
     [ProducesResponseType(typeof(IdeaResultDto), StatusCodes.Status200OK)]

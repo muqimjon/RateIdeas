@@ -1,4 +1,4 @@
-﻿namespace RateCategorys.Application.Categorys.DTOs;
+﻿namespace RateIdeas.Application.Categories.DTOs;
 
 public class CategoryResultDto
 {

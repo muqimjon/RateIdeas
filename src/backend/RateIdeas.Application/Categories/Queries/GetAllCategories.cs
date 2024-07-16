@@ -1,4 +1,4 @@
-﻿namespace RateCategories.Application.Categories.Queries;
+﻿namespace RateIdeas.Application.Categories.Queries;
 
 public record GetAllCategoriesQuery : IRequest<IEnumerable<UserResultDto>>
 {

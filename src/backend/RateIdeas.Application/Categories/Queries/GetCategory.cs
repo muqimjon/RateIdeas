@@ -1,4 +1,4 @@
-﻿namespace RateCategorys.Application.Categorys.Queries;
+﻿namespace RateIdeas.Application.Categories.Queries;
 
 public record GetCategoryQuery : IRequest<UserResultDto>
 {
