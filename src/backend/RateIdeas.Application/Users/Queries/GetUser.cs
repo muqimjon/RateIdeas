@@ -4,13 +4,14 @@ public record GetUserQuery : IRequest<UserResultDto>
 {
     public GetUserQuery(long userId)
     {
-        Id = userId;
+        Id = userId; 
     }
 
     public long Id { get; set; }
 }
 
-public class GetUserQueryHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<GetUserQuery, UserResultDto>
+public class GetUserQueryHandler(IRepository<User> repository, IMapper mapper)
+    : IRequestHandler<GetUserQuery, UserResultDto>
 {
     public async Task<UserResultDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
         => mapper.Map<UserResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id)))

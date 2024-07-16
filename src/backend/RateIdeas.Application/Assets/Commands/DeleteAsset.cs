@@ -9,7 +9,8 @@ public record DeleteAssetCommand : IRequest<bool>
     public long Id { get; set; }
 }
 
-public class DeleteAssetCommandHendler(IRepository<Asset> repository) : IRequestHandler<DeleteAssetCommand, bool>
+public class DeleteAssetCommandHendler(IRepository<Asset> repository)
+    : IRequestHandler<DeleteAssetCommand, bool>
 {
     public async Task<bool> Handle(DeleteAssetCommand request, CancellationToken cancellationToken)
     {

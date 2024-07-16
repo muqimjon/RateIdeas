@@ -10,7 +10,8 @@ public record GetCategoryQuery : IRequest<CategoryResultDto>
     public long Id { get; set; }
 }
 
-public class GetCategoryQueryHandler(IRepository<Category> repository, IMapper mapper) : IRequestHandler<GetCategoryQuery, CategoryResultDto>
+public class GetCategoryQueryHandler(IRepository<Category> repository, IMapper mapper)
+    : IRequestHandler<GetCategoryQuery, CategoryResultDto>
 {
     public async Task<CategoryResultDto> Handle(GetCategoryQuery request, CancellationToken cancellationToken)
         => mapper.Map<CategoryResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id)))

@@ -22,20 +22,23 @@ public record UpdateIdeaCommand : IRequest<IdeaResultDto>
 
 public class UpdateIdeaCommandHandler(IMapper mapper,
     IRepository<Idea> repository,
-    IMediator mediator) :
-    IRequestHandler<UpdateIdeaCommand, IdeaResultDto>
+    IMediator mediator) : IRequestHandler<UpdateIdeaCommand, IdeaResultDto>
 {
-    public async Task<IdeaResultDto> Handle(UpdateIdeaCommand request, CancellationToken cancellationToken)
+    public async Task<IdeaResultDto> Handle(UpdateIdeaCommand request,
+        CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"This Idea is not found by id: {request.Id} | Idea update");
+        var entity = await repository.SelectAsync(entity => entity.Id.Equals(request.Id))
+            ?? throw new NotFoundException($"This Idea is not found by ID={request.Id}");
 
         mapper.Map(request, entity);
 
         if (request.FormFile is not null)
         {
-            _ = await mediator.Send(new DeleteAssetCommand(entity.Id), cancellationToken);
-            var uploadedImage = await mediator.Send(new UploadAssetCommand(request.FormFile), cancellationToken);
+            await mediator.Send(new DeleteAssetCommand(entity.Id), cancellationToken);
+
+            var uploadedImage = await mediator.Send(
+                new UploadAssetCommand(request.FormFile), cancellationToken);
+
             var createdImage = new Asset
             {
                 FileName = uploadedImage.FileName,

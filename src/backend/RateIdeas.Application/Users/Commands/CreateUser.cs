@@ -30,11 +30,11 @@ public class CreateUserCommandHandler(IMapper mapper,
     {
         var entity = await repository.SelectAsync(entity => entity.Email.ToLower().Equals(request.Email.ToLower()));
         if (entity is not null)
-            throw new AlreadyExistException($"User is Already exist user command create with email: {request.Email} | create user");
+            throw new AlreadyExistException($"User is already exist with email: {request.Email}");
 
         entity = await repository.SelectAsync(entity => entity.UserName.ToLower().Equals(request.UserName.ToLower()));
         if (entity is not null)
-            throw new AlreadyExistException($"User is Already exist user command create with UserName: {request.UserName} | create user");
+            throw new AlreadyExistException($"User is already exist with UserName: {request.UserName}");
 
         entity = mapper.Map<User>(request);
 

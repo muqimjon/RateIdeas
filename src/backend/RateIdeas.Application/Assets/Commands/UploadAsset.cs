@@ -14,7 +14,8 @@ public class UploadAssetCommandHandler(IMapper mapper,
     IRepository<Asset> repository,
     IHttpContextAccessor httpContextAccessor) : IRequestHandler<UploadAssetCommand, AssetResultDto>
 {
-    public async Task<AssetResultDto> Handle(UploadAssetCommand request, CancellationToken cancellationToken)
+    public async Task<AssetResultDto> Handle(UploadAssetCommand request,
+        CancellationToken cancellationToken)
     {
         var webRootPath = Path.Combine(PathHelper.WebRootPath, "Images");
 
@@ -30,7 +31,8 @@ public class UploadAssetCommandHandler(IMapper mapper,
             await request.FormFile.CopyToAsync(fileStream, cancellationToken);
         }
 
-        var imageUrl = $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}/Images/{fileName}";
+        var imageUrl = $"{httpContextAccessor.HttpContext.Request.Scheme}://" +
+            $"{httpContextAccessor.HttpContext.Request.Host}/Images/{fileName}";
 
         var asset = new Asset()
         {

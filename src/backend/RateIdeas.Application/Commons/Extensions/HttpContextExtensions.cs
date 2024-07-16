@@ -8,6 +8,7 @@ public static class HttpContextExtensions
     {
         using var scope = app.Services.CreateScope();
 
-        HttpContextHelper.Accessor = scope.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
+        HttpContextHelper.Accessor = scope.ServiceProvider
+            .GetRequiredService<IHttpContextAccessor>();
     }
 }

@@ -21,13 +21,15 @@ public class CreateIdeaCommandHandler(IMapper mapper,
     IRepository<Idea> repository,
     IMediator mediator) : IRequestHandler<CreateIdeaCommand, IdeaResultDto>
 {
-    public async Task<IdeaResultDto> Handle(CreateIdeaCommand request, CancellationToken cancellationToken)
+    public async Task<IdeaResultDto> Handle(CreateIdeaCommand request,
+        CancellationToken cancellationToken)
     {
         var entity = mapper.Map<Idea>(request);
 
         if (request.FormFile is not null)
         {
-            var uploadedImage = await mediator.Send(new UploadAssetCommand(request.FormFile), cancellationToken);
+            var uploadedImage = await mediator.Send(
+                new UploadAssetCommand(request.FormFile), cancellationToken);
             var createdImage = new Asset
             {
                 FileName = uploadedImage.FileName,
