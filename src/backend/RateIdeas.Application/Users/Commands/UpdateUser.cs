@@ -1,6 +1,6 @@
 ﻿namespace RateIdeas.Application.Users.Commands;
 
-public record UpdateUserCommand : IRequest<IdeaResultDto>
+public record UpdateUserCommand : IRequest<UserResultDto>
 {
     public UpdateUserCommand(UpdateUserCommand command)
     {
@@ -27,9 +27,9 @@ public record UpdateUserCommand : IRequest<IdeaResultDto>
 public class UpdateUserCommandHandler(IMapper mapper,
     IRepository<User> repository,
     IMediator mediator) :
-    IRequestHandler<UpdateUserCommand, IdeaResultDto>
+    IRequestHandler<UpdateUserCommand, UserResultDto>
 {
-    public async Task<IdeaResultDto> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<UserResultDto> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Email.ToLower().Equals(request.Email.ToLower()));
         if (entity is not null)
@@ -63,6 +63,6 @@ public class UpdateUserCommandHandler(IMapper mapper,
         repository.Update(entity);
         await repository.SaveAsync();
 
-        return mapper.Map<IdeaResultDto>(entity);
+        return mapper.Map<UserResultDto>(entity);
     }
 }

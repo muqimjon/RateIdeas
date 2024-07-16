@@ -2,7 +2,7 @@
 
 namespace RateIdeas.Application.Users.DTOs;
 
-public class IdeaResultDto
+public class UserResultDto
 {
     public long Id { get; set; }
     public string FirstName { get; set; } = string.Empty;

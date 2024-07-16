@@ -11,14 +11,14 @@ public static class DependencyInjection
 
 
         // User
-        services.AddScoped<IRequestHandler<CreateUserCommand, IdeaResultDto>, CreateUserCommandHandler>();
+        services.AddScoped<IRequestHandler<CreateUserCommand, UserResultDto>, CreateUserCommandHandler>();
 
-        services.AddScoped<IRequestHandler<UpdateUserCommand, IdeaResultDto>, UpdateUserCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateUserCommand, UserResultDto>, UpdateUserCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();
 
-        services.AddScoped<IRequestHandler<GetUserQuery, IdeaResultDto>, GetUserQueryHandler>();
-        services.AddScoped<IRequestHandler<GetAllUsersQuery, IEnumerable<IdeaResultDto>>, GetAllUsersQueryHandler>();
+        services.AddScoped<IRequestHandler<GetUserQuery, UserResultDto>, GetUserQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAllUsersQuery, IEnumerable<UserResultDto>>, GetAllUsersQueryHandler>();
 
 
         // Asset

@@ -1,6 +1,6 @@
 ﻿namespace RateIdeas.Application.Ideas.Commands;
 
-public record UpdateIdeaCommand : IRequest<IdeaResultDto>
+public record UpdateIdeaCommand : IRequest<UserResultDto>
 {
     public UpdateIdeaCommand(UpdateIdeaCommand command)
     {
@@ -23,9 +23,9 @@ public record UpdateIdeaCommand : IRequest<IdeaResultDto>
 public class UpdateIdeaCommandHandler(IMapper mapper,
     IRepository<Idea> repository,
     IMediator mediator) :
-    IRequestHandler<UpdateIdeaCommand, IdeaResultDto>
+    IRequestHandler<UpdateIdeaCommand, UserResultDto>
 {
-    public async Task<IdeaResultDto> Handle(UpdateIdeaCommand request, CancellationToken cancellationToken)
+    public async Task<UserResultDto> Handle(UpdateIdeaCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
             ?? throw new NotFoundException($"This Idea is not found by id: {request.Id} | Idea update");
@@ -49,6 +49,6 @@ public class UpdateIdeaCommandHandler(IMapper mapper,
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
 
-        return mapper.Map<IdeaResultDto>(entity);
+        return mapper.Map<UserResultDto>(entity);
     }
 }
