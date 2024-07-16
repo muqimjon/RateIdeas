@@ -1,9 +1,4 @@
-﻿using RateIdeas.Application.Categories.Commands;
-using RateIdeas.Application.Categories.Queries;
-using RateIdeas.Application.Ideas.Commands;
-using RateIdeas.Application.Ideas.Queries;
-
-namespace RateIdeas.Application;
+﻿namespace RateIdeas.Application;
 
 public static class DependencyInjection
 {
@@ -39,13 +34,13 @@ public static class DependencyInjection
 
         // Idea
         services.AddScoped<IRequestHandler<CreateIdeaCommand, IdeaResultDto>, CreateIdeaCommandHandler>();
-        
-        services.AddScoped<IRequestHandler<UpdateIdeaCommand, IdeaResultDto>,  UpdateIdeaCommandHandler>();
+
+        services.AddScoped<IRequestHandler<UpdateIdeaCommand, IdeaResultDto>, UpdateIdeaCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteIdeaCommand, bool>, DeleteIdeaCommandHandler>();
 
-        services.AddScoped<IRequestHandler<GetIdeaQuery, IdeaResultDto>,  GetIdeaQueryHandler>();
-        services.AddScoped < IRequestHandler<GetAllIdeasQuery, IEnumerable<IdeaResultDto>>, GetAllIdeasQueryHandler>();
+        services.AddScoped<IRequestHandler<GetIdeaQuery, IdeaResultDto>, GetIdeaQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAllIdeasQuery, IEnumerable<IdeaResultDto>>, GetAllIdeasQueryHandler>();
 
 
         // Asset

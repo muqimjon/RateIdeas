@@ -24,13 +24,13 @@ public class UpdateCategoryCommandHandler(IMapper mapper,
     public async Task<CategoryResultDto> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"This Category is not found by id: {request.Id} | Category update");
+            ?? throw new NotFoundException($"This Category is not found by id: {request.Id} | Category Update");
 
         mapper.Map(request, entity);
 
         if (request.FormFile is not null)
         {
-            _ = await mediator.Send(new DeleteAssetCommand(entity.Id), cancellationToken);
+            await mediator.Send(new DeleteAssetCommand(entity.Id), cancellationToken);
             var uploadedImage = await mediator.Send(new UploadAssetCommand(request.FormFile), cancellationToken);
             var createdImage = new Asset
             {
@@ -42,7 +42,7 @@ public class UpdateCategoryCommandHandler(IMapper mapper,
             entity.Image = createdImage;
         }
 
-        await repository.InsertAsync(entity);
+        repository.Update(entity);
         await repository.SaveAsync();
 
         return mapper.Map<CategoryResultDto>(entity);

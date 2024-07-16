@@ -41,6 +41,6 @@ public class CreateIdeaCommandHandler(IMapper mapper,
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
 
-        return mapper.Map<UserResultDto>(entity);
+        return mapper.Map<IdeaResultDto>(entity);
     }
 }

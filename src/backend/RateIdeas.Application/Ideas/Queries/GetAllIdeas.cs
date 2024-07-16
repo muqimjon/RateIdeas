@@ -9,6 +9,6 @@ public class GetAllIdeasQueryHandler(IMapper mapper, IRepository<Idea> repositor
     public async Task<IEnumerable<IdeaResultDto>> Handle(GetAllIdeasQuery request, CancellationToken cancellationToken)
     {
         var entities = (await Task.Run(() => repository.SelectAll())).ToList();
-        return mapper.Map<IEnumerable<UserResultDto>>(entities);
+        return mapper.Map<IEnumerable<IdeaResultDto>>(entities);
     }
 }

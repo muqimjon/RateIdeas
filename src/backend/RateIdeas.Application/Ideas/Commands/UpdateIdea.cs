@@ -46,9 +46,9 @@ public class UpdateIdeaCommandHandler(IMapper mapper,
             entity.Image = createdImage;
         }
 
-        await repository.InsertAsync(entity);
+        repository.Update(entity);
         await repository.SaveAsync();
 
-        return mapper.Map<UserResultDto>(entity);
+        return mapper.Map<IdeaResultDto>(entity);
     }
 }

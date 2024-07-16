@@ -37,6 +37,6 @@ public class CreateCategoryCommandHandler(IMapper mapper,
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
 
-        return mapper.Map<UserResultDto>(entity);
+        return mapper.Map<CategoryResultDto>(entity);
     }
 }
