@@ -10,7 +10,7 @@ public record GetCommentQuery : IRequest<CommentResultDto>
     public long Id { get; set; }
 }
 
-public class GetCommentQueryHandler(IMapper mapper, IRepository<Comment> repository) : 
+public class GetCommentQueryHandler(IMapper mapper, IRepository<Comment> repository) :
     IRequestHandler<GetCommentQuery, CommentResultDto>
 {
     public async Task<CommentResultDto> Handle(GetCommentQuery request, CancellationToken cancellationToken)

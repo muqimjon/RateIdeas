@@ -4,7 +4,7 @@ public record GetUserQuery : IRequest<UserResultDto>
 {
     public GetUserQuery(long userId)
     {
-        Id = userId; 
+        Id = userId;
     }
 
     public long Id { get; set; }

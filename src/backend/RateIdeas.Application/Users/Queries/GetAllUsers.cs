@@ -1,7 +1,7 @@
 ﻿namespace RateIdeas.Application.Users.Queries;
 
-public record GetAllUsersQuery : IRequest<IEnumerable<UserResultDto>> 
-{ 
+public record GetAllUsersQuery : IRequest<IEnumerable<UserResultDto>>
+{
 }
 
 public class GetAllUsersQueryHandler(IMapper mapper, IRepository<User> repository)
