@@ -13,4 +13,8 @@ global using RateIdeas.Application.Users.Commands;
 global using RateIdeas.Application.Users.DTOs;
 global using RateIdeas.Application.Users.Queries;
 global using RateIdeas.Domain.Entities;
+global using RateIdeas.Domain.Entities.Comments;
 global using RateIdeas.Domain.Entities.Ideas;
+global using RateCategorys.Application.Categorys.DTOs;
+global using RateIdeas.Application.Ideas.DTOs;
+global using RateIdeas.Application.IdeaVotes.DTOs;

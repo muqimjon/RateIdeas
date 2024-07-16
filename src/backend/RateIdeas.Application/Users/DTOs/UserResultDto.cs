@@ -1,6 +1,4 @@
-﻿using RateIdeas.Domain.Entities.Comments;
-
-namespace RateIdeas.Application.Users.DTOs;
+﻿namespace RateIdeas.Application.Users.DTOs;
 
 public class UserResultDto
 {

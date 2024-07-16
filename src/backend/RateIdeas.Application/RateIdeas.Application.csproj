@@ -7,14 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Categories\" />
-    <Folder Include="Comments\" />
-    <Folder Include="CommentVotes\" />
-    <Folder Include="IdeaVotes\" />
-    <Folder Include="SavedIdeas\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="MediatR" Version="12.3.0" />
