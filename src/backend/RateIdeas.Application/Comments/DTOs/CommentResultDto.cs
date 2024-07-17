@@ -1,4 +1,4 @@
-﻿namespace RateIdeas.Application.Ideas.DTOs;
+﻿namespace RateIdeas.Application.Comments.DTOs;
 
 public class CommentResultDto
 {

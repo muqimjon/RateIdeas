@@ -7,6 +7,7 @@ global using RateIdeas.Application.Assets.DTOs;
 global using RateIdeas.Application.Categories.Commands;
 global using RateIdeas.Application.Categories.DTOs;
 global using RateIdeas.Application.Categories.Queries;
+global using RateIdeas.Application.Comments.DTOs;
 global using RateIdeas.Application.CommentVotes.DTOs;
 global using RateIdeas.Application.Commons.Constants;
 global using RateIdeas.Application.Commons.Exceptions;

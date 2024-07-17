@@ -14,7 +14,7 @@ public class DeleteUserCommandHandler(IRepository<User> repository,
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
             ?? throw new NotFoundException($"{typeof(User)} is not found by ID: {request.Id}");
 
-        if(entity.Image is not null)
+        if (entity.Image is not null)
             await mediator.Send(new DeleteAssetCommand(entity.ImageId), cancellationToken);
 
         repository.Delete(entity);

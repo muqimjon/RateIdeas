@@ -1,4 +1,4 @@
-﻿namespace RateIdeas.Application.Categories.Commands;
+﻿namespace RateIdeas.Application.Comments.Commands;
 
 public record CreateCommentCommand : IRequest<CommentResultDto>
 {

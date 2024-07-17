@@ -1,4 +1,4 @@
-﻿namespace RateIdeas.Application.Categories.Queries;
+﻿namespace RateIdeas.Application.Comments.Queries;
 
 public record GetCommentQuery : IRequest<CommentResultDto>
 {

@@ -42,7 +42,7 @@ public class UpdateIdeaCommandHandler(IMapper mapper,
 
         if (request.FormFile is not null)
         {
-            if(entity.Image is not null)
+            if (entity.Image is not null)
                 await mediator.Send(new DeleteAssetCommand(entity.ImageId), cancellationToken);
 
             var uploadedImage = await mediator.Send(

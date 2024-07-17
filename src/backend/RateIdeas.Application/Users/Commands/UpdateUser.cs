@@ -31,12 +31,12 @@ public class UpdateUserCommandHandler(IMapper mapper,
 {
     public async Task<UserResultDto> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity 
+        var entity = await repository.SelectAsync(entity
             => entity.Email.ToLower().Equals(request.Email.ToLower()));
         if (entity is not null)
             throw new AlreadyExistException($"{typeof(User)} is already exist with Email: {request.Email}");
 
-        entity = await repository.SelectAsync(entity 
+        entity = await repository.SelectAsync(entity
             => entity.UserName.ToLower().Equals(request.UserName.ToLower()));
         if (entity is not null)
             throw new AlreadyExistException($"{typeof(User)} is already exist with UserName: {request.UserName}");
@@ -48,7 +48,7 @@ public class UpdateUserCommandHandler(IMapper mapper,
 
         if (request.FormFile is not null)
         {
-            if(entity.Image is not null)
+            if (entity.Image is not null)
                 await mediator.Send(new DeleteAssetCommand(request.Id), cancellationToken);
 
             var uploadedImage = await mediator.Send(new UploadAssetCommand(request.FormFile), cancellationToken);
