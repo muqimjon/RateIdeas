@@ -24,10 +24,10 @@ public class CreateCommentCommandHandler(IMapper mapper,
         var entity = mapper.Map<Comment>(request);
 
         entity.Idea = await ideaRepository.SelectAsync(i => i.Id.Equals(request.IdeaId))
-            ?? throw new NotFoundException($"{nameof(Idea)} is not found by ID={request.IdeaId}");
+            ?? throw new NotFoundException($"{nameof(Idea)} is not found by ID: {request.IdeaId}");
 
         entity.User = await userRepository.SelectAsync(i => i.Id.Equals(request.UserId))
-            ?? throw new NotFoundException($"{nameof(User)} is not found by ID={request.UserId}");
+            ?? throw new NotFoundException($"{nameof(User)} is not found by ID: {request.UserId}");
 
         await repository.InsertAsync(entity);
         await repository.SaveAsync();

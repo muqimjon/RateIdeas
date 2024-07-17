@@ -16,5 +16,5 @@ public class GetSavedIdeaQueryHandler(IMapper mapper, IRepository<SavedIdea> rep
     public async Task<SavedIdeaResultDto> Handle(GetSavedIdeaQuery request,
         CancellationToken cancellationToken)
         => mapper.Map<SavedIdeaResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id)))
-            ?? throw new NotFoundException($"{nameof(SavedIdea)} is not found with ID={request.Id}");
+            ?? throw new NotFoundException($"{nameof(SavedIdea)} is not found with ID: {request.Id}");
 }

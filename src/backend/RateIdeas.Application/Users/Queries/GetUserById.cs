@@ -15,5 +15,5 @@ public class GetUserQueryHandler(IRepository<User> repository, IMapper mapper)
 {
     public async Task<UserResultDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
         => mapper.Map<UserResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id)))
-            ?? throw new NotFoundException($"User is not found with ID = {request.Id}");
+            ?? throw new NotFoundException($"{typeof(User)} is not found with ID: {request.Id}");
 }

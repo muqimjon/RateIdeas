@@ -31,22 +31,26 @@ public class UpdateUserCommandHandler(IMapper mapper,
 {
     public async Task<UserResultDto> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.Email.ToLower().Equals(request.Email.ToLower()));
+        var entity = await repository.SelectAsync(entity 
+            => entity.Email.ToLower().Equals(request.Email.ToLower()));
         if (entity is not null)
-            throw new AlreadyExistException($"The User is already exist with Email={request.Email}");
+            throw new AlreadyExistException($"{typeof(User)} is already exist with Email: {request.Email}");
 
-        entity = await repository.SelectAsync(entity => entity.UserName.ToLower().Equals(request.UserName.ToLower()));
+        entity = await repository.SelectAsync(entity 
+            => entity.UserName.ToLower().Equals(request.UserName.ToLower()));
         if (entity is not null)
-            throw new AlreadyExistException($"The User is already exist with UserName={request.UserName}");
+            throw new AlreadyExistException($"{typeof(User)} is already exist with UserName: {request.UserName}");
 
         entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"The User is not found by ID={request.Id}");
+            ?? throw new NotFoundException($"{typeof(User)} is not found by ID: {request.Id}");
 
         mapper.Map(request, entity);
 
         if (request.FormFile is not null)
         {
-            await mediator.Send(new DeleteAssetCommand(request.Id), cancellationToken);
+            if(entity.Image is not null)
+                await mediator.Send(new DeleteAssetCommand(request.Id), cancellationToken);
+
             var uploadedImage = await mediator.Send(new UploadAssetCommand(request.FormFile), cancellationToken);
             var createdImage = new Asset
             {

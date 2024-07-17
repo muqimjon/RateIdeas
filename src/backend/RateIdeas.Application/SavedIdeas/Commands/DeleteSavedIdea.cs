@@ -12,7 +12,7 @@ public class DeleteSavedIdeaCommandHandler(IRepository<SavedIdea> repository,
     public async Task<bool> Handle(DeleteSavedIdeaCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"{nameof(SavedIdea)} is not found by ID={request.Id}");
+            ?? throw new NotFoundException($"{nameof(SavedIdea)} is not found by ID: {request.Id}");
 
         await mediator.Send(new DeleteAssetCommand(request.Id), cancellationToken);
         repository.Delete(entity);

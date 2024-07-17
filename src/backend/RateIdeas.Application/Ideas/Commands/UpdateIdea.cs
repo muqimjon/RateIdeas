@@ -30,19 +30,20 @@ public class UpdateIdeaCommandHandler(IMapper mapper,
         CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id.Equals(request.Id))
-            ?? throw new NotFoundException($"{nameof(Idea)} is not found by ID={request.Id}");
+            ?? throw new NotFoundException($"{nameof(Idea)} is not found by ID: {request.Id}");
 
         entity.Category = await categoryRepository.SelectAsync(i => i.Id.Equals(request.CategoryId))
-            ?? throw new NotFoundException($"{nameof(Category)} is not found by ID={request.CategoryId}");
+            ?? throw new NotFoundException($"{nameof(Category)} is not found by ID: {request.CategoryId}");
 
         entity.User = await userRepository.SelectAsync(i => i.Id.Equals(request.UserId))
-            ?? throw new NotFoundException($"{nameof(User)} is not found by ID={request.UserId}");
+            ?? throw new NotFoundException($"{nameof(User)} is not found by ID: {request.UserId}");
 
         mapper.Map(request, entity);
 
         if (request.FormFile is not null)
         {
-            await mediator.Send(new DeleteAssetCommand(entity.Id), cancellationToken);
+            if(entity.Image is not null)
+                await mediator.Send(new DeleteAssetCommand(entity.ImageId), cancellationToken);
 
             var uploadedImage = await mediator.Send(
                 new UploadAssetCommand(request.FormFile), cancellationToken);

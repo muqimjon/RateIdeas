@@ -28,13 +28,15 @@ public class CreateUserCommandHandler(IMapper mapper,
 {
     public async Task<UserResultDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.Email.ToLower().Equals(request.Email.ToLower()));
+        var entity = await repository.SelectAsync(entity 
+            => entity.Email.ToLower().Equals(request.Email.ToLower()));
         if (entity is not null)
-            throw new AlreadyExistException($"User is already exist with email: {request.Email}");
+            throw new AlreadyExistException($"{typeof(User)} is already exist with Email: {request.Email}");
 
-        entity = await repository.SelectAsync(entity => entity.UserName.ToLower().Equals(request.UserName.ToLower()));
+        entity = await repository.SelectAsync(entity 
+            => entity.UserName.ToLower().Equals(request.UserName.ToLower()));
         if (entity is not null)
-            throw new AlreadyExistException($"User is already exist with UserName: {request.UserName}");
+            throw new AlreadyExistException($"{typeof(User)} is already exist with UserName: {request.UserName}");
 
         entity = mapper.Map<User>(request);
 

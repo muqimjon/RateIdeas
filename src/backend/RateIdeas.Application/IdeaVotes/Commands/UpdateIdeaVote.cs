@@ -28,10 +28,10 @@ public class UpdateIdeaVoteCommandHandler(IMapper mapper,
             ?? throw new NotFoundException($"The IdeaVote is not found by id={request.Id}");
 
         entity.Idea = await ideaRepository.SelectAsync(i => i.Id.Equals(request.IdeaId))
-            ?? throw new NotFoundException($"{nameof(Idea)} is not found by ID={request.IdeaId}");
+            ?? throw new NotFoundException($"{nameof(Idea)} is not found by ID: {request.IdeaId}");
 
         entity.User = await userRepository.SelectAsync(i => i.Id.Equals(request.UserId))
-            ?? throw new NotFoundException($"{nameof(User)} is not found by ID={request.UserId}");
+            ?? throw new NotFoundException($"{nameof(User)} is not found by ID: {request.UserId}");
 
         mapper.Map(request, entity);
 

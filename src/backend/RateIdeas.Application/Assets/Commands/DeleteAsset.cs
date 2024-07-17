@@ -2,11 +2,11 @@
 
 public record DeleteAssetCommand : IRequest<bool>
 {
-    public DeleteAssetCommand(long id)
+    public DeleteAssetCommand(long? id)
     {
         Id = id;
     }
-    public long Id { get; set; }
+    public long? Id { get; set; }
 }
 
 public class DeleteAssetCommandHendler(IRepository<Asset> repository)
@@ -19,13 +19,14 @@ public class DeleteAssetCommandHendler(IRepository<Asset> repository)
         if (entity is null)
             return false;
 
-        string path = Path.Combine(PathHelper.WebRootPath, "Images", entity.FileName);
+        string filePath = Path.Combine(PathHelper.WebRootPath, "Images", entity.FileName);
 
-        if (!File.Exists(path))
-            File.Delete(path);
+        if (!File.Exists(filePath))
+            File.Delete(filePath);
 
         repository.Delete(entity);
         await repository.SaveAsync();
+
         return true;
     }
 }

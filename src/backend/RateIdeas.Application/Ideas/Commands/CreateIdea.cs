@@ -29,15 +29,16 @@ public class CreateIdeaCommandHandler(IMapper mapper,
         var entity = mapper.Map<Idea>(request);
 
         entity.Category = await categoryRepository.SelectAsync(i => i.Id.Equals(request.CategoryId))
-            ?? throw new NotFoundException($"{nameof(Category)} is not found by ID={request.CategoryId}");
+            ?? throw new NotFoundException($"{nameof(Category)} is not found by ID: {request.CategoryId}");
 
         entity.User = await userRepository.SelectAsync(i => i.Id.Equals(request.UserId))
-            ?? throw new NotFoundException($"{nameof(User)} is not found by ID={request.UserId}");
+            ?? throw new NotFoundException($"{nameof(User)} is not found by ID: {request.UserId}");
 
         if (request.FormFile is not null)
         {
             var uploadedImage = await mediator.Send(
                 new UploadAssetCommand(request.FormFile), cancellationToken);
+
             var createdImage = new Asset
             {
                 FileName = uploadedImage.FileName,
