@@ -10,8 +10,8 @@ public class UserResultDto
     public DateTimeOffset DateOfBirth { get; set; }
 
     public AssetResultDto Image { get; set; } = default!;
-    public ICollection<Idea> Users { get; set; } = default!;
-    public ICollection<IdeaVote> Votes { get; set; } = default!;
-    public ICollection<Comment> Comments { get; set; } = default!;
-    public ICollection<CommentVote> CommentVotes { get; set; } = default!;
+    public ICollection<IdeaResultDto> Users { get; set; } = default!;
+    public ICollection<IdeaVoteResultDto> Votes { get; set; } = default!;
+    public ICollection<CommentResultDto> Comments { get; set; } = default!;
+    public ICollection<CommentVoteResultDto> CommentVotes { get; set; } = default!;
 }
