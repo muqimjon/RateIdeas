@@ -25,9 +25,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .HasForeignKey(cv => cv.UserId);
 
         modelBuilder.Entity<CommentVote>()
-            .HasOne(cv => cv.Idea)
+            .HasOne(cv => cv.Comment)
             .WithMany(c => c.Votes)
-            .HasForeignKey(cv => cv.IdeaId);
+            .HasForeignKey(cv => cv.CommentId);
 
         // Comment
         modelBuilder.Entity<Comment>()

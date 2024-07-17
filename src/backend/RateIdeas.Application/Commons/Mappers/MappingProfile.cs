@@ -29,6 +29,16 @@ public class MappingProfile : Profile
         CreateMap<UpdateIdeaVoteCommand, IdeaVote>();
         CreateMap<IdeaVote, IdeaVoteResultDto>();
 
+        // Comment
+        CreateMap<CreateCommentCommand, Comment>();
+        CreateMap<UpdateCommentCommand, Comment>();
+        CreateMap<Comment, CommentResultDto>();
+
+        // Comment vote
+        CreateMap<CreateCommentVoteCommand, CommentVote>();
+        CreateMap<UpdateCommentVoteCommand, CommentVote>();
+        CreateMap<CommentVote, CommentVoteResultDto>();
+
         // Asset
         CreateMap<Asset, AssetResultDto>();
         CreateMap<UploadAssetCommand, Asset>();

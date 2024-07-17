@@ -9,6 +9,6 @@ public class CommentVote : Auditable
     public long UserId { get; set; }
     public User User { get; set; } = default!;
 
-    public long IdeaId { get; set; }
-    public Comment Idea { get; set; } = default!;
+    public long CommentId { get; set; }
+    public Comment Comment { get; set; } = default!;
 }

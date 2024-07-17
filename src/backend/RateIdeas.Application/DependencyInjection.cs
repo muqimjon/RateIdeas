@@ -1,4 +1,7 @@
-﻿namespace RateIdeas.Application;
+﻿using RateIdeas.Application.Comments.Queries;
+using RateIdeas.Application.CommentVotes.Queries;
+
+namespace RateIdeas.Application;
 
 public static class DependencyInjection
 {
@@ -63,6 +66,28 @@ public static class DependencyInjection
 
         services.AddScoped<IRequestHandler<GetIdeaVoteQuery, IdeaVoteResultDto>, GetIdeaVoteQueryHandler>();
         services.AddScoped<IRequestHandler<GetAllIdeaVotesQuery, IEnumerable<IdeaVoteResultDto>>, GetAllIdeaVotesQueryHandler>();
+
+
+        // Comment
+        services.AddScoped<IRequestHandler<CreateCommentCommand, CommentResultDto>, CreateCommentCommandHandler>();
+
+        services.AddScoped<IRequestHandler<UpdateCommentCommand, CommentResultDto>, UpdateCommentCommandHandler>();
+
+        services.AddScoped<IRequestHandler<DeleteCommentCommand, bool>, DeleteCommentCommandHandler>();
+
+        services.AddScoped<IRequestHandler<GetCommentQuery, CommentResultDto>, GetCommentQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAllCommentsQuery, IEnumerable<CommentResultDto>>, GetAllCommentsQueryHandler>();
+
+
+        // Comment vote
+        services.AddScoped<IRequestHandler<CreateCommentVoteCommand, CommentVoteResultDto>, CreateCommentVoteCommandHandler>();
+
+        services.AddScoped<IRequestHandler<UpdateCommentVoteCommand, CommentVoteResultDto>, UpdateCommentVoteCommandHandler>();
+
+        services.AddScoped<IRequestHandler<DeleteCommentVoteCommand, bool>, DeleteCommentVoteCommandHandler>();
+
+        services.AddScoped<IRequestHandler<GetCommentVoteQuery, CommentVoteResultDto>, GetCommentVoteQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAllCommentVotesQuery, IEnumerable<CommentVoteResultDto>>, GetAllCommentVotesQueryHandler>();
 
 
         // Asset
