@@ -1,5 +1,6 @@
 ﻿using RateIdeas.Application.Comments.Queries;
 using RateIdeas.Application.CommentVotes.Queries;
+using System.Text.Json.Serialization;
 
 namespace RateIdeas.Application;
 
@@ -9,8 +10,16 @@ public static class DependencyInjection
     {
         PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
 
-        services.AddAutoMapper(typeof(MappingProfile));
-        services.AddHttpContextAccessor();
+
+        // Use metadata
+        services.AddHttpContextAccessor()
+            // Mapping objects
+            .AddAutoMapper(typeof(MappingProfile))
+            // Add MVC controllers
+            .AddControllers()
+            // Ignore cycle errors
+            .AddJsonOptions(options =>
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 
         // User
