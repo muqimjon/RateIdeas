@@ -7,7 +7,7 @@ public class HttpContextHelper
 
     private static HttpContext HttpContext => Accessor?.HttpContext;
     public static IHeaderDictionary ResponseHeaders => HttpContext?.Response?.Headers;
-    public static long? GetUserId => long.TryParse(HttpContext?.User?.FindFirst("id")?.Value,
+    public static long? GetUserId => long.TryParse(HttpContext?.User?.FindFirst("Id")?.Value,
         out _tempUserId) ? _tempUserId : null;
     public static string UserRole => HttpContext?.User?.FindFirst("role")?.Value;
 

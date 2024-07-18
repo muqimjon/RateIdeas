@@ -1,6 +1,5 @@
 ﻿namespace RateIdeas.Application.Commons.Exceptions;
 
-public class AlreadyExistException(string message) : BaseException(message)
+public class AlreadyExistException(string message) : BaseException(message, 403)
 {
-    public int StatusCode { get; set; } = 403;
 }

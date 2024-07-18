@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace MedX.Service.Extensions;
+namespace RateIdeas.Application.Commons.Extensions;
 
 public static class HttpContextExtensions
 {

@@ -1,7 +1,7 @@
-﻿using MedX.Service.Extensions;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RateIdeas.Application.Commons.Extensions;
 using RateIdeas.WebApi.Middlewares;
 using System.Text;
 
@@ -82,7 +82,7 @@ public static class DependencyInjection
         app.UseStaticFiles();
 
         // Exceptopn middleware     ------- Manual<Custom>
-        app.UseMiddleware<ExceptionHandlerMiddleware>();
+        //app.UseMiddleware<ExceptionHandlerMiddleware>();
 
         return app;
     }

@@ -1,8 +1,8 @@
 ﻿namespace RateIdeas.Application.Users.Queries;
 
-public record GetUserQuery : IRequest<UserResultDto>
+public record GetUserByIdQuery : IRequest<UserResultDto>
 {
-    public GetUserQuery(long id)
+    public GetUserByIdQuery(long id)
     {
         Id = id;
     }
@@ -10,10 +10,10 @@ public record GetUserQuery : IRequest<UserResultDto>
     public long Id { get; set; }
 }
 
-public class GetUserQueryHandler(IRepository<User> repository, IMapper mapper)
-    : IRequestHandler<GetUserQuery, UserResultDto>
+public class GetUserByIdQueryHandler(IRepository<User> repository, IMapper mapper)
+    : IRequestHandler<GetUserByIdQuery, UserResultDto>
 {
-    public async Task<UserResultDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
+    public async Task<UserResultDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         => mapper.Map<UserResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id)))
             ?? throw new NotFoundException($"{typeof(User)} is not found with ID: {request.Id}");
 }

@@ -1,6 +1,6 @@
 ﻿namespace RateIdeas.Application.Commons.Exceptions;
 
-public class BaseException(string message) : Exception(message)
+public class BaseException(string message, int StatusCode) : Exception(message)
 {
-    public int StatusCode { get; set; } = 404;
+    public int StatusCode { get; set; } = StatusCode;
 }

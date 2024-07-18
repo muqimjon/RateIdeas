@@ -1,6 +1,5 @@
 ﻿namespace RateIdeas.Application.Commons.Exceptions;
 
-public class NotFoundException(string message) : BaseException(message)
+public class NotFoundException(string message) : BaseException(message, 404)
 {
-    public int StatusCode { get; set; } = 404;
 }
