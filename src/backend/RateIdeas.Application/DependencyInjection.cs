@@ -1,8 +1,4 @@
-﻿using RateIdeas.Application.Comments.Queries;
-using RateIdeas.Application.CommentVotes.Queries;
-using System.Text.Json.Serialization;
-
-namespace RateIdeas.Application;
+﻿namespace RateIdeas.Application;
 
 public static class DependencyInjection
 {
@@ -103,6 +99,10 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<UploadAssetCommand, AssetResultDto>, UploadAssetCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteAssetCommand, bool>, DeleteAssetCommandHendler>();
+
+
+        // Auth
+        services.AddScoped<IRequestHandler<GenerateTokenCommand, UserResponseDto>, GenerateTokenCommandHandler>();
 
 
         return services;

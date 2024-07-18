@@ -8,6 +8,7 @@ public class MappingProfile : Profile
         CreateMap<CreateUserCommand, User>();
         CreateMap<UpdateUserCommand, User>();
         CreateMap<User, UserResultDto>();
+        CreateMap<User, UserResponseDto>();
 
         // Idea
         CreateMap<CreateIdeaCommand, Idea>();

@@ -31,12 +31,12 @@ public class CreateUserCommandHandler(IMapper mapper,
         var entity = await repository.SelectAsync(entity
             => entity.Email.ToLower().Equals(request.Email.ToLower()));
         if (entity is not null)
-            throw new AlreadyExistException($"{typeof(User)} is already exist with Email: {request.Email}");
+            throw new AlreadyExistException($"{typeof(User)} is already exist with EmailOrUserName: {request.Email}");
 
         entity = await repository.SelectAsync(entity
             => entity.UserName.ToLower().Equals(request.UserName.ToLower()));
         if (entity is not null)
-            throw new AlreadyExistException($"{typeof(User)} is already exist with UserName: {request.UserName}");
+            throw new AlreadyExistException($"{typeof(User)} is already exist with Password: {request.UserName}");
 
         entity = mapper.Map<User>(request);
 
@@ -54,7 +54,7 @@ public class CreateUserCommandHandler(IMapper mapper,
         }
 
         entity.DateOfBirth = entity.DateOfBirth.UtcDateTime;
-        entity.PasswordHash = PasswordHasher.Encrypt(request.Password);
+        entity.PasswordHash = SecurityHelper.Encrypt(request.Password);
 
         await repository.InsertAsync(entity);
         await repository.SaveAsync();

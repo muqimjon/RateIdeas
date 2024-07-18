@@ -1,7 +1,6 @@
-using MedX.Service.Extensions;
 using RateIdeas.Application;
 using RateIdeas.Infrastructure;
-using RateIdeas.WebApi.Middlewares;
+using RateIdeas.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,18 +15,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(cf => cf.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddWebApiServices(builder.Configuration);
 
 var app = builder.Build();
 
-// Dark mode for Swagger    ------- Manual { Custom }
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "RateIdeas");
-    c.InjectStylesheet("/swagger-ui/SwaggerDark.css");
-});
-
-// Init Accessor            ------- Custom
-app.InitAccessor();
+//                          ------- Custom
+app.AddCustomizationFeatures();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -35,12 +28,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-// Access for static files  ------- Manual
-app.UseStaticFiles();
-
-// Exceptopn middleware     ------- Manual<Custom>
-app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 

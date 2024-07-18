@@ -1,6 +1,6 @@
 ﻿namespace RateIdeas.Application.Commons.Helpers;
 
-public static class PasswordHasher
+public static class SecurityHelper
 {
     public static string Encrypt(string password)
         => BCrypt.Net.BCrypt.HashPassword(password);

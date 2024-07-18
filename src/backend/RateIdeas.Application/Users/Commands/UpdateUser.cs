@@ -5,13 +5,13 @@ public record UpdateUserCommand : IRequest<UserResultDto>
     public UpdateUserCommand(UpdateUserCommand command)
     {
         Id = command.Id;
-        FormFile = command.FormFile;
         Email = command.Email;
+        UserName = command.UserName;
+        FormFile = command.FormFile;
         LastName = command.LastName;
         Password = command.Password;
         FirstName = command.FirstName;
         DateOfBirth = command.DateOfBirth;
-        UserName = command.UserName;
     }
 
     public long Id { get; set; }
@@ -34,12 +34,12 @@ public class UpdateUserCommandHandler(IMapper mapper,
         var entity = await repository.SelectAsync(entity
             => entity.Email.ToLower().Equals(request.Email.ToLower()));
         if (entity is not null)
-            throw new AlreadyExistException($"{typeof(User)} is already exist with Email: {request.Email}");
+            throw new AlreadyExistException($"{typeof(User)} is already exist with EmailOrUserName: {request.Email}");
 
         entity = await repository.SelectAsync(entity
             => entity.UserName.ToLower().Equals(request.UserName.ToLower()));
         if (entity is not null)
-            throw new AlreadyExistException($"{typeof(User)} is already exist with UserName: {request.UserName}");
+            throw new AlreadyExistException($"{typeof(User)} is already exist with Password: {request.UserName}");
 
         entity = await repository.SelectAsync(entity => entity.Id == request.Id)
             ?? throw new NotFoundException($"{typeof(User)} is not found by ID: {request.Id}");
