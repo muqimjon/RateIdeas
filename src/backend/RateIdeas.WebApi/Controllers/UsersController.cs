@@ -1,6 +1,9 @@
-﻿using RateIdeas.Application.Users.Commands;
+﻿using RateIdeas.Application.Users.Commands.DeleteUser;
+using RateIdeas.Application.Users.Commands.CreateUser;
+using RateIdeas.Application.Users.Commands.UpdateUser;
 using RateIdeas.Application.Users.DTOs;
 using RateIdeas.Application.Users.Queries;
+using RateIdeas.Application.Users.Commands;
 
 namespace RateIdeas.WebApi.Controllers.Users;
 
@@ -24,12 +27,29 @@ public class UsersController(IMediator mediator) : BaseController
             Data = await mediator.Send(new UpdateUserCommand(command), cancellationToken)
         });
 
-    [HttpDelete("delete/{id:long}")]
-    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Delete(long id, CancellationToken cancellationToken)
+    [HttpPut("update-by-id")]
+    [ProducesResponseType(typeof(UserResultDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Update(UpdateUserByIdCommand command,
+        CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new DeleteUserCommand(id), cancellationToken)
+            Data = await mediator.Send(new UpdateUserByIdCommand(command), cancellationToken)
+        });
+
+    [HttpDelete("delete")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Delete(CancellationToken cancellationToken)
+        => Ok(new Response
+        {
+            Data = await mediator.Send(new DeleteUserCommand(), cancellationToken)
+        });
+
+    [HttpDelete("delete-by-id/{userId:long}")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Delete(long userId, CancellationToken cancellationToken)
+        => Ok(new Response
+        {
+            Data = await mediator.Send(new DeleteUserByIdCommand(userId), cancellationToken)
         });
 
     [HttpGet("get")]

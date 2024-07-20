@@ -1,4 +1,7 @@
-﻿namespace RateIdeas.Application.Commons.Mappers;
+﻿using RateIdeas.Application.Users.Commands.CreateUser;
+using RateIdeas.Application.Users.Commands.UpdateUser;
+
+namespace RateIdeas.Application.Commons.Mappers;
 
 public class MappingProfile : Profile
 {
@@ -7,6 +10,7 @@ public class MappingProfile : Profile
         // User
         CreateMap<CreateUserCommand, User>();
         CreateMap<UpdateUserCommand, User>();
+        CreateMap<UpdateUserByIdCommand, User>();
         CreateMap<User, UserResultDto>();
         CreateMap<User, UserResponseDto>();
 

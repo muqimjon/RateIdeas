@@ -1,4 +1,4 @@
-﻿namespace RateIdeas.Application.Users.Commands;
+﻿namespace RateIdeas.Application.Users.Commands.CreateUser;
 
 public record CreateUserCommand : IRequest<UserResultDto>
 {

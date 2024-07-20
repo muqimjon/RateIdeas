@@ -1,15 +1,15 @@
-﻿namespace RateIdeas.Application.Users.Commands;
+﻿namespace RateIdeas.Application.Users.Commands.DeleteUser;
 
-public record DeleteUserCommand : IRequest<bool>
+public record DeleteUserByIdCommand : IRequest<bool>
 {
-    public DeleteUserCommand(long userId) { Id = userId; }
+    public DeleteUserByIdCommand(long userId) { Id = userId; }
     public long Id { get; set; }
 }
 
-public class DeleteUserCommandHandler(IRepository<User> repository,
-    IMediator mediator) : IRequestHandler<DeleteUserCommand, bool>
+public class DeleteUserByIdCommandHandler(IRepository<User> repository,
+    IMediator mediator) : IRequestHandler<DeleteUserByIdCommand, bool>
 {
-    public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(DeleteUserByIdCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id.Equals(request.Id))
             ?? throw new NotFoundException($"{nameof(User)} is not found by ID: {request.Id}");

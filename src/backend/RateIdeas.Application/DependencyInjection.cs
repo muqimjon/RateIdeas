@@ -22,8 +22,10 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateUserCommand, UserResultDto>, CreateUserCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateUserCommand, UserResultDto>, UpdateUserCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateUserByIdCommand, UserResultDto>, UpdateUserByIdCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteUserByIdCommand, bool>, DeleteUserByIdCommandHandler>();
 
         services.AddScoped<IRequestHandler<GetUserQuery, UserResultDto>, GetUserQueryHandler>();
         services.AddScoped<IRequestHandler<GetUserByIdQuery, UserResultDto>, GetUserByIdQueryHandler>();

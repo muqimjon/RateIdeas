@@ -34,3 +34,6 @@ global using RateIdeas.Domain.Entities;
 global using RateIdeas.Domain.Entities.Comments;
 global using RateIdeas.Domain.Entities.Ideas;
 global using System.Text.Json.Serialization;
+global using RateIdeas.Application.Users.Commands.CreateUser;
+global using RateIdeas.Application.Users.Commands.DeleteUser;
+global using RateIdeas.Application.Users.Commands.UpdateUser;

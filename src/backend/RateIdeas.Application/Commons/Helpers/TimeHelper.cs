@@ -6,5 +6,5 @@ public class TimeHelper
         => DateTimeOffset.UtcNow.AddHours(TimeConstants.UTC);
 
     public static DateTimeOffset ToLocalize(DateTimeOffset dateTime)
-        => dateTime.AddHours(TimeConstants.UTC).ToUniversalTime();
+        => dateTime.ToUniversalTime().AddHours(TimeConstants.UTC);
 }
