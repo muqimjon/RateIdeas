@@ -1,9 +1,9 @@
-﻿using RateIdeas.Application.Users.Commands.DeleteUser;
+﻿using RateIdeas.Application.Users.Commands;
 using RateIdeas.Application.Users.Commands.CreateUser;
+using RateIdeas.Application.Users.Commands.DeleteUser;
 using RateIdeas.Application.Users.Commands.UpdateUser;
 using RateIdeas.Application.Users.DTOs;
 using RateIdeas.Application.Users.Queries;
-using RateIdeas.Application.Users.Commands;
 
 namespace RateIdeas.WebApi.Controllers.Users;
 

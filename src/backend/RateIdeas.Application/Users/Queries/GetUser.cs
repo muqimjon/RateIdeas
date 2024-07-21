@@ -9,5 +9,5 @@ public class GetUserQueryHandler(IMapper mapper,
 {
     public async Task<UserResultDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
         => mapper.Map<UserResultDto>(await repository.SelectAsync(i => i.Id.Equals(HttpContextHelper.GetUserId)))
-            ?? throw new UnAuthenticationException("Authentication has not been completed   ");
+            ?? throw new AuthenticationException("Authentication has not been completed   ");
 }

@@ -2,7 +2,6 @@
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RateIdeas.Application.Commons.Extensions;
-using RateIdeas.WebApi.Middlewares;
 using System.Text;
 
 namespace RateIdeas.WebApi;

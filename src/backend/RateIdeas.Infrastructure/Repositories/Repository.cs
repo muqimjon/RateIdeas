@@ -41,6 +41,7 @@ public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : Au
             return (await Table.FirstOrDefaultAsync(expression))!;
 
         var query = Table.AsQueryable();
+
         foreach (string item in includes)
             query = query.Include(item);
 

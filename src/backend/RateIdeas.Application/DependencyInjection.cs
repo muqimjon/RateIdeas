@@ -51,6 +51,8 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<DeleteIdeaCommand, bool>, DeleteIdeaCommandHandler>();
 
         services.AddScoped<IRequestHandler<GetIdeaQuery, IdeaResultDto>, GetIdeaQueryHandler>();
+        services.AddScoped<IRequestHandler<GetIdeasQuery, IEnumerable<IdeaResultDto>>, GetIdeasQueryHandler>();
+        services.AddScoped<IRequestHandler<GetIdeasByUserIdQuery, IEnumerable<IdeaResultDto>>, GetIdeasByUserIdQueryHandler>();
         services.AddScoped<IRequestHandler<GetAllIdeasQuery, IEnumerable<IdeaResultDto>>, GetAllIdeasQueryHandler>();
 
 

@@ -18,7 +18,7 @@ public static class DependencyInjection
             options.UseNpgsql(configuration.GetConnectionString(name: "DefaultConnection")));
 
         // Add repositories
-        services.AddScoped(serviceType: typeof(IRepository<>), implementationType: typeof(Repository<>));
+        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
         return services;
     }

@@ -40,6 +40,22 @@ public class IdeasController(IMediator mediator) : BaseController
             Data = await mediator.Send(new GetIdeaQuery(ideaId), cancellationToken)
         });
 
+    [HttpGet("get")]
+    [ProducesResponseType(typeof(IdeaResultDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
+        => Ok(new Response
+        {
+            Data = await mediator.Send(new GetIdeasQuery(), cancellationToken)
+        });
+
+    [HttpGet("get-by-user-id/{userId:long}")]
+    [ProducesResponseType(typeof(IdeaResultDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetByUserId(long userId, CancellationToken cancellationToken)
+        => Ok(new Response
+        {
+            Data = await mediator.Send(new GetIdeasByUserIdQuery(userId), cancellationToken)
+        });
+
     [HttpGet("get-all")]
     [ProducesResponseType(typeof(IEnumerable<IdeaResultDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetForApplication(CancellationToken cancellationToken)

@@ -26,21 +26,22 @@ public class GenerateTokenCommandHandler(IMapper mapper,
     {
         var user = await userRepository.SelectAsync(u => u.Email.Equals(request.EmailOrUserName))
             ?? await userRepository.SelectAsync(u => u.UserName.Equals(request.EmailOrUserName))
-            ?? throw new UnAuthenticationException("Email/UserName or password is invalid");
+            ?? throw new AuthorizationException("Email/UserName or password is invalid");
 
         bool verifiedPassword = SecurityHelper.Verify(user.PasswordHash, request.Password);
 
         if (!verifiedPassword)
-            throw new UnAuthenticationException("Email/UserName or password is invalid");
+            throw new AuthorizationException("Email/UserName or password is invalid");
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
                  new("Id", user.Id.ToString()),
-                 new("Email", user.Email),
-                 new("FirstName", user.FirstName),
-                 new("LastName", user.LastName),
+                 new(ClaimTypes.Email, user.Email),
+                 new(ClaimTypes.Name, user.FirstName),
+                 new(ClaimTypes.Surname, user.LastName),
+                 new(ClaimTypes.Role, user.Role)
             }),
             Expires = DateTime.UtcNow.AddHours(1),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(

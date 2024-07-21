@@ -1,6 +1,6 @@
 ﻿namespace RateIdeas.Application.Commons.Exceptions;
 
 public class AlreadyExistException(string message)
-    : BaseException(message, StatusCodes.Status403Forbidden)
+    : BaseException(message, StatusCodes.Status409Conflict)
 {
 }

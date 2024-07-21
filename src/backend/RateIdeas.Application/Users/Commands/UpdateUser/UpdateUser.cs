@@ -39,8 +39,8 @@ public class UpdateUserCommandHandler(IMapper mapper,
         if (entity is not null)
             throw new AlreadyExistException($"{typeof(User)} is already exist with Password: {request.UserName}");
 
-        entity = await repository.SelectAsync(entity => entity.Id.Equals(HttpContextHelper.GetUserId))
-            ?? throw new UnAuthenticationException("Authentication has not been completed");
+        entity = await repository.SelectAsync(entity => entity.Id.Equals(HttpContextHelper.GetUserId ?? 0))
+            ?? throw new AuthenticationException("Authentication has not been completed");
 
         mapper.Map(request, entity);
 

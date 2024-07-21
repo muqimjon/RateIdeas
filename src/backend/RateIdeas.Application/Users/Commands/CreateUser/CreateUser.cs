@@ -40,6 +40,9 @@ public class CreateUserCommandHandler(IMapper mapper,
 
         entity = mapper.Map<User>(request);
 
+        if (!repository.SelectAll().Any())
+            entity.Role = Roles.SuperAdmin;
+
         if (request.FormFile is not null)
         {
             var uploadedImage = await mediator.Send(new UploadAssetCommand(request.FormFile), cancellationToken);

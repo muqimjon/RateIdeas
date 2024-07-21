@@ -1,4 +1,5 @@
 ﻿using RateIdeas.Domain.Common;
+using RateIdeas.Domain.Constants;
 using RateIdeas.Domain.Entities.Comments;
 using RateIdeas.Domain.Entities.Ideas;
 
@@ -12,6 +13,7 @@ public class User : Auditable
     public string Email { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
     public DateTimeOffset DateOfBirth { get; set; }
+    public string Role { get; set; } = Roles.User;
 
     public long? ImageId { get; set; }
     public Asset Image { get; set; } = default!;

@@ -1,7 +1,4 @@
-﻿using RateIdeas.Application.Users.Commands.CreateUser;
-using RateIdeas.Application.Users.Commands.UpdateUser;
-
-namespace RateIdeas.Application.Commons.Mappers;
+﻿namespace RateIdeas.Application.Commons.Mappers;
 
 public class MappingProfile : Profile
 {

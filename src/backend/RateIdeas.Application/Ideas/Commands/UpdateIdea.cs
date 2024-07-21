@@ -6,7 +6,6 @@ public record UpdateIdeaCommand : IRequest<IdeaResultDto>
     {
         Id = command.Id;
         Title = command.Title;
-        UserId = command.UserId;
         FormFile = command.FormFile;
         CategoryId = command.CategoryId;
         Description = command.Description;
@@ -16,7 +15,6 @@ public record UpdateIdeaCommand : IRequest<IdeaResultDto>
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public long CategoryId { get; set; }
-    public long UserId { get; set; }
     public IFormFile? FormFile { get; set; } = default!;
 }
 
@@ -35,8 +33,8 @@ public class UpdateIdeaCommandHandler(IMapper mapper,
         entity.Category = await categoryRepository.SelectAsync(i => i.Id.Equals(request.CategoryId))
             ?? throw new NotFoundException($"{nameof(Category)} is not found by ID: {request.CategoryId}");
 
-        entity.User = await userRepository.SelectAsync(i => i.Id.Equals(request.UserId))
-            ?? throw new NotFoundException($"{nameof(User)} is not found by ID: {request.UserId}");
+        entity.User = await userRepository.SelectAsync(i => i.Id.Equals(HttpContextHelper.GetUserId ?? 0))
+            ?? throw new AuthenticationException("Authentication has not been completed");
 
         mapper.Map(request, entity);
 
