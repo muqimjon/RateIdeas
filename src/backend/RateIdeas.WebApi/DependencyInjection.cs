@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using EcoLink.WebApi.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RateIdeas.Application.Commons.Extensions;
@@ -67,6 +68,9 @@ public static class DependencyInjection
 
     public static WebApplication AddCustomizationFeatures(this WebApplication app)
     {
+        // Avto update database     ------- Custom
+        app.MigrateDatabase();
+
         // Dark mode for Swagger    ------- Manual { Custom }
         app.UseSwaggerUI(c =>
         {
