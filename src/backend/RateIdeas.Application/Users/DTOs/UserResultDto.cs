@@ -7,11 +7,12 @@ public class UserResultDto
     public string LastName { get; set; } = string.Empty;
     public string UserName { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public Roles Role { get; set; }
     public DateTimeOffset DateOfBirth { get; set; }
 
     public AssetResultDto Image { get; set; } = default!;
-    public ICollection<IdeaResultDto> Users { get; set; } = default!;
-    public ICollection<IdeaVoteResultDto> Votes { get; set; } = default!;
+    public ICollection<IdeaResultDto> Ideas { get; set; } = default!;
+    public ICollection<IdeaVoteResultDto> IdeaVotes { get; set; } = default!;
     public ICollection<CommentResultDto> Comments { get; set; } = default!;
     public ICollection<CommentVoteResultDto> CommentVotes { get; set; } = default!;
 }

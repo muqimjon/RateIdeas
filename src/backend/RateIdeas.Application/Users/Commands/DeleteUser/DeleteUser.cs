@@ -13,7 +13,7 @@ public class DeleteUserCommandHandler(IRepository<User> repository,
             ?? throw new AuthenticationException("Authentication has not been completed");
 
         if (entity.Role.Equals(Roles.SuperAdmin))
-            throw new ForbiddenExistException("Deleting a SuperAdmin is forbidden.");
+            throw new ForbiddenException("Deleting a SuperAdmin is forbidden.");
 
         if (entity.Image is not null)
             await mediator.Send(new DeleteAssetCommand(entity.ImageId), cancellationToken);

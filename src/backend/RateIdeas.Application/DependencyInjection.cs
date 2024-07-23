@@ -1,4 +1,6 @@
-﻿namespace RateIdeas.Application;
+﻿using RateIdeas.Application.Users.Commands.UpdateRole;
+
+namespace RateIdeas.Application;
 
 public static class DependencyInjection
 {
@@ -22,6 +24,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateUserCommand, UserResultDto>, CreateUserCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateUserCommand, UserResultDto>, UpdateUserCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateRoleCommand, bool>, UpdateRoleCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateUserByIdCommand, UserResultDto>, UpdateUserByIdCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();

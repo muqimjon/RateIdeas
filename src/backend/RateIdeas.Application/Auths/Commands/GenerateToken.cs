@@ -41,7 +41,7 @@ public class GenerateTokenCommandHandler(IMapper mapper,
                  new(ClaimTypes.Email, user.Email),
                  new(ClaimTypes.Name, user.FirstName),
                  new(ClaimTypes.Surname, user.LastName),
-                 new(ClaimTypes.Role, user.Role)
+                 new(ClaimTypes.Role, user.Role.ToString())
             }),
             Expires = DateTime.UtcNow.AddHours(1),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(

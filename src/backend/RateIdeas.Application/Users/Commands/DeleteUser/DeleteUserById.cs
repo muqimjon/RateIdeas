@@ -15,7 +15,7 @@ public class DeleteUserByIdCommandHandler(IRepository<User> repository,
             ?? throw new NotFoundException($"{nameof(User)} is not found by ID: {request.Id}");
 
         if (entity.Role.Equals(Roles.SuperAdmin))
-            throw new ForbiddenExistException("Deleting a SuperAdmin is forbidden.");
+            throw new ForbiddenException("Deleting a SuperAdmin is forbidden.");
 
         if (entity.Image is not null)
             await mediator.Send(new DeleteAssetCommand(entity.ImageId), cancellationToken);
