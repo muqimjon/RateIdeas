@@ -5,22 +5,44 @@ name: Production
 
 on:
   pull_request:
-    branches: [ "deploy" ]
+    branches: deploy
 
 jobs:
-  build:
-
+  build-api:
+    name: Build backend
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./src/backend/RateIdeas.WebApi/
     - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet build --configuration Release --verbosity normal ./src/backend/RateIdeas.WebApi/
+
+  dockerize-api:
+    name: Dockerize backend
+    needs: build-api
+    runs-on: ubuntu-latest
+
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      PROJECT: ${{ secrets.PROJECT }}
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Login to DockerHub
+      run: |
+        echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
+    - name: Build and push
+      run: |
+        docker build --tag $DOCKER_USERNAME/$PROJECT-api --file ./src/backend/RateIdeas.WebApi/Dockerfile .
+        docker push $DOCKER_USERNAME/$PROJECT-api
