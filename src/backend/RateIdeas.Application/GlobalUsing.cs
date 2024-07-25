@@ -38,3 +38,4 @@ global using RateIdeas.Domain.Entities.Comments;
 global using RateIdeas.Domain.Entities.Ideas;
 global using RateIdeas.Domain.Enums;
 global using System.Text.Json.Serialization;
+global using FluentValidation;
