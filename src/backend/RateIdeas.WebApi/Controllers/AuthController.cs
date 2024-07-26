@@ -1,4 +1,5 @@
 ﻿using RateIdeas.Application.Ideas.Commands;
+using RateIdeas.Application.Senders.EmailServices.Commands;
 using RateIdeas.Application.Users.DTOs;
 
 namespace RateIdeas.WebApi.Controllers;
@@ -13,4 +14,12 @@ public class AuthController(IMediator mediator) : BaseController
         {
             Data = await mediator.Send(new GenerateTokenCommand(command), cancellationToken)
         });
+
+    [HttpPost("send-email")]
+    public async ValueTask<IActionResult> SendEmailAsync([FromForm] SendEmailCommand command,
+        CancellationToken cancellationToken)
+    {
+        await mediator.Send(new SendEmailCommand(command), cancellationToken);
+        return Ok();
+    }
 }

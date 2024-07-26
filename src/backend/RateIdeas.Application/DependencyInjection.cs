@@ -1,13 +1,12 @@
-﻿using RateIdeas.Application.Users.Commands.UpdateRole;
-
-namespace RateIdeas.Application;
+﻿namespace RateIdeas.Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
         PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
 
+        services.Configure<EmailConfigurations>(configuration.GetSection("EmailConfigurations"));
 
         // Use metadata
         services.AddHttpContextAccessor()
@@ -111,6 +110,10 @@ public static class DependencyInjection
 
         // Auth
         services.AddScoped<IRequestHandler<GenerateTokenCommand, UserResponseDto>, GenerateTokenCommandHandler>();
+
+
+        // Senders
+        services.AddScoped<IRequestHandler<SendEmailCommand, bool>, SendEmailCommandHandler>();
 
 
         return services;
