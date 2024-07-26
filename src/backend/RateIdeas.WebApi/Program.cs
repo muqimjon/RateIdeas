@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 
 // Add services             ------- Manual, Custom
 builder.Services.AddMediatR(cf => cf.RegisterServicesFromAssemblies(typeof(Program).Assembly));
-builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddWebApiServices(builder.Configuration);
 

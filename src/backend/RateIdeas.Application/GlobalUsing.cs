@@ -2,7 +2,7 @@
 global using FluentValidation;
 global using MediatR;
 global using Microsoft.AspNetCore.Http;
-global using Microsoft.Extensions.Configuration;
+global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 global using RateIdeas.Application.Assets.Commands;
