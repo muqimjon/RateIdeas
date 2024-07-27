@@ -6,9 +6,9 @@ public record CreateIdeaVoteCommand : IRequest<IdeaVoteResultDto>
     {
         IdeaId = command.IdeaId;
         UserId = command.UserId;
-        Content = command.Content;
+        IsUpvote = command.IsUpvote;
     }
-    public string Content { get; set; } = string.Empty;
+    public bool IsUpvote { get; set; }
     public long IdeaId { get; set; }
     public long UserId { get; set; }
 }
