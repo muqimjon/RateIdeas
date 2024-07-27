@@ -11,7 +11,7 @@ public class GetUserQueryHandler(IMapper mapper,
     {
         User entity = new();
 
-        if(HttpContextHelper.ResponseHeaders is null
+        if (HttpContextHelper.ResponseHeaders is null
             || (entity = await repository.SelectAsync(entity =>
             entity.Id.Equals(HttpContextHelper.GetUserId ?? 0))) is null)
             throw new AuthenticationException("Authentication has not been completed");
