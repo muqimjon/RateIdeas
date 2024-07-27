@@ -18,7 +18,7 @@ public class GetAllIdeasQueryHandler(IMapper mapper, IRepository<Idea> repositor
     public async Task<IEnumerable<IdeaResultDto>> Handle(GetAllIdeasQuery request,
         CancellationToken cancellationToken)
     {
-        var entities = (await Task.Run(() => repository.SelectAll()))
+        var entities = (await Task.Run(() => repository.SelectAll(includes: ["User", "Comments", "Category", "Votes"])))
             .ToPagedList(request.Size, request.Index)
             .ToList();
 
