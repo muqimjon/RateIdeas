@@ -12,14 +12,14 @@ public class AuthController(IMediator mediator) : BaseController
     CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new GenerateTokenCommand(command), cancellationToken)
+            Data = await mediator.Send(command, cancellationToken)
         });
 
     [HttpPost("send-email")]
     public async ValueTask<IActionResult> SendEmailAsync([FromForm] SendEmailCommand command,
         CancellationToken cancellationToken)
     {
-        await mediator.Send(new SendEmailCommand(command), cancellationToken);
+        await mediator.Send(command, cancellationToken);
         return Ok();
     }
 }

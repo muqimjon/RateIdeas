@@ -11,10 +11,7 @@ public static class DependencyInjection
             // Mapping objects
             .AddAutoMapper(typeof(MappingProfile))
             // Add MVC controllers
-            .AddControllers()
-            // Ignore cycle errors
-            .AddJsonOptions(options =>
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+            .AddControllers();
 
 
         // User

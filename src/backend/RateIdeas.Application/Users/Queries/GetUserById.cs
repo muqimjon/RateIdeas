@@ -14,6 +14,7 @@ public class GetUserByIdQueryHandler(IRepository<User> repository, IMapper mappe
     : IRequestHandler<GetUserByIdQuery, UserResultDto>
 {
     public async Task<UserResultDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
-        => mapper.Map<UserResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id)))
+        => mapper.Map<UserResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id),
+            includes: ["Image", "SavedIdeas", "Ideas.Category.Image", "Ideas.Image"]))
             ?? throw new NotFoundException($"{typeof(User)} is not found with ID: {request.Id}");
 }

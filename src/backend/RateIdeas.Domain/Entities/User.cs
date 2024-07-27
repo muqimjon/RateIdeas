@@ -18,9 +18,9 @@ public class User : Auditable
     public long? ImageId { get; set; }
     public Asset Image { get; set; } = default!;
 
-    public ICollection<SavedIdea> SavedIdeas { get; set; } = default!;
-    public ICollection<Idea> Users { get; set; } = default!;
-    public ICollection<IdeaVote> Votes { get; set; } = default!;
+    public ICollection<Idea> Ideas { get; set; } = default!;
+    public ICollection<IdeaVote> IdeaVotes { get; set; } = default!;
     public ICollection<Comment> Comments { get; set; } = default!;
     public ICollection<CommentVote> CommentVotes { get; set; } = default!;
+    public ICollection<SavedIdea> SavedIdeas { get; set; } = default!;
 }

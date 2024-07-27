@@ -4,6 +4,6 @@ public class IdeaVoteResultDto
 {
     public long Id { get; set; }
     public bool IsUpvote { get; set; }
-    public UserResultDto User { get; set; } = default!;
-    public IdeaResultDto Idea { get; set; } = default!;
+    public UserResultForPropDto User { get; set; } = default!;
+    public long IdeaId { get; set; }
 }

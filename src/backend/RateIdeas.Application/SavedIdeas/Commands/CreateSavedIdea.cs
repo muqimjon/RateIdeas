@@ -21,7 +21,8 @@ public class CreateSavedIdeaCommandHandler(IMapper mapper,
     {
         var entity = mapper.Map<SavedIdea>(request);
 
-        entity.Idea = await ideaRepository.SelectAsync(i => i.Id.Equals(request.IdeaId))
+        entity.Idea = await ideaRepository.SelectAsync(
+            i => i.Id.Equals(request.IdeaId), includes: ["Category"])
             ?? throw new NotFoundException($"{nameof(Idea)} is not found by ID: {request.IdeaId}");
 
         entity.User = await userRepository.SelectAsync(i => i.Id.Equals(request.UserId))

@@ -14,6 +14,7 @@ public class GetIdeasQueryHandler(IMapper mapper,
             throw new AuthenticationException("Authentication has not been completed");
 
         return mapper.Map<IEnumerable<IdeaResultDto>>(await repository.SelectAsync(i
-            => i.UserId.Equals(HttpContextHelper.GetUserId ?? 0)));
+            => i.UserId.Equals(HttpContextHelper.GetUserId ?? 0),
+            includes: ["User.Image", "Comments", "Category.Image", "Votes", "Image"]));
     }
 }

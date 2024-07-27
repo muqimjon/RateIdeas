@@ -18,7 +18,8 @@ public class GetAllIdeaVotesQueryHandler(IMapper mapper, IRepository<IdeaVote> r
     public async Task<IEnumerable<IdeaVoteResultDto>> Handle(GetAllIdeaVotesQuery request,
         CancellationToken cancellationToken)
     {
-        var entities = (await Task.Run(() => repository.SelectAll()))
+        var entities = (await Task.Run(() => repository.SelectAll(
+            includes: ["User.Image"])))
             .ToPagedList(request.Size, request.Index)
             .ToList();
 

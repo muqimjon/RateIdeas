@@ -18,7 +18,7 @@ public class GetAllCategoriesQueryHandler(IMapper mapper, IRepository<Category> 
     public async Task<IEnumerable<CategoryResultDto>> Handle(GetAllCategoriesQuery request,
         CancellationToken cancellationToken)
     {
-        var entities = (await Task.Run(() => repository.SelectAll()))
+        var entities = (await Task.Run(() => repository.SelectAll(includes: ["Ideas.User.Image", "Image"])))
             .ToPagedList(request.Size, request.Index)
             .ToList();
 
