@@ -32,12 +32,12 @@ public class CommentsController(IMediator mediator) : BaseController
             Data = await mediator.Send(new DeleteCommentCommand(id), cancellationToken)
         });
 
-    [HttpGet("get/{savedIdeaId:long}")]
+    [HttpGet("get/{ideaId:long}")]
     [ProducesResponseType(typeof(CommentResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get(long savedIdeaId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Get(long ideaId, CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new GetCommentQuery(savedIdeaId), cancellationToken)
+            Data = await mediator.Send(new GetCommentQuery(ideaId), cancellationToken)
         });
 
     [HttpGet("get-all")]

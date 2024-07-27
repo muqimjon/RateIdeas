@@ -6,9 +6,7 @@ public record CreateSavedIdeaCommand : IRequest<SavedIdeaResultDto>
     {
         IdeaId = command.IdeaId;
         UserId = command.UserId;
-        Content = command.Content;
     }
-    public string Content { get; set; } = string.Empty;
     public long IdeaId { get; set; }
     public long UserId { get; set; }
 }

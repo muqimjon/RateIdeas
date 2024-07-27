@@ -14,7 +14,7 @@ namespace RateIdeas.Application.Commons.Extensions
         {
             PaginationParams @params = new()
             {
-                PageSize = pageSize > 0 ? pageSize : 1,
+                PageSize = pageSize > 0 ? pageSize : 10,
                 PageIndex = pageIndex > 0 ? pageIndex : 1
             };
 
