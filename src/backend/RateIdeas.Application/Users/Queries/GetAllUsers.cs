@@ -2,6 +2,13 @@
 
 public record GetAllUsersQuery : IRequest<IEnumerable<UserResultDto>>
 {
+    public GetAllUsersQuery(GetAllUsersQuery query)
+    {
+        Size = query.Size;
+        Index = query.Index;
+    }
+    public int Size { get; set; }
+    public int Index { get; set; }
 }
 
 public class GetAllUsersQueryHandler(IMapper mapper, IRepository<User> repository)
@@ -10,7 +17,10 @@ public class GetAllUsersQueryHandler(IMapper mapper, IRepository<User> repositor
     public async Task<IEnumerable<UserResultDto>> Handle(GetAllUsersQuery request,
         CancellationToken cancellationToken)
     {
-        var entities = (await Task.Run(() => repository.SelectAll())).ToList();
+        var entities = (await Task.Run(() => repository.SelectAll()))
+            .ToPagedList(request.Size, request.Index)
+            .ToList();
+
         return mapper.Map<IEnumerable<UserResultDto>>(entities);
     }
 }

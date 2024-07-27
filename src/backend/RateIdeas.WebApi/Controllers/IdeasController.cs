@@ -58,9 +58,10 @@ public class IdeasController(IMediator mediator) : BaseController
 
     [HttpGet("get-all")]
     [ProducesResponseType(typeof(IEnumerable<IdeaResultDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetForApplication(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetForApplication([FromQuery] GetAllIdeasQuery query,
+        CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new GetAllIdeasQuery(), cancellationToken)
+            Data = await mediator.Send(new GetAllIdeasQuery(query), cancellationToken)
         });
 }

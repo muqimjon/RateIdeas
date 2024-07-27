@@ -42,9 +42,10 @@ public class CategoriesController(IMediator mediator) : BaseController
 
     [HttpGet("get-all")]
     [ProducesResponseType(typeof(IEnumerable<CategoryResultDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetForApplication(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetForApplication([FromQuery] GetAllCategoriesQuery query,
+        CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new GetAllCategoriesQuery(), cancellationToken)
+            Data = await mediator.Send(new GetAllCategoriesQuery(query), cancellationToken)
         });
 }
