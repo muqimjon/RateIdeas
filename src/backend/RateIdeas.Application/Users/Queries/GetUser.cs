@@ -8,6 +8,14 @@ public class GetUserQueryHandler(IMapper mapper,
     IRepository<User> repository) : IRequestHandler<GetUserQuery, UserResultDto>
 {
     public async Task<UserResultDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
-        => mapper.Map<UserResultDto>(await repository.SelectAsync(i => i.Id.Equals(HttpContextHelper.GetUserId)))
-            ?? throw new AuthenticationException("Authentication has not been completed   ");
+    {
+        User entity = new();
+
+        if(HttpContextHelper.ResponseHeaders is null
+            || (entity = await repository.SelectAsync(entity =>
+            entity.Id.Equals(HttpContextHelper.GetUserId ?? 0))) is null)
+            throw new AuthenticationException("Authentication has not been completed");
+
+        return mapper.Map<UserResultDto>(entity);
+    }
 }

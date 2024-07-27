@@ -19,9 +19,10 @@ public class UpdateRoleCommandHandler(IRepository<User> userRepository)
 {
     public async Task<bool> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)
     {
-        _ = HttpContextHelper.GetUserId
-            ?? throw new AuthenticationException("Authentication has not been completed");
 
+        if (HttpContextHelper.ResponseHeaders is null ||HttpContextHelper.GetUserId is null)
+            throw new AuthenticationException("Authentication has not been completed");
+        
         if (request.UserId.Equals(1))
             throw new ForbiddenException("Delete general moderator is forbidden");
 
