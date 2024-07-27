@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RateIdeas.Application.Commons.Interfaces;
+using RateIdeas.Application.Senders.EmailServices.Models;
 using RateIdeas.Infrastructure.Contexts;
 using RateIdeas.Infrastructure.Repositories;
 
@@ -19,6 +20,8 @@ public static class DependencyInjection
 
         // Add repositories
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+        services.Configure<EmailConfigurations>(configuration.GetSection("EmailConfigurations"));
 
         return services;
     }

@@ -16,7 +16,7 @@ public class UsersController(IMediator mediator) : BaseController
         CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new CreateUserCommand(command), cancellationToken)
+            Data = await mediator.Send(command, cancellationToken)
         });
 
     [HttpPut("update")]
@@ -25,7 +25,7 @@ public class UsersController(IMediator mediator) : BaseController
         CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new UpdateUserCommand(command), cancellationToken)
+            Data = await mediator.Send(command, cancellationToken)
         });
 
     [HttpPut("update-by-id")]
@@ -34,7 +34,7 @@ public class UsersController(IMediator mediator) : BaseController
         CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new UpdateUserByIdCommand(command), cancellationToken)
+            Data = await mediator.Send(command, cancellationToken)
         });
 
     [HttpPut("update-role")]
@@ -43,7 +43,7 @@ public class UsersController(IMediator mediator) : BaseController
         CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new UpdateRoleCommand(command), cancellationToken)
+            Data = await mediator.Send(command, cancellationToken)
         });
 
     [HttpDelete("delete")]
@@ -80,9 +80,10 @@ public class UsersController(IMediator mediator) : BaseController
 
     [HttpGet("get-all")]
     [ProducesResponseType(typeof(IEnumerable<UserResultDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetForApplication(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetForApplication([FromQuery] GetAllUsersQuery query,
+        CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new GetAllUsersQuery(), cancellationToken)
+            Data = await mediator.Send(query, cancellationToken)
         });
 }

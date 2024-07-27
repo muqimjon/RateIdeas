@@ -42,9 +42,10 @@ public class CommentsController(IMediator mediator) : BaseController
 
     [HttpGet("get-all")]
     [ProducesResponseType(typeof(IEnumerable<CommentResultDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetForApplication(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetForApplication([FromQuery] GetAllCommentsQuery query,
+        CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new GetAllCommentsQuery(), cancellationToken)
+            Data = await mediator.Send(new GetAllCommentsQuery(query), cancellationToken)
         });
 }

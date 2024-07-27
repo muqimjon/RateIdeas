@@ -9,8 +9,11 @@ public class DeleteUserCommandHandler(IRepository<User> repository,
 {
     public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.Id.Equals(HttpContextHelper.GetUserId ?? 0))
-            ?? throw new AuthenticationException("Authentication has not been completed");
+        User entity = new();
+
+        if (HttpContextHelper.ResponseHeaders is null || (entity = await repository
+            .SelectAsync(entity => entity.Id.Equals(HttpContextHelper.GetUserId ?? 0))) is null)
+            throw new AuthenticationException("Authentication has not been completed");
 
         if (entity.Role.Equals(Roles.SuperAdmin))
             throw new ForbiddenException("Deleting a SuperAdmin is forbidden.");

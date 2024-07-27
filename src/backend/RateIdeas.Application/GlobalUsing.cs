@@ -2,7 +2,6 @@
 global using FluentValidation;
 global using MediatR;
 global using Microsoft.AspNetCore.Http;
-global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 global using RateIdeas.Application.Assets.Commands;
@@ -18,6 +17,7 @@ global using RateIdeas.Application.CommentVotes.DTOs;
 global using RateIdeas.Application.CommentVotes.Queries;
 global using RateIdeas.Application.Commons.Constants;
 global using RateIdeas.Application.Commons.Exceptions;
+global using RateIdeas.Application.Commons.Extensions;
 global using RateIdeas.Application.Commons.Helpers;
 global using RateIdeas.Application.Commons.Interfaces;
 global using RateIdeas.Application.Commons.Mappers;

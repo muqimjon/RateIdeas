@@ -2,11 +2,9 @@
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
-
-        services.Configure<EmailConfigurations>(configuration.GetSection("EmailConfigurations"));
 
         // Use metadata
         services.AddHttpContextAccessor()
