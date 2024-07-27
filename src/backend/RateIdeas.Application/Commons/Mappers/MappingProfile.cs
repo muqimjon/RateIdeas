@@ -10,16 +10,19 @@ public class MappingProfile : Profile
         CreateMap<UpdateUserByIdCommand, User>();
         CreateMap<User, UserResultDto>();
         CreateMap<User, UserResponseDto>();
+        CreateMap<User, UserResultForPropDto>();
 
         // Idea
         CreateMap<CreateIdeaCommand, Idea>();
         CreateMap<UpdateIdeaCommand, Idea>();
         CreateMap<Idea, IdeaResultDto>();
+        CreateMap<Idea, IdeaResultForPropDto>();
 
         // Category
         CreateMap<CreateCategoryCommand, Category>();
         CreateMap<UpdateCategoryCommand, Category>();
         CreateMap<Category, CategoryResultDto>();
+        CreateMap<Category, CategoryResultForPropDto>();
 
         // Saved idea
         CreateMap<CreateSavedIdeaCommand, SavedIdea>();

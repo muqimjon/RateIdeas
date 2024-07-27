@@ -43,7 +43,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         // Idea
         modelBuilder.Entity<Idea>()
             .HasOne(i => i.User)
-            .WithMany(u => u.Users)
+            .WithMany(u => u.Ideas)
             .HasForeignKey(i => i.UserId);
 
         modelBuilder.Entity<Idea>()
@@ -59,7 +59,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         // IdeaVote
         modelBuilder.Entity<IdeaVote>()
             .HasOne(iv => iv.User)
-            .WithMany(u => u.Votes)
+            .WithMany(u => u.IdeaVotes)
             .HasForeignKey(iv => iv.UserId);
 
         modelBuilder.Entity<IdeaVote>()

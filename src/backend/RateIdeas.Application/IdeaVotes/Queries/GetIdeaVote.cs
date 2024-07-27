@@ -15,6 +15,7 @@ public class GetIdeaVoteQueryHandler(IMapper mapper, IRepository<IdeaVote> repos
 {
     public async Task<IdeaVoteResultDto> Handle(GetIdeaVoteQuery request,
         CancellationToken cancellationToken)
-        => mapper.Map<IdeaVoteResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id)))
+        => mapper.Map<IdeaVoteResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id),
+            includes: ["User.Image"]))
             ?? throw new NotFoundException($"{nameof(IdeaVote)} is not found with ID: {request.Id}");
 }

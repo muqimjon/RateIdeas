@@ -37,27 +37,24 @@ public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : Au
 
     public async Task<T> SelectAsync(Expression<Func<T, bool>> expression, string[] includes = null!)
     {
-        if (includes is null)
-            return (await Table.FirstOrDefaultAsync(expression))!;
-
         var query = Table.AsQueryable();
 
-        foreach (string item in includes)
-            query = query.Include(item);
+        if (includes is not null)
+            foreach (string item in includes)
+                query = query.Include(item);
 
         return (await query.FirstOrDefaultAsync(expression))!;
     }
 
     public IQueryable<T> SelectAll(Expression<Func<T, bool>> expression = null!, string[] includes = null!)
     {
-        if (includes is null)
-            return expression is null ? Table : Table.Where(expression);
-
         var query = Table.AsQueryable();
-        foreach (string item in includes)
-            query = query.Include(item);
 
-        return expression is null ? Table : Table.Where(expression);
+        if (includes is not null)
+            foreach (string include in includes)
+                query = query.Include(include);
+
+        return expression is null ? query : query.Where(expression);
     }
 
     public Task<int> SaveAsync()

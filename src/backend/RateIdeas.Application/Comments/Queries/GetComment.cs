@@ -14,6 +14,7 @@ public class GetCommentQueryHandler(IMapper mapper, IRepository<Comment> reposit
     IRequestHandler<GetCommentQuery, CommentResultDto>
 {
     public async Task<CommentResultDto> Handle(GetCommentQuery request, CancellationToken cancellationToken)
-        => mapper.Map<CommentResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id)))
+        => mapper.Map<CommentResultDto>(
+            await repository.SelectAsync(i => i.Id.Equals(request.Id), includes: ["User.Image", "Votes"]))
             ?? throw new NotFoundException($"{nameof(Comment)} is not found with ID: {request.Id}");
 }

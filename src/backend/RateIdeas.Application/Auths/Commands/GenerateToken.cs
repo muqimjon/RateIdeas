@@ -24,8 +24,8 @@ public class GenerateTokenCommandHandler(IMapper mapper,
     public async Task<UserResponseDto> Handle(GenerateTokenCommand request,
         CancellationToken cancellationToken)
     {
-        var user = await userRepository.SelectAsync(u => u.Email.Equals(request.EmailOrUserName))
-            ?? await userRepository.SelectAsync(u => u.UserName.Equals(request.EmailOrUserName))
+        var user = await userRepository.SelectAsync(u => u.Email.Equals(request.EmailOrUserName)
+            || u.UserName.Equals(request.EmailOrUserName))
             ?? throw new AuthorizationException("Email/UserName or password is invalid");
 
         bool verifiedPassword = SecurityHelper.Verify(user.PasswordHash, request.Password);
@@ -41,9 +41,9 @@ public class GenerateTokenCommandHandler(IMapper mapper,
                  new(ClaimTypes.Email, user.Email),
                  new(ClaimTypes.Name, user.FirstName),
                  new(ClaimTypes.Surname, user.LastName),
-                 new(ClaimTypes.Role, user.Role.ToString())
+                 new(ClaimTypes.Role, user.Role.ToString()),
             }),
-            Expires = DateTime.UtcNow.AddHours(1),
+            Expires = DateTime.UtcNow.AddHours(5),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(configuration["JWT:Key"]!)),
                 SecurityAlgorithms.HmacSha256Signature)

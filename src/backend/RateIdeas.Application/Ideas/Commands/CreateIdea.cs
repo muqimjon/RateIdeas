@@ -26,12 +26,12 @@ public class CreateIdeaCommandHandler(IMapper mapper,
     {
         var entity = mapper.Map<Idea>(request);
 
-        entity.Category = await categoryRepository.SelectAsync(i => i.Id.Equals(request.CategoryId))
-            ?? throw new NotFoundException($"{nameof(Category)} is not found by ID: {request.CategoryId}");
-
         if (HttpContextHelper.ResponseHeaders is null || (entity.User = await userRepository
             .SelectAsync(entity => entity.Id.Equals(HttpContextHelper.GetUserId ?? 0))) is null)
             throw new AuthenticationException("Authentication has not been completed");
+
+        entity.Category = await categoryRepository.SelectAsync(i => i.Id.Equals(request.CategoryId))
+            ?? throw new NotFoundException($"{nameof(Category)} is not found by ID: {request.CategoryId}");
 
         if (request.FormFile is not null)
         {

@@ -1,6 +1,6 @@
 ﻿namespace RateIdeas.Application.Users.DTOs;
 
-public class UserResultDto
+public class UserResultForPropDto
 {
     public long Id { get; set; }
     public string FirstName { get; set; } = string.Empty;
@@ -11,6 +11,4 @@ public class UserResultDto
     public DateTimeOffset DateOfBirth { get; set; }
 
     public AssetResultDto Image { get; set; } = default!;
-    public ICollection<IdeaResultForPropDto> Ideas { get; set; } = default!;
-    public ICollection<SavedIdeaResultDto> SavedIdeas { get; set; } = default!;
 }

@@ -18,7 +18,7 @@ public class GetAllCommentsQueryHandler(IMapper mapper, IRepository<Comment> rep
     public async Task<IEnumerable<CommentResultDto>> Handle(GetAllCommentsQuery request,
         CancellationToken cancellationToken)
     {
-        var entities = (await Task.Run(() => repository.SelectAll()))
+        var entities = (await Task.Run(() => repository.SelectAll(includes: ["User.Image", "Votes"])))
             .ToPagedList(request.Size, request.Index)
             .ToList();
 
