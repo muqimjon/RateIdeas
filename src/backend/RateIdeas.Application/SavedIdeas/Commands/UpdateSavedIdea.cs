@@ -25,7 +25,7 @@ public class UpdateSavedIdeaCommandHandler(IMapper mapper,
         CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"{typeof(SavedIdea)} is not found by ID: {request.Id}");
+            ?? throw new NotFoundException($"{nameof(SavedIdea)} is not found by ID: {request.Id}");
 
         entity.Idea = await ideaRepository.SelectAsync(i => i.Id.Equals(request.IdeaId))
             ?? throw new NotFoundException($"{nameof(Idea)} is not found by ID: {request.IdeaId}");

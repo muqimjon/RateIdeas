@@ -32,12 +32,12 @@ public class UpdateUserCommandHandler(IMapper mapper,
         var entity = await repository.SelectAsync(entity
             => entity.Email.ToLower().Equals(request.Email.ToLower()));
         if (entity is not null)
-            throw new AlreadyExistException($"{typeof(User)} is already exist with EmailOrUserName: {request.Email}");
+            throw new AlreadyExistException($"{nameof(User)} is already exist with EmailOrUserName: {request.Email}");
 
         entity = await repository.SelectAsync(entity
             => entity.UserName.ToLower().Equals(request.UserName.ToLower()));
         if (entity is not null)
-            throw new AlreadyExistException($"{typeof(User)} is already exist with Password: {request.UserName}");
+            throw new AlreadyExistException($"{nameof(User)} is already exist with Password: {request.UserName}");
 
         if (HttpContextHelper.ResponseHeaders is null || (entity = await repository
             .SelectAsync(entity => entity.Id.Equals(HttpContextHelper.GetUserId ?? 0))) is null)
