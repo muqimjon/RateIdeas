@@ -104,7 +104,7 @@ public static class DependencyInjection
 
 
         // Auth
-        services.AddScoped<IRequestHandler<GenerateTokenCommand, UserResponseDto>, GenerateTokenCommandHandler>();
+        services.AddScoped<IRequestHandler<LogInCommand, UserResponseDto>, LogInCommandHandler>();
 
 
         // Senders

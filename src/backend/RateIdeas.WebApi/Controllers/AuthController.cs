@@ -8,7 +8,7 @@ public class AuthController(IMediator mediator) : BaseController
 {
     [HttpPost("login")]
     [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(GenerateTokenCommand command,
+    public async Task<IActionResult> Create(LogInCommand command,
     CancellationToken cancellationToken)
         => Ok(new Response
         {
