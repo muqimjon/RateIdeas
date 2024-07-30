@@ -1,4 +1,7 @@
-﻿namespace RateIdeas.Application.Commons.Mappers;
+﻿using RateIdeas.Application.Auths.Commands.Register;
+using RateIdeas.Application.Auths.DTOs;
+
+namespace RateIdeas.Application.Commons.Mappers;
 
 public class MappingProfile : Profile
 {
@@ -11,6 +14,8 @@ public class MappingProfile : Profile
         CreateMap<User, UserResultDto>();
         CreateMap<User, UserResponseDto>();
         CreateMap<User, UserResultForPropDto>();
+        CreateMap<RegisterCommand, UserRegistrationDto>();
+        CreateMap<UserRegistrationDto, User>();
 
         // Idea
         CreateMap<CreateIdeaCommand, Idea>();

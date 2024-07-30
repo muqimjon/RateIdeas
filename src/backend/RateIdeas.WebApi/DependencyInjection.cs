@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RateIdeas.Application.Commons.Extensions;
+using RateIdeas.WebApi.Middlewares;
 using System.Text;
 
 namespace RateIdeas.WebApi;
@@ -85,7 +86,7 @@ public static class DependencyInjection
         app.UseStaticFiles();
 
         // Exceptopn middleware     ------- Manual<Custom>
-        //app.UseMiddleware<ExceptionHandlerMiddleware>();
+        app.UseMiddleware<ExceptionHandlerMiddleware>();
 
         return app;
     }

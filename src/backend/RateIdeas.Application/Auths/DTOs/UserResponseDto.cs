@@ -1,4 +1,4 @@
-﻿namespace RateIdeas.Application.Users.DTOs;
+﻿namespace RateIdeas.Application.Auths.DTOs;
 
 public class UserResponseDto
 {

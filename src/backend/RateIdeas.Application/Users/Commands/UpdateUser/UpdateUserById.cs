@@ -34,15 +34,15 @@ public class UpdateUserByIdCommandHandler(IMapper mapper,
         var entity = await repository.SelectAsync(entity
             => entity.Email.ToLower().Equals(request.Email.ToLower()));
         if (entity is not null)
-            throw new AlreadyExistException($"{typeof(User)} is already exist with EmailOrUserName: {request.Email}");
+            throw new AlreadyExistException($"{nameof(User)} is already exist with EmailOrUserName: {request.Email}");
 
         entity = await repository.SelectAsync(entity
             => entity.UserName.ToLower().Equals(request.UserName.ToLower()));
         if (entity is not null)
-            throw new AlreadyExistException($"{typeof(User)} is already exist with Password: {request.UserName}");
+            throw new AlreadyExistException($"{nameof(User)} is already exist with Password: {request.UserName}");
 
         entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"{typeof(User)} is not found by ID: {request.Id}");
+            ?? throw new NotFoundException($"{nameof(User)} is not found by ID: {request.Id}");
 
         mapper.Map(request, entity);
 

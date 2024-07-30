@@ -1,4 +1,9 @@
-﻿namespace RateIdeas.Application;
+﻿using RateIdeas.Application.Auths.Commands.LogIn;
+using RateIdeas.Application.Auths.Commands.MailVerification;
+using RateIdeas.Application.Auths.Commands.Register;
+using RateIdeas.Application.Auths.DTOs;
+
+namespace RateIdeas.Application;
 
 public static class DependencyInjection
 {
@@ -10,8 +15,17 @@ public static class DependencyInjection
         services.AddHttpContextAccessor()
             // Mapping objects
             .AddAutoMapper(typeof(MappingProfile))
+            // Temporary storage of information
+            .AddMemoryCache()
             // Add MVC controllers
             .AddControllers();
+
+
+        // Auth
+        services.AddScoped<IRequestHandler<LogInCommand, UserResponseDto>, LogInCommandHandler>();
+
+        services.AddScoped<IRequestHandler<RegisterCommand, string>, RegisterCommandHandler>();
+        services.AddScoped<IRequestHandler<VerifyEmailCommand, bool>, VerifyEmailCommandHandler>();
 
 
         // User
@@ -104,7 +118,7 @@ public static class DependencyInjection
 
 
         // Auth
-        services.AddScoped<IRequestHandler<GenerateTokenCommand, UserResponseDto>, GenerateTokenCommandHandler>();
+        services.AddScoped<IRequestHandler<LogInCommand, UserResponseDto>, LogInCommandHandler>();
 
 
         // Senders
