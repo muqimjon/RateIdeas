@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using RateIdeas.Application.Auths.DTOs;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace RateIdeas.Application.Ideas.Commands;
+namespace RateIdeas.Application.Auths.Commands.LogIn;
 
 public record LogInCommand : IRequest<UserResponseDto>
 {
@@ -13,6 +14,7 @@ public record LogInCommand : IRequest<UserResponseDto>
         Password = command.Password;
         EmailOrUserName = command.EmailOrUserName;
     }
+
     public string EmailOrUserName { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
 }
