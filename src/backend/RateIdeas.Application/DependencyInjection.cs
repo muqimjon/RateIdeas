@@ -16,9 +16,7 @@ public static class DependencyInjection
             // Mapping objects
             .AddAutoMapper(typeof(MappingProfile))
             // Temporary storage of information
-            .AddMemoryCache()
-            // Add MVC controllers
-            .AddControllers();
+            .AddMemoryCache();
 
 
         // Auth

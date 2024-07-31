@@ -1,7 +1,9 @@
 ﻿using EcoLink.WebApi.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Nabeey.Web.Middlewares;
 using RateIdeas.Application.Commons.Extensions;
 using RateIdeas.WebApi.Middlewares;
 using System.Text;
@@ -10,7 +12,8 @@ namespace RateIdeas.WebApi;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddWebApiServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddWebApiServices(this IServiceCollection services,
+        IConfiguration configuration)
     {
         // Authentication button    ------- Manual
         services.AddSwaggerGen(setup =>
@@ -62,6 +65,12 @@ public static class DependencyInjection
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             };
+        });
+
+        // Add MVC controllers      ------- Manual( Manual( Manual( Custom )))
+        services.AddControllers(options =>
+        {
+            options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
         });
 
         return services;

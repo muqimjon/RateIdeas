@@ -397,5 +397,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# Ignoring all *.Development.json files in any directory
-/src/backend/RateIdeas.WebApi/appsettings.Development.json
+# Config files
+appsettings.json
+appsettings.Development.json

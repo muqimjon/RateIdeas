@@ -34,7 +34,8 @@ public class VerifyEmailCommandHandler(IMapper mapper,
 
             if (data.IsBlocked)
                 throw new TooManyAttemptsException(
-                    $"Too many attempts. Please try again after {data.LifeTime} times");
+                    $"Too many attempts. Please try again after " +
+                    $"{(data.LifeTime - DateTimeOffset.UtcNow).TotalMinutes} minutes");
 
             memory.Remove(data.Email);
 
