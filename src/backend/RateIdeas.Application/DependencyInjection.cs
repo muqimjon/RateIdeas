@@ -25,7 +25,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<LogInCommand, UserResponseDto>, LogInCommandHandler>();
 
         services.AddScoped<IRequestHandler<RegisterCommand, string>, RegisterCommandHandler>();
-        services.AddScoped<IRequestHandler<VerifyEmailCommand, bool>, VerifyEmailCommandHandler>();
+        services.AddScoped<IRequestHandler<VerifyEmailCommand, UserResponseDto>, VerifyEmailCommandHandler>();
 
 
         // User

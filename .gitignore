@@ -398,4 +398,4 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Ignoring all *.Development.json files in any directory
-*.Development.json
+/src/backend/RateIdeas.WebApi/appsettings.Development.json

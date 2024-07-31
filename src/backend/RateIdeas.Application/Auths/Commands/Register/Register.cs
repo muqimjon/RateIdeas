@@ -27,10 +27,10 @@ public record RegisterCommand : IRequest<string>
     public IFormFile? FormFile { get; set; }
 }
 
-public class RegisterCommandHandler(IRepository<User> repository,
+public class RegisterCommandHandler(IMapper mapper,
+    IRepository<User> repository,
     IMemoryCache memory,
-    IMediator mediator,
-    IMapper mapper) : IRequestHandler<RegisterCommand, string>
+    IMediator mediator) : IRequestHandler<RegisterCommand, string>
 {
     private readonly TimeSpan DurationTime = TimeSpan.FromMinutes(1);
     public async Task<string> Handle(RegisterCommand request,
@@ -38,7 +38,7 @@ public class RegisterCommandHandler(IRepository<User> repository,
     {
         if (memory.TryGetValue(request.Email, out _))
             throw new AlreadyExistException(
-                "Please confirm your email address before attempting to register again.");
+                "Please complete your registration by using the verification code sent to your email");
 
         var entity = await repository.SelectAsync(entity
             => entity.Email.ToLower().Equals(request.Email.ToLower()));
@@ -61,8 +61,8 @@ public class RegisterCommandHandler(IRepository<User> repository,
         await mediator.Send(new SendEmailCommand()
         {
             To = request.Email,
-            Subject = "Please Confirm Your Email",
-            Body = $"Your verification code is: {user.VerificationCode}\n" +
+            Subject = "Confirm Your Email",
+            Body = $"Your verification code is: <b>{user.VerificationCode}</b>\n" +
                    $"This code will expire in {DurationTime} minute(s). " +
                    $"Please use it within the given time to complete the registration process.",
         }, cancellationToken);
