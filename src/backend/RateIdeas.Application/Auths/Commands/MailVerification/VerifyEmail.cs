@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
+using RateIdeas.Application.Auths.Commands.LogIn;
 using RateIdeas.Application.Auths.DTOs;
 
 namespace RateIdeas.Application.Auths.Commands.MailVerification;
 
-public record VerifyEmailCommand : IRequest<bool>
+public record VerifyEmailCommand : IRequest<UserResponseDto>
 {
     public VerifyEmailCommand(VerifyEmailCommand command)
     {
@@ -18,12 +19,12 @@ public record VerifyEmailCommand : IRequest<bool>
 public class VerifyEmailCommandHandler(IMapper mapper,
     IRepository<User> repository,
     IMemoryCache memory,
-    IMediator mediator) : IRequestHandler<VerifyEmailCommand, bool>
+    IMediator mediator) : IRequestHandler<VerifyEmailCommand, UserResponseDto>
 {
     private const int MaxAttempts = 3;
     private readonly TimeSpan BlockDuration = TimeSpan.FromMinutes(5);
 
-    public async Task<bool> Handle(
+    public async Task<UserResponseDto> Handle(
         VerifyEmailCommand request,
         CancellationToken cancellationToken)
     {
@@ -33,7 +34,8 @@ public class VerifyEmailCommandHandler(IMapper mapper,
 
             if (data.IsBlocked)
                 throw new TooManyAttemptsException(
-                    "Too many attempts. Please try again later");
+                    $"Too many attempts. Please try again after " +
+                    $"{(data.LifeTime - DateTimeOffset.UtcNow).TotalMinutes} minutes");
 
             memory.Remove(data.Email);
 
@@ -94,8 +96,13 @@ public class VerifyEmailCommandHandler(IMapper mapper,
             entity.PasswordHash = SecurityHelper.Encrypt(data.Password);
 
             await repository.InsertAsync(entity);
+            await repository.SaveAsync();
 
-            return await repository.SaveAsync() > 0;
+            return await mediator.Send(new LogInCommand
+            {
+                EmailOrUserName = data.Email,
+                Password = data.Password,
+            }, cancellationToken);
         }
 
         throw new NotFoundException($"{nameof(User)} not found with Email: {request.Email}");

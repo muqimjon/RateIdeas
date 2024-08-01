@@ -16,16 +16,14 @@ public static class DependencyInjection
             // Mapping objects
             .AddAutoMapper(typeof(MappingProfile))
             // Temporary storage of information
-            .AddMemoryCache()
-            // Add MVC controllers
-            .AddControllers();
+            .AddMemoryCache();
 
 
         // Auth
         services.AddScoped<IRequestHandler<LogInCommand, UserResponseDto>, LogInCommandHandler>();
 
         services.AddScoped<IRequestHandler<RegisterCommand, string>, RegisterCommandHandler>();
-        services.AddScoped<IRequestHandler<VerifyEmailCommand, bool>, VerifyEmailCommandHandler>();
+        services.AddScoped<IRequestHandler<VerifyEmailCommand, UserResponseDto>, VerifyEmailCommandHandler>();
 
 
         // User
