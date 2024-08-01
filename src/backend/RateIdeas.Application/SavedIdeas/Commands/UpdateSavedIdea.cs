@@ -36,7 +36,6 @@ public class UpdateSavedIdeaCommandHandler(IMapper mapper,
             throw new AuthorizationException("Permission denied");
 
         mapper.Map(request, entity);
-        entity.UserId = (long)HttpContextHelper.GetUserId!;
         repository.Update(entity);
         await repository.SaveAsync();
 
