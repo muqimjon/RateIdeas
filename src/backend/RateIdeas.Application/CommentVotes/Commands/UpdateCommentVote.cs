@@ -28,12 +28,14 @@ public class UpdateCommentVoteCommandHandler(IMapper mapper,
         entity.Comment = await commentRepository.SelectAsync(i => i.Id.Equals(request.CommentId))
             ?? throw new NotFoundException($"{nameof(Idea)} is not found by ID: {request.CommentId}");
 
-        if (HttpContextHelper.ResponseHeaders is null || (entity.User = await userRepository
-            .SelectAsync(entity => entity.Id.Equals(HttpContextHelper.GetUserId ?? 0))) is null)
+        if (HttpContextHelper.ResponseHeaders is null || await userRepository
+            .SelectAsync(entity => entity.Id.Equals(HttpContextHelper.GetUserId ?? 0)) is null)
             throw new AuthenticationException("Authentication has not been completed");
 
+        if (!HttpContextHelper.GetUserId.Equals(entity.UserId))
+            throw new AuthorizationException("Permission denied");
+
         mapper.Map(request, entity);
-        entity.UserId = (long)HttpContextHelper.GetUserId!;
         repository.Update(entity);
         await repository.SaveAsync();
 
