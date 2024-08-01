@@ -5,14 +5,12 @@ public record UpdateCommentVoteCommand : IRequest<CommentVoteResultDto>
     public UpdateCommentVoteCommand(UpdateCommentVoteCommand command)
     {
         Id = command.Id;
-        UserId = command.UserId;
         IsUpvote = command.IsUpvote;
         CommentId = command.CommentId;
     }
 
     public long Id { get; set; }
     public bool IsUpvote { get; set; }
-    public long UserId { get; set; }
     public long CommentId { get; set; }
 }
 
@@ -30,11 +28,12 @@ public class UpdateCommentVoteCommandHandler(IMapper mapper,
         entity.Comment = await commentRepository.SelectAsync(i => i.Id.Equals(request.CommentId))
             ?? throw new NotFoundException($"{nameof(Idea)} is not found by ID: {request.CommentId}");
 
-        entity.User = await userRepository.SelectAsync(i => i.Id.Equals(request.UserId))
-            ?? throw new NotFoundException($"{nameof(User)} is not found by ID: {request.UserId}");
+        if (HttpContextHelper.ResponseHeaders is null || (entity.User = await userRepository
+            .SelectAsync(entity => entity.Id.Equals(HttpContextHelper.GetUserId ?? 0))) is null)
+            throw new AuthenticationException("Authentication has not been completed");
 
         mapper.Map(request, entity);
-
+        entity.UserId = (long)HttpContextHelper.GetUserId!;
         repository.Update(entity);
         await repository.SaveAsync();
 

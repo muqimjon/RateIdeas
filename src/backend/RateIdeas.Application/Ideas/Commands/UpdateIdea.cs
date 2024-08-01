@@ -57,6 +57,7 @@ public class UpdateIdeaCommandHandler(IMapper mapper,
             entity.Image = createdImage;
         }
 
+        entity.UserId = (long)HttpContextHelper.GetUserId!;
         repository.Update(entity);
         await repository.SaveAsync();
 

@@ -30,8 +30,10 @@ public class CreateIdeaCommandHandler(IMapper mapper,
             .SelectAsync(entity => entity.Id.Equals(HttpContextHelper.GetUserId ?? 0))) is null)
             throw new AuthenticationException("Authentication has not been completed");
 
-        entity.Category = await categoryRepository.SelectAsync(i => i.Id.Equals(request.CategoryId))
-            ?? throw new NotFoundException($"{nameof(Category)} is not found by ID: {request.CategoryId}");
+        entity.Category = await categoryRepository
+            .SelectAsync(i => i.Id.Equals(request.CategoryId))
+            ?? throw new NotFoundException(
+                $"{nameof(Category)} is not found by ID: {request.CategoryId}");
 
         if (request.FormFile is not null)
         {
@@ -48,6 +50,7 @@ public class CreateIdeaCommandHandler(IMapper mapper,
             entity.Image = createdImage;
         }
 
+        entity.UserId = (long)HttpContextHelper.GetUserId!;
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
 
