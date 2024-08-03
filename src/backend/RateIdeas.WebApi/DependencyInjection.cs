@@ -110,6 +110,8 @@ public static class DependencyInjection
         // Exceptopn middleware     ------- Manual<Custom>
         app.UseMiddleware<ExceptionHandlerMiddleware>();
 
+        app.UseCors("AllowAll");
+
         return app;
     }
 }
