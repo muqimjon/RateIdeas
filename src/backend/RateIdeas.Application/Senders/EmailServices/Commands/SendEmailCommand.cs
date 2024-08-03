@@ -19,6 +19,9 @@ public class SendEmailCommandHandler(IOptions<EmailConfigurations> options) : IR
 
     public async Task<bool> Handle(SendEmailCommand request, CancellationToken cancellationToken)
     {
+        if (string.IsNullOrEmpty(request.To) || !IsValidEmail(request.To))
+            throw new NotFoundException($"Invalid email");
+
         SmtpClient smtpClient = new(configs.Host)
         {
             Port = configs.Port,
@@ -38,5 +41,18 @@ public class SendEmailCommandHandler(IOptions<EmailConfigurations> options) : IR
         await smtpClient.SendMailAsync(mailMessage, cancellationToken);
 
         return true;
+    }
+
+    private static bool IsValidEmail(string email)
+    {
+        try
+        {
+            var mailAddress = new MailAddress(email);
+            return mailAddress.Address == email;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

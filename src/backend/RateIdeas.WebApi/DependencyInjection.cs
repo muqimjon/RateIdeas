@@ -15,6 +15,19 @@ public static class DependencyInjection
     public static IServiceCollection AddWebApiServices(this IServiceCollection services,
         IConfiguration configuration)
     {
+        // Allow CORS for all users
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll",
+                builder =>
+                {
+                    builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+        });
+
         // Authentication button    ------- Manual
         services.AddSwaggerGen(setup =>
         {
@@ -73,19 +86,6 @@ public static class DependencyInjection
             options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
         });
 
-        // Allow CORS for all users
-        services.AddCors(options =>
-        {
-            options.AddPolicy("AllowAll",
-                builder =>
-                {
-                    builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-                });
-        });
-
         return services;
     }
 
@@ -93,6 +93,9 @@ public static class DependencyInjection
     {
         // Avto update database     ------- Custom
         app.MigrateDatabase();
+
+        // Use CORS point           ------- Manual
+        app.UseCors("AllowAll");
 
         // Dark mode for Swagger    ------- Manual { Custom }
         app.UseSwaggerUI(c =>
@@ -109,8 +112,6 @@ public static class DependencyInjection
 
         // Exceptopn middleware     ------- Manual<Custom>
         app.UseMiddleware<ExceptionHandlerMiddleware>();
-
-        app.UseCors("AllowAll");
 
         return app;
     }
