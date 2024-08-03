@@ -8,7 +8,6 @@ public record RegisterCommand : IRequest<string>
     public RegisterCommand(RegisterCommand command)
     {
         Email = command.Email;
-        FormFile = command.FormFile;
         LastName = command.LastName;
         Password = command.Password;
         UserName = command.UserName;
@@ -24,7 +23,6 @@ public record RegisterCommand : IRequest<string>
     public string Password { get; set; } = string.Empty;
     public string ConfirmPassword { get; set; } = string.Empty;
     public DateTimeOffset DateOfBirth { get; set; }
-    public IFormFile? FormFile { get; set; }
 }
 
 public class RegisterCommandHandler(IMapper mapper,
