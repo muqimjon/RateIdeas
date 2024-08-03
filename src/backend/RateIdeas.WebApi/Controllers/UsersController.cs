@@ -38,7 +38,7 @@ public class UsersController(IMediator mediator) : BaseController
 
     [HttpPut("update-role")]
     [ProducesResponseType(typeof(UserResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Update([FromForm] UpdateRoleCommand command,
+    public async Task<IActionResult> Update(UpdateRoleCommand command,
         CancellationToken cancellationToken)
         => Ok(new Response
         {

@@ -9,7 +9,7 @@ public class AuthController(IMediator mediator) : BaseController
 {
     [HttpPost("login")]
     [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Login([FromForm] LogInCommand command,
+    public async Task<IActionResult> Login(LogInCommand command,
     CancellationToken cancellationToken)
         => Ok(new Response
         {
@@ -18,7 +18,7 @@ public class AuthController(IMediator mediator) : BaseController
 
     [HttpPost("sign-up")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-    public async Task<IActionResult> SignUp([FromForm] RegisterCommand command,
+    public async Task<IActionResult> SignUp(RegisterCommand command,
     CancellationToken cancellationToken)
         => Ok(new Response
         {
@@ -27,7 +27,7 @@ public class AuthController(IMediator mediator) : BaseController
 
     [HttpPost("verify-email")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Verify([FromForm] VerifyEmailCommand command,
+    public async Task<IActionResult> Verify(VerifyEmailCommand command,
     CancellationToken cancellationToken)
         => Ok(new Response
         {
