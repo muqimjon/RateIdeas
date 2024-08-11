@@ -1,4 +1,6 @@
-﻿namespace RateIdeas.Application.Ideas.Queries;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace RateIdeas.Application.Ideas.Queries;
 
 public record GetIdeasQuery : IRequest<IEnumerable<IdeaResultDto>>
 {
@@ -13,8 +15,9 @@ public class GetIdeasQueryHandler(IMapper mapper,
         if (HttpContextHelper.ResponseHeaders is null || HttpContextHelper.GetUserId is null)
             throw new AuthenticationException("Authentication has not been completed");
 
-        return mapper.Map<IEnumerable<IdeaResultDto>>(await repository.SelectAsync(i
-            => i.UserId.Equals(HttpContextHelper.GetUserId ?? 0),
-            includes: ["User.Image", "Comments", "Category.Image", "Votes", "Image"]));
+        return mapper.Map<IEnumerable<IdeaResultDto>>(
+           await repository.SelectAll(i => i.UserId.Equals(HttpContextHelper.GetUserId ?? 0),
+            includes: ["User.Image", "Comments", "Category.Image", "Votes", "Image"])
+            .ToListAsync(cancellationToken: cancellationToken));
     }
 }

@@ -24,7 +24,7 @@ public record RegisterCommand : IRequest<string>
     public string Password { get; set; } = string.Empty;
     public string ConfirmPassword { get; set; } = string.Empty;
     public DateTimeOffset DateOfBirth { get; set; }
-    public IFormFile FormFile { get; set; } = default!;
+    public IFormFile? FormFile { get; set; } = default!;
 }
 
 public class RegisterCommandHandler(IMapper mapper,

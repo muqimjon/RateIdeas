@@ -1,4 +1,6 @@
-﻿namespace RateIdeas.Application.Ideas.Queries;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace RateIdeas.Application.Ideas.Queries;
 
 public record GetIdeasByUserIdQuery : IRequest<IEnumerable<IdeaResultDto>>
 {
@@ -16,7 +18,8 @@ public class GetIdeasByUserIdQueryHandler(IRepository<Idea> repository, IMapper 
     public async Task<IEnumerable<IdeaResultDto>> Handle(GetIdeasByUserIdQuery request,
         CancellationToken cancellationToken)
         => mapper.Map<IEnumerable<IdeaResultDto>>(
-            await repository.SelectAsync(i => i.Id.Equals(request.Id),
-            includes: ["User.Image", "Comments", "Category.Image", "Votes", "Image"]))
+           await repository.SelectAll(i => i.UserId.Equals(request.Id),
+            includes: ["User.Image", "Comments", "Category.Image", "Votes", "Image"])
+            .ToListAsync(cancellationToken: cancellationToken))
             ?? throw new NotFoundException($"{nameof(Idea)} is not found with ID: {request.Id}");
 }

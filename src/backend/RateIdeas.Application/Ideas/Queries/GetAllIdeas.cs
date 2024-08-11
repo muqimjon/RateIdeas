@@ -19,7 +19,7 @@ public class GetAllIdeasQueryHandler(IMapper mapper, IRepository<Idea> repositor
         CancellationToken cancellationToken)
     {
         var entities = (await Task.Run(() => repository.SelectAll(
-            includes: ["User.Image", "Comments", "Category.Image", "Votes", "Image"])))
+            includes: ["User", "Comments", "Category", "Votes", "Image"])))
             .ToPagedList(request.Size, request.Index)
             .ToList();
 
