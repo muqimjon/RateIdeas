@@ -27,30 +27,27 @@ public class UpdateUserCommandHandler(IMapper mapper,
     IMediator mediator) :
     IRequestHandler<UpdateUserCommand, UserResultDto>
 {
-    public async Task<UserResultDto> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<UserResultDto> Handle(
+        UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity
-            => entity.Email.ToLower().Equals(request.Email.ToLower()));
-        if (entity is not null)
-            throw new AlreadyExistException($"{nameof(User)} is already exist with EmailOrUserName: {request.Email}");
-
-        entity = await repository.SelectAsync(entity
-            => entity.UserName.ToLower().Equals(request.UserName.ToLower()));
-        if (entity is not null)
-            throw new AlreadyExistException($"{nameof(User)} is already exist with Password: {request.UserName}");
-
-        if (HttpContextHelper.ResponseHeaders is null || (entity = await repository
-            .SelectAsync(entity => entity.Id.Equals(HttpContextHelper.GetUserId ?? 0))) is null)
+        if (HttpContextHelper.ResponseHeaders is null || HttpContextHelper.GetUserId is null)
             throw new AuthenticationException("Authentication has not been completed");
+
+        var entity = await repository.SelectAsync(entity
+            => entity.Id.Equals(HttpContextHelper.GetUserId))
+            ?? throw new NotFoundException(
+                $"{nameof(User)} is not found with ID: {HttpContextHelper.GetUserId}");
 
         mapper.Map(request, entity);
 
         if (request.FormFile is not null)
         {
             if (entity.Image is not null)
-                await mediator.Send(new DeleteAssetCommand(HttpContextHelper.GetUserId), cancellationToken);
+                await mediator.Send(new DeleteAssetCommand(entity.ImageId), cancellationToken);
 
-            var uploadedImage = await mediator.Send(new UploadAssetCommand(request.FormFile), cancellationToken);
+            var uploadedImage = await mediator.Send(
+                new UploadAssetCommand(request.FormFile), cancellationToken);
+
             var createdImage = new Asset
             {
                 FileName = uploadedImage.FileName,
@@ -60,8 +57,6 @@ public class UpdateUserCommandHandler(IMapper mapper,
             entity.ImageId = uploadedImage.Id;
             entity.Image = createdImage;
         }
-
-        entity.DateOfBirth = TimeHelper.ToLocalize(entity.DateOfBirth);
 
         repository.Update(entity);
         await repository.SaveAsync();

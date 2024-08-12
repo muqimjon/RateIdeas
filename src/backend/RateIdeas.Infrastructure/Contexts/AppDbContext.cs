@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RateIdeas.Application.Commons.Constants;
 using RateIdeas.Domain.Entities;
 using RateIdeas.Domain.Entities.Comments;
 using RateIdeas.Domain.Entities.Ideas;
@@ -17,6 +18,19 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<CommentVote> CommentVotes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Vaqtni UTC'ga konvertatsiya qilish uchun konfiguratsiya
+        modelBuilder.Entity<User>()
+        .Property(u => u.DateOfBirth)
+        .HasConversion(
+            v => v.ToOffset(TimeSpan.Zero),
+            v => new DateTimeOffset(v.DateTime, TimeSpan.FromHours(TimeConstants.UTC)));
+
+        // Relationships
+        ConfigureRelationships(modelBuilder);
+    }
+
+    private static void ConfigureRelationships(ModelBuilder modelBuilder)
     {
         // CommentVote
         modelBuilder.Entity<CommentVote>()

@@ -15,7 +15,6 @@ global using RateIdeas.Application.Comments.Queries;
 global using RateIdeas.Application.CommentVotes.Commands;
 global using RateIdeas.Application.CommentVotes.DTOs;
 global using RateIdeas.Application.CommentVotes.Queries;
-global using RateIdeas.Application.Commons.Constants;
 global using RateIdeas.Application.Commons.Exceptions;
 global using RateIdeas.Application.Commons.Extensions;
 global using RateIdeas.Application.Commons.Helpers;
