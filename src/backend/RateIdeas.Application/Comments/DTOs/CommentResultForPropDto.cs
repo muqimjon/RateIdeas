@@ -1,6 +1,6 @@
 ﻿namespace RateIdeas.Application.Comments.DTOs;
 
-public class ComentResultForPropDto
+public class CommentResultForPropDto
 {
     public long Id { get; set; }
     public string Content { get; set; } = string.Empty;

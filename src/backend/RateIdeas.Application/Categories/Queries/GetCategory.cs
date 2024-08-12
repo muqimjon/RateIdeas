@@ -21,7 +21,6 @@ public class GetCategoryQueryHandler(IRepository<Category> repository, IMapper m
                     "Ideas.User.Image",
                     "Ideas.Comments.User.Image",
                     "Ideas.Comments.Votes.User.Image",
-                    "Ideas.Category.Image",
                     "Ideas.Votes.User.Image",
                     "Ideas.Image"
                     ]

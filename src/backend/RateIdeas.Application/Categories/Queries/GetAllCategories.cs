@@ -26,7 +26,6 @@ public class GetAllCategoriesQueryHandler(IMapper mapper, IRepository<Category> 
                 "Ideas.User.Image",
                 "Ideas.Comments.User.Image",
                 "Ideas.Comments.Votes.User.Image",
-                "Ideas.Category.Image",
                 "Ideas.Votes.User.Image",
                 "Ideas.Image"
                 ])

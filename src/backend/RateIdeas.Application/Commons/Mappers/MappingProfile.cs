@@ -43,6 +43,7 @@ public class MappingProfile : Profile
         CreateMap<CreateCommentCommand, Comment>();
         CreateMap<UpdateCommentCommand, Comment>();
         CreateMap<Comment, CommentResultDto>();
+        CreateMap<Comment, CommentResultForPropDto>();
 
         // Comment vote
         CreateMap<CreateCommentVoteCommand, CommentVote>();
