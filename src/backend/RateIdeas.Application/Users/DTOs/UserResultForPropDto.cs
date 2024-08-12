@@ -10,5 +10,6 @@ public class UserResultForPropDto
     public Roles Role { get; set; }
     public DateTimeOffset DateOfBirth { get; set; }
 
+    public long ImageId { get; set; }
     public AssetResultDto Image { get; set; } = default!;
 }
