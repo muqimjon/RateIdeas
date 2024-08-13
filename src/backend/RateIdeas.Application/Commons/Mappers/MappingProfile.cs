@@ -11,11 +11,11 @@ public class MappingProfile : Profile
         CreateMap<CreateUserCommand, User>();
         CreateMap<UpdateUserCommand, User>();
         CreateMap<UpdateUserByIdCommand, User>();
+        CreateMap<UserRegistrationDto, User>();
         CreateMap<User, UserResultDto>();
         CreateMap<User, UserResponseDto>();
         CreateMap<User, UserResultForPropDto>();
         CreateMap<RegisterCommand, UserRegistrationDto>();
-        CreateMap<UserRegistrationDto, User>();
 
         // Idea
         CreateMap<CreateIdeaCommand, Idea>();
@@ -35,8 +35,7 @@ public class MappingProfile : Profile
         CreateMap<SavedIdea, SavedIdeaResultDto>();
 
         // Idea vote
-        CreateMap<CreateIdeaVoteCommand, IdeaVote>();
-        CreateMap<UpdateIdeaVoteCommand, IdeaVote>();
+        CreateMap<ToggleIdeaVoteCommand, IdeaVote>();
         CreateMap<IdeaVote, IdeaVoteResultDto>();
 
         // Comment

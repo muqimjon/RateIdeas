@@ -53,6 +53,8 @@ public static class DependencyInjection
 
 
         // Idea
+        services.AddScoped<IRequestHandler<ToggleIdeaVoteCommand, bool>, ToggleIdeaVoteCommandHandler>();
+
         services.AddScoped<IRequestHandler<CreateIdeaCommand, IdeaResultDto>, CreateIdeaCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateIdeaCommand, IdeaResultDto>, UpdateIdeaCommandHandler>();
@@ -77,12 +79,6 @@ public static class DependencyInjection
 
 
         // Idea vote
-        services.AddScoped<IRequestHandler<CreateIdeaVoteCommand, IdeaVoteResultDto>, CreateIdeaVoteCommandHandler>();
-
-        services.AddScoped<IRequestHandler<UpdateIdeaVoteCommand, IdeaVoteResultDto>, UpdateIdeaVoteCommandHandler>();
-
-        services.AddScoped<IRequestHandler<DeleteIdeaVoteCommand, bool>, DeleteIdeaVoteCommandHandler>();
-
         services.AddScoped<IRequestHandler<GetIdeaVoteQuery, IdeaVoteResultDto>, GetIdeaVoteQueryHandler>();
         services.AddScoped<IRequestHandler<GetAllIdeaVotesQuery, IEnumerable<IdeaVoteResultDto>>, GetAllIdeaVotesQueryHandler>();
 
