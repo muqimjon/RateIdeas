@@ -44,8 +44,8 @@ jobs:
         echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
     - name: Build and push
       run: |
-        docker build --tag $DOCKER_USERNAME/$PROJECT-api --file ./src/backend/RateIdeas.WebApi/Dockerfile .
-        docker push $DOCKER_USERNAME/$PROJECT-api
+        docker build --tag $DOCKER_USERNAME/$PROJECT --file ./src/backend/RateIdeas.WebApi/Dockerfile .
+        docker push $DOCKER_USERNAME/$PROJECT
 
   deploy:
     name: Deploy
