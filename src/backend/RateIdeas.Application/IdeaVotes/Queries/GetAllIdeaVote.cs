@@ -1,4 +1,6 @@
-﻿namespace RateIdeas.Application.IdeaVotes.Queries;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace RateIdeas.Application.IdeaVotes.Queries;
 
 public record GetAllIdeaVotesQuery : IRequest<IEnumerable<IdeaVoteResultDto>>
 {
@@ -18,10 +20,12 @@ public class GetAllIdeaVotesQueryHandler(IMapper mapper, IRepository<IdeaVote> r
     public async Task<IEnumerable<IdeaVoteResultDto>> Handle(GetAllIdeaVotesQuery request,
         CancellationToken cancellationToken)
     {
-        var entities = (await Task.Run(() => repository.SelectAll(
-            includes: ["User.Image"])))
+        var entities = await repository.SelectAll(
+            includes: [
+                "User.Image"
+                ])
             .ToPagedList(request.Size, request.Index)
-            .ToList();
+            .ToListAsync(cancellationToken: cancellationToken);
 
         return mapper.Map<IEnumerable<IdeaVoteResultDto>>(entities);
     }
