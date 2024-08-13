@@ -1,7 +1,4 @@
-﻿using RateIdeas.Application.Auths.Commands.Register;
-using RateIdeas.Application.Auths.DTOs;
-
-namespace RateIdeas.Application.Commons.Mappers;
+﻿namespace RateIdeas.Application.Commons.Mappers;
 
 public class MappingProfile : Profile
 {
@@ -44,8 +41,7 @@ public class MappingProfile : Profile
         CreateMap<Comment, CommentResultDto>();
 
         // Comment vote
-        CreateMap<CreateCommentVoteCommand, CommentVote>();
-        CreateMap<UpdateCommentVoteCommand, CommentVote>();
+        CreateMap<ToggleCommentVoteCommand, CommentVote>();
         CreateMap<CommentVote, CommentVoteResultDto>();
 
         // Asset

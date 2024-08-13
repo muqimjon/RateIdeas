@@ -1,7 +1,5 @@
 ﻿using RateIdeas.Application.Auths.Commands.LogIn;
 using RateIdeas.Application.Auths.Commands.MailVerification;
-using RateIdeas.Application.Auths.Commands.Register;
-using RateIdeas.Application.Auths.DTOs;
 
 namespace RateIdeas.Application;
 
@@ -95,11 +93,7 @@ public static class DependencyInjection
 
 
         // Comment vote
-        services.AddScoped<IRequestHandler<CreateCommentVoteCommand, CommentVoteResultDto>, CreateCommentVoteCommandHandler>();
-
-        services.AddScoped<IRequestHandler<UpdateCommentVoteCommand, CommentVoteResultDto>, UpdateCommentVoteCommandHandler>();
-
-        services.AddScoped<IRequestHandler<DeleteCommentVoteCommand, bool>, DeleteCommentVoteCommandHandler>();
+        services.AddScoped<IRequestHandler<ToggleIdeaVoteCommand, bool>, ToggleIdeaVoteCommandHandler>();
 
         services.AddScoped<IRequestHandler<GetCommentVoteQuery, CommentVoteResultDto>, GetCommentVoteQueryHandler>();
         services.AddScoped<IRequestHandler<GetAllCommentVotesQuery, IEnumerable<CommentVoteResultDto>>, GetAllCommentVotesQueryHandler>();

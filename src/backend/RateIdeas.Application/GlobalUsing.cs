@@ -6,6 +6,8 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 global using RateIdeas.Application.Assets.Commands;
 global using RateIdeas.Application.Assets.DTOs;
+global using RateIdeas.Application.Auths.Commands.Register;
+global using RateIdeas.Application.Auths.DTOs;
 global using RateIdeas.Application.Categories.Commands;
 global using RateIdeas.Application.Categories.DTOs;
 global using RateIdeas.Application.Categories.Queries;

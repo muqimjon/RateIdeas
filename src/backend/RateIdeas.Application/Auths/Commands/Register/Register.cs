@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using RateIdeas.Application.Auths.DTOs;
 
 namespace RateIdeas.Application.Auths.Commands.Register;
 

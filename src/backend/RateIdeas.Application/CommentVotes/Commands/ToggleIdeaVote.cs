@@ -1,27 +1,27 @@
-﻿namespace RateIdeas.Application.IdeaVotes.Commands;
+﻿namespace RateIdeas.Application.CommentVotes.Commands;
 
-public record ToggleIdeaVoteCommand : IRequest<bool>
+public record ToggleCommentVoteCommand : IRequest<bool>
 {
-    public ToggleIdeaVoteCommand(ToggleIdeaVoteCommand command)
+    public ToggleCommentVoteCommand(ToggleCommentVoteCommand command)
     {
         IsUpvote = command.IsUpvote;
-        IdeaId = command.IdeaId;
+        CommentId = command.CommentId;
     }
 
     public bool IsUpvote { get; set; }
-    public long IdeaId { get; set; }
+    public long CommentId { get; set; }
 }
 
-public class ToggleIdeaVoteCommandHandler(IMapper mapper,
-    IRepository<IdeaVote> repository,
-    IRepository<Idea> ideaRepository,
+public class ToggleCommentVoteCommandHandler(IMapper mapper,
+    IRepository<CommentVote> repository,
+    IRepository<Comment> ideaRepository,
     IRepository<User> userRepository)
-    : IRequestHandler<ToggleIdeaVoteCommand, bool>
+    : IRequestHandler<ToggleCommentVoteCommand, bool>
 {
     public async Task<bool> Handle(
-        ToggleIdeaVoteCommand request, CancellationToken cancellationToken)
+        ToggleCommentVoteCommand request, CancellationToken cancellationToken)
     {
-        var entity = mapper.Map<IdeaVote>(request);
+        var entity = mapper.Map<CommentVote>(request);
 
         if (HttpContextHelper.ResponseHeaders is null || (entity.User = await userRepository
             .SelectAsync(entity => entity.Id.Equals(HttpContextHelper.GetUserId ?? 0))) is null)
@@ -29,17 +29,17 @@ public class ToggleIdeaVoteCommandHandler(IMapper mapper,
 
         entity.UserId = entity.User.Id;
 
-        entity.Idea = await ideaRepository.SelectAsync(entity => entity.Id.Equals(request.IdeaId))
+        entity.Comment = await ideaRepository.SelectAsync(entity => entity.Id.Equals(request.CommentId))
             ?? throw new NotFoundException(
-                $"{nameof(Idea)} is not found exception with ID: {request.IdeaId}");
+                $"{nameof(Comment)} is not found exception with ID: {request.CommentId}");
 
         var existVote = await repository.SelectAsync(item
             => item.UserId.Equals(entity.UserId)
-            && item.IdeaId.Equals(entity.IdeaId));
+            && item.CommentId.Equals(entity.CommentId));
 
         if (existVote is null)
             await repository.InsertAsync(entity);
-        else if (existVote.IdeaId.Equals(entity.IdeaId)
+        else if (existVote.CommentId.Equals(entity.CommentId)
             && existVote.IsUpvote.Equals(entity.IsUpvote))
             repository.Delete(existVote);
         else
