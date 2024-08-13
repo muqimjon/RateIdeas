@@ -9,10 +9,10 @@ public class UserResultDto
     public string Email { get; set; } = string.Empty;
     public Roles Role { get; set; }
     public DateTimeOffset DateOfBirth { get; set; }
-    
+
     public long ImageId { get; set; }
     public AssetResultDto Image { get; set; } = default!;
-    
+
     public ICollection<IdeaResultForPropDto> Ideas { get; set; } = default!;
     public ICollection<SavedIdeaResultDto> SavedIdeas { get; set; } = default!;
 }
