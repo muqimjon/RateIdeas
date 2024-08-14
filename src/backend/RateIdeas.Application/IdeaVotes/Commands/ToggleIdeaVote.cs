@@ -39,8 +39,7 @@ public class ToggleIdeaVoteCommandHandler(IMapper mapper,
 
         if (existVote is null)
             await repository.InsertAsync(entity);
-        else if (existVote.IdeaId.Equals(entity.IdeaId)
-            && existVote.IsUpvote.Equals(entity.IsUpvote))
+        else if (existVote.IsUpvote.Equals(entity.IsUpvote))
             repository.Delete(existVote);
         else
         {

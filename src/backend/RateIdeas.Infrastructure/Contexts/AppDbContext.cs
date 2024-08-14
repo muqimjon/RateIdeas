@@ -19,15 +19,18 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Vaqtni UTC'ga konvertatsiya qilish uchun konfiguratsiya
-        modelBuilder.Entity<User>()
-        .Property(u => u.DateOfBirth)
-        .HasConversion(
-            v => v.ToOffset(TimeSpan.Zero),
-            v => new DateTimeOffset(v.DateTime, TimeSpan.FromHours(TimeConstants.UTC)));
-
-        // Relationships
+        ConfigureValueConversions(modelBuilder);
         ConfigureRelationships(modelBuilder);
+    }
+
+    private static void ConfigureValueConversions(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>()
+            .Property(u => u.DateOfBirth)
+            .HasConversion(
+                v => v.ToOffset(TimeSpan.Zero),
+                v => new DateTimeOffset(v.DateTime,
+                TimeSpan.FromHours(TimeConstants.UTC)));
     }
 
     private static void ConfigureRelationships(ModelBuilder modelBuilder)

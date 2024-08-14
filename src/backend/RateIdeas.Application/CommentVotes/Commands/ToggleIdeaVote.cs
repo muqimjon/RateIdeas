@@ -39,8 +39,7 @@ public class ToggleCommentVoteCommandHandler(IMapper mapper,
 
         if (existVote is null)
             await repository.InsertAsync(entity);
-        else if (existVote.CommentId.Equals(entity.CommentId)
-            && existVote.IsUpvote.Equals(entity.IsUpvote))
+        else if (existVote.IsUpvote.Equals(entity.IsUpvote))
             repository.Delete(existVote);
         else
         {
