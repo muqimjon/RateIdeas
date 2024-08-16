@@ -1,6 +1,6 @@
 ﻿namespace RateIdeas.Application.CommentVotes.Commands;
 
-public record ToggleCommentVoteCommand : IRequest<bool>
+public record ToggleCommentVoteCommand : IRequest<CommentVoteResultDto>
 {
     public ToggleCommentVoteCommand(ToggleCommentVoteCommand command)
     {
@@ -16,9 +16,9 @@ public class ToggleCommentVoteCommandHandler(IMapper mapper,
     IRepository<CommentVote> repository,
     IRepository<Comment> ideaRepository,
     IRepository<User> userRepository)
-    : IRequestHandler<ToggleCommentVoteCommand, bool>
+    : IRequestHandler<ToggleCommentVoteCommand, CommentVoteResultDto>
 {
-    public async Task<bool> Handle(
+    public async Task<CommentVoteResultDto> Handle(
         ToggleCommentVoteCommand request, CancellationToken cancellationToken)
     {
         var entity = mapper.Map<CommentVote>(request);
@@ -38,15 +38,21 @@ public class ToggleCommentVoteCommandHandler(IMapper mapper,
             && item.CommentId.Equals(entity.CommentId));
 
         if (existVote is null)
-            await repository.InsertAsync(entity);
-        else if (existVote.IsUpvote.Equals(entity.IsUpvote))
-            repository.Delete(existVote);
-        else
         {
-            existVote.IsUpvote = request.IsUpvote;
-            repository.Update(existVote);
+            await repository.InsertAsync(entity);
+            await repository.SaveAsync();
+            return mapper.Map<CommentVoteResultDto>(entity);
+        }
+        else if (existVote.IsUpvote.Equals(entity.IsUpvote))
+        {
+            repository.Delete(existVote);
+            await repository.SaveAsync();
+            return mapper.Map<CommentVoteResultDto>(default);
         }
 
-        return await repository.SaveAsync() > 0;
+        mapper.Map(request, existVote);
+        repository.Update(existVote);
+        await repository.SaveAsync();
+        return mapper.Map<CommentVoteResultDto>(existVote);
     }
 }
