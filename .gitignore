@@ -398,5 +398,4 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Config files
-src\backend\RateIdeas.WebApi\appsettings.json
-src\backend\RateIdeas.WebApi\appsettings.Development.json
+appsettings.Development.json
