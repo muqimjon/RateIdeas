@@ -6,30 +6,13 @@ namespace RateIdeas.WebApi.Controllers.Comments;
 
 public class CommentVotesController(IMediator mediator) : BaseController
 {
-    [HttpPost("create")]
+    [HttpPost("toggle-comment-vote")]
     [ProducesResponseType(typeof(CommentVoteResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(CreateCommentVoteCommand command,
+    public async Task<IActionResult> Create(ToggleCommentVoteCommand command,
         CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new CreateCommentVoteCommand(command), cancellationToken)
-        });
-
-    [HttpPut("update")]
-    [ProducesResponseType(typeof(CommentVoteResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Update(UpdateCommentVoteCommand command,
-        CancellationToken cancellationToken)
-        => Ok(new Response
-        {
-            Data = await mediator.Send(new UpdateCommentVoteCommand(command), cancellationToken)
-        });
-
-    [HttpDelete("delete/{id:long}")]
-    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Delete(long id, CancellationToken cancellationToken)
-        => Ok(new Response
-        {
-            Data = await mediator.Send(new DeleteCommentVoteCommand(id), cancellationToken)
+            Data = await mediator.Send(new ToggleCommentVoteCommand(command), cancellationToken)
         });
 
     [HttpGet("get/{savedIdeaId:long}")]

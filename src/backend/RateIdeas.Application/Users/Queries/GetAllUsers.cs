@@ -1,4 +1,6 @@
-﻿namespace RateIdeas.Application.Users.Queries;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace RateIdeas.Application.Users.Queries;
 
 public record GetAllUsersQuery : IRequest<IEnumerable<UserResultDto>>
 {
@@ -18,10 +20,18 @@ public class GetAllUsersQueryHandler(IMapper mapper, IRepository<User> repositor
     public async Task<IEnumerable<UserResultDto>> Handle(GetAllUsersQuery request,
         CancellationToken cancellationToken)
     {
-        var entities = (await Task.Run(() => repository.SelectAll(
-            includes: ["Image", "SavedIdeas", "Ideas.Category.Image", "Ideas.Image"])))
+        var entities = await repository.SelectAll(
+            includes: [
+                "Image",
+                "Ideas.Image",
+                "SavedIdeas.Idea",
+                "Ideas.Category.Image",
+                "Ideas.Votes.User.Image",
+                "Ideas.Comments.User.Image",
+                "Ideas.Comments.Votes.User.Image",
+                ])
             .ToPagedList(request.Size, request.Index)
-            .ToList();
+            .ToListAsync(cancellationToken: cancellationToken);
 
         return mapper.Map<IEnumerable<UserResultDto>>(entities);
     }

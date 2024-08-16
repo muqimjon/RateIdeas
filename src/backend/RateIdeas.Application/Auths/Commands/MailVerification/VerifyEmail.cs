@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using RateIdeas.Application.Auths.Commands.LogIn;
-using RateIdeas.Application.Auths.DTOs;
 
 namespace RateIdeas.Application.Auths.Commands.MailVerification;
 

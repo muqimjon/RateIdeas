@@ -14,8 +14,15 @@ public class GetIdeaQueryHandler(IRepository<Idea> repository, IMapper mapper)
     : IRequestHandler<GetIdeaQuery, IdeaResultDto>
 {
     public async Task<IdeaResultDto> Handle(GetIdeaQuery request, CancellationToken cancellationToken)
-        => mapper.Map<IdeaResultDto>(
-            await repository.SelectAsync(i => i.Id.Equals(request.Id),
-            includes: ["User.Image", "Comments", "Category.Image", "Votes", "Image"]))
-            ?? throw new NotFoundException($"{nameof(Idea)} is not found with ID: {request.Id}");
+        => mapper.Map<IdeaResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id),
+            includes: [
+                "User.Image",
+                "Comments.User.Image",
+                "Comments.Votes.User.Image",
+                "Category.Image",
+                "Votes.User.Image",
+                "Image"
+                ]
+            ))
+        ?? throw new NotFoundException($"{nameof(Idea)} is not found with ID: {request.Id}");
 }

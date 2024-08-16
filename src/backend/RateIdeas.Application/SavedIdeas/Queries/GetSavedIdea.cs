@@ -16,6 +16,15 @@ public class GetSavedIdeaQueryHandler(IMapper mapper, IRepository<SavedIdea> rep
     public async Task<SavedIdeaResultDto> Handle(GetSavedIdeaQuery request,
         CancellationToken cancellationToken)
         => mapper.Map<SavedIdeaResultDto>(await repository.SelectAsync(i
-            => i.Id.Equals(request.Id), includes: ["Idea.Category.Image"]))
-            ?? throw new NotFoundException($"{nameof(SavedIdea)} is not found with ID: {request.Id}");
+            => i.Id.Equals(request.Id),
+            includes: [
+                "Idea.Image",
+                "Idea.User.Image",
+                "Idea.Category.Image",
+                "Idea.Votes.User.Image",
+                "Idea.Comments.User.Image",
+                "Idea.Comments.Votes.User.Image",
+                ])
+            )
+        ?? throw new NotFoundException($"{nameof(SavedIdea)} is not found with ID: {request.Id}");
 }

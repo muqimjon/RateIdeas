@@ -15,6 +15,16 @@ public class GetCategoryQueryHandler(IRepository<Category> repository, IMapper m
 {
     public async Task<CategoryResultDto> Handle(GetCategoryQuery request, CancellationToken cancellationToken)
         => mapper.Map<CategoryResultDto>(
-            await repository.SelectAsync(i => i.Id.Equals(request.Id), includes: ["Ideas.User.Image", "Image"]))
-            ?? throw new NotFoundException($"{nameof(Category)} is not found with ID: {request.Id}");
+            await repository.SelectAsync(i => i.Id.Equals(request.Id),
+                includes: [
+                    "Image",
+                    "Ideas.User.Image",
+                    "Ideas.Comments.User.Image",
+                    "Ideas.Comments.Votes.User.Image",
+                    "Ideas.Votes.User.Image",
+                    "Ideas.Image"
+                    ]
+                )
+            )
+        ?? throw new NotFoundException($"{nameof(Category)} is not found with ID: {request.Id}");
 }

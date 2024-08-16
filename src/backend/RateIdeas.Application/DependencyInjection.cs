@@ -1,7 +1,5 @@
 ﻿using RateIdeas.Application.Auths.Commands.LogIn;
 using RateIdeas.Application.Auths.Commands.MailVerification;
-using RateIdeas.Application.Auths.Commands.Register;
-using RateIdeas.Application.Auths.DTOs;
 
 namespace RateIdeas.Application;
 
@@ -53,6 +51,8 @@ public static class DependencyInjection
 
 
         // Idea
+        services.AddScoped<IRequestHandler<ToggleIdeaVoteCommand, IdeaVoteResultDto>, ToggleIdeaVoteCommandHandler>();
+
         services.AddScoped<IRequestHandler<CreateIdeaCommand, IdeaResultDto>, CreateIdeaCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateIdeaCommand, IdeaResultDto>, UpdateIdeaCommandHandler>();
@@ -77,12 +77,6 @@ public static class DependencyInjection
 
 
         // Idea vote
-        services.AddScoped<IRequestHandler<CreateIdeaVoteCommand, IdeaVoteResultDto>, CreateIdeaVoteCommandHandler>();
-
-        services.AddScoped<IRequestHandler<UpdateIdeaVoteCommand, IdeaVoteResultDto>, UpdateIdeaVoteCommandHandler>();
-
-        services.AddScoped<IRequestHandler<DeleteIdeaVoteCommand, bool>, DeleteIdeaVoteCommandHandler>();
-
         services.AddScoped<IRequestHandler<GetIdeaVoteQuery, IdeaVoteResultDto>, GetIdeaVoteQueryHandler>();
         services.AddScoped<IRequestHandler<GetAllIdeaVotesQuery, IEnumerable<IdeaVoteResultDto>>, GetAllIdeaVotesQueryHandler>();
 
@@ -99,11 +93,7 @@ public static class DependencyInjection
 
 
         // Comment vote
-        services.AddScoped<IRequestHandler<CreateCommentVoteCommand, CommentVoteResultDto>, CreateCommentVoteCommandHandler>();
-
-        services.AddScoped<IRequestHandler<UpdateCommentVoteCommand, CommentVoteResultDto>, UpdateCommentVoteCommandHandler>();
-
-        services.AddScoped<IRequestHandler<DeleteCommentVoteCommand, bool>, DeleteCommentVoteCommandHandler>();
+        services.AddScoped<IRequestHandler<ToggleCommentVoteCommand, CommentVoteResultDto>, ToggleCommentVoteCommandHandler>();
 
         services.AddScoped<IRequestHandler<GetCommentVoteQuery, CommentVoteResultDto>, GetCommentVoteQueryHandler>();
         services.AddScoped<IRequestHandler<GetAllCommentVotesQuery, IEnumerable<CommentVoteResultDto>>, GetAllCommentVotesQueryHandler>();

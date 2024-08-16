@@ -1,4 +1,6 @@
-﻿namespace RateIdeas.Application.CommentVotes.Queries;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace RateIdeas.Application.CommentVotes.Queries;
 
 public record GetAllCommentVotesQuery : IRequest<IEnumerable<CommentVoteResultDto>>
 {
@@ -18,9 +20,12 @@ public class GetAllCommentVotesQueryHandler(IMapper mapper, IRepository<CommentV
     public async Task<IEnumerable<CommentVoteResultDto>> Handle(GetAllCommentVotesQuery request,
         CancellationToken cancellationToken)
     {
-        var entities = (await Task.Run(() => repository.SelectAll(includes: ["User.Image"])))
+        var entities = await repository.SelectAll(
+            includes: [
+                "User.Image",
+                ])
             .ToPagedList(request.Size, request.Index)
-            .ToList();
+            .ToListAsync(cancellationToken: cancellationToken);
 
         return mapper.Map<IEnumerable<CommentVoteResultDto>>(entities);
     }

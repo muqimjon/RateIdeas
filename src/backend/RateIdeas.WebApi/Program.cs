@@ -1,4 +1,6 @@
+using EcoLink.WebApi.Extensions;
 using RateIdeas.Application;
+using RateIdeas.Application.Commons.Extensions;
 using RateIdeas.Infrastructure;
 using RateIdeas.WebApi;
 
@@ -19,8 +21,10 @@ builder.Services.AddWebApiServices(builder.Configuration);
 
 var app = builder.Build();
 
-//                          ------- Custom
+// Useing services          ------- Custom
+app.MigrateDatabase();
 app.AddCustomizationFeatures();
+app.InitAccessor();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
