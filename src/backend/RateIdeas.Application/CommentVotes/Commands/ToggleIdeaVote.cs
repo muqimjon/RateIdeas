@@ -24,7 +24,11 @@ public class ToggleCommentVoteCommandHandler(IMapper mapper,
         var entity = mapper.Map<CommentVote>(request);
 
         if (HttpContextHelper.ResponseHeaders is null || (entity.User = await userRepository
-            .SelectAsync(entity => entity.Id.Equals(HttpContextHelper.GetUserId ?? 0))) is null)
+            .SelectAsync(entity => entity.Id.Equals(HttpContextHelper.GetUserId ?? 0),
+            includes: [
+                "Image"
+                ])
+            ) is null)
             throw new AuthenticationException("Authentication has not been completed");
 
         entity.UserId = entity.User.Id;
