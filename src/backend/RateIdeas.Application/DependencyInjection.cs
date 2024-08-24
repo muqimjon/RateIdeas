@@ -63,6 +63,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetIdeasQuery, IEnumerable<IdeaResultDto>>, GetIdeasQueryHandler>();
         services.AddScoped<IRequestHandler<GetIdeasByUserIdQuery, IEnumerable<IdeaResultDto>>, GetIdeasByUserIdQueryHandler>();
         services.AddScoped<IRequestHandler<GetAllIdeasQuery, IEnumerable<IdeaResultDto>>, GetAllIdeasQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAllIdeasFullQuery, IEnumerable<IdeaResultDto>>, GetAllIdeasFullQueryHandler>();
 
 
         // Saved idea
