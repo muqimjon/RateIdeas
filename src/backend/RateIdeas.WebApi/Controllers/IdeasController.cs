@@ -12,7 +12,7 @@ public class IdeasController(IMediator mediator) : BaseController
         CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new CreateIdeaCommand(command), cancellationToken)
+            Data = await mediator.Send(command, cancellationToken)
         });
 
     [HttpPut("update")]
@@ -21,7 +21,7 @@ public class IdeasController(IMediator mediator) : BaseController
         CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new UpdateIdeaCommand(command), cancellationToken)
+            Data = await mediator.Send(command, cancellationToken)
         });
 
     [HttpDelete("delete/{id:long}")]
@@ -58,10 +58,19 @@ public class IdeasController(IMediator mediator) : BaseController
 
     [HttpGet("get-all")]
     [ProducesResponseType(typeof(IEnumerable<IdeaResultDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetForApplication([FromQuery] GetAllIdeasQuery query,
+    public async Task<IActionResult> GetAll([FromQuery] GetAllIdeasQuery query,
         CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new GetAllIdeasQuery(query), cancellationToken)
+            Data = await mediator.Send(query, cancellationToken)
+        });
+
+    [HttpGet("get-all-full")]
+    [ProducesResponseType(typeof(IEnumerable<IdeaResultDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAllFull([FromQuery] GetAllIdeasFullQuery query,
+        CancellationToken cancellationToken)
+        => Ok(new Response
+        {
+            Data = await mediator.Send(query, cancellationToken)
         });
 }

@@ -46,11 +46,13 @@ public class LogInCommandHandler(IMapper mapper,
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
-                 new("Id", user.Id.ToString()),
+                 new(nameof(user.Id), user.Id.ToString()),
+                 new(nameof(user.UserName), user.UserName),
                  new(ClaimTypes.Email, user.Email),
                  new(ClaimTypes.Name, user.FirstName),
                  new(ClaimTypes.Surname, user.LastName),
                  new(ClaimTypes.Role, user.Role.ToString()),
+                 new(ClaimTypes.DateOfBirth, user.DateOfBirth.ToString()),
             }),
 
             Expires = DateTime.UtcNow.AddHours(5),

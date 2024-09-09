@@ -8,11 +8,11 @@ public class IdeaVotesController(IMediator mediator) : BaseController
 {
     [HttpPost("toggle-idea-vote")]
     [ProducesResponseType(typeof(IdeaVoteResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(ToggleIdeaVoteCommand command,
+    public async Task<IActionResult> Toggle(ToggleIdeaVoteCommand command,
         CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new ToggleIdeaVoteCommand(command), cancellationToken)
+            Data = await mediator.Send(command, cancellationToken)
         });
 
     [HttpGet("get/{userId:long}")]
@@ -29,6 +29,6 @@ public class IdeaVotesController(IMediator mediator) : BaseController
         CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new GetAllIdeaVotesQuery(query), cancellationToken)
+            Data = await mediator.Send(query, cancellationToken)
         });
 }

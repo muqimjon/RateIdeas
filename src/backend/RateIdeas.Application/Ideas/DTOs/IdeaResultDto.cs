@@ -8,6 +8,7 @@ public class IdeaResultDto
     public AssetResultDto Image { get; set; } = default!;
     public CategoryResultForPropDto Category { get; set; } = default!;
     public UserResultForPropDto User { get; set; } = default!;
+    public bool? IsSaved { get; set; } = default;
 
     public ICollection<CommentResultDto> Comments { get; set; } = default!;
     public ICollection<IdeaVoteResultDto> Votes { get; set; } = default!;

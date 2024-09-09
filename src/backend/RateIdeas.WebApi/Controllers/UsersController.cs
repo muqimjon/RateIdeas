@@ -9,15 +9,6 @@ namespace RateIdeas.WebApi.Controllers.Users;
 
 public class UsersController(IMediator mediator) : BaseController
 {
-    //[HttpPost("create")]
-    //[ProducesResponseType(typeof(UserResultDto), StatusCodes.Status200OK)]
-    //public async Task<IActionResult> Create(CreateUserCommand command,
-    //    CancellationToken cancellationToken)
-    //    => Ok(new Response
-    //    {
-    //        Data = await mediator.Send(command, cancellationToken)
-    //    });
-
     [HttpPut("update")]
     [ProducesResponseType(typeof(UserResultDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Update(UpdateUserCommand command,

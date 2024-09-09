@@ -28,9 +28,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<User>()
             .Property(u => u.DateOfBirth)
             .HasConversion(
-                v => v.ToOffset(TimeSpan.Zero),
-                v => new DateTimeOffset(v.DateTime,
-                TimeSpan.FromHours(TimeConstants.UTC)));
+                v => new DateTimeOffset(v.UtcDateTime),
+                v => new DateTime(v.DateTime.Ticks, DateTimeKind.Utc));
     }
 
     private static void ConfigureRelationships(ModelBuilder modelBuilder)
