@@ -27,8 +27,7 @@ public class MappingProfile : Profile
         CreateMap<Category, CategoryResultForPropDto>();
 
         // Saved idea
-        CreateMap<CreateSavedIdeaCommand, SavedIdea>();
-        CreateMap<UpdateSavedIdeaCommand, SavedIdea>();
+        CreateMap<ToggleSavedIdeaCommand, SavedIdea>();
         CreateMap<SavedIdea, SavedIdeaResultDto>();
 
         // Idea vote

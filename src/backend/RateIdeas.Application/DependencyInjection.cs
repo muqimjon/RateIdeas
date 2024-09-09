@@ -67,17 +67,15 @@ public static class DependencyInjection
 
 
         // Saved idea
-        services.AddScoped<IRequestHandler<CreateSavedIdeaCommand, SavedIdeaResultDto>, CreateSavedIdeaCommandHandler>();
-
-        services.AddScoped<IRequestHandler<UpdateSavedIdeaCommand, SavedIdeaResultDto>, UpdateSavedIdeaCommandHandler>();
-
-        services.AddScoped<IRequestHandler<DeleteSavedIdeaCommand, bool>, DeleteSavedIdeaCommandHandler>();
+        services.AddScoped<IRequestHandler<ToggleSavedIdeaCommand, long?>, ToggleSavedIdeaCommandHandler>();
 
         services.AddScoped<IRequestHandler<GetSavedIdeaQuery, SavedIdeaResultDto>, GetSavedIdeaQueryHandler>();
         services.AddScoped<IRequestHandler<GetAllSavedIdeasQuery, IEnumerable<SavedIdeaResultDto>>, GetAllSavedIdeasQueryHandler>();
 
 
         // Idea vote
+        services.AddScoped<IRequestHandler<ToggleIdeaVoteCommand, IdeaVoteResultDto>, ToggleIdeaVoteCommandHandler>();
+
         services.AddScoped<IRequestHandler<GetIdeaVoteQuery, IdeaVoteResultDto>, GetIdeaVoteQueryHandler>();
         services.AddScoped<IRequestHandler<GetAllIdeaVotesQuery, IEnumerable<IdeaVoteResultDto>>, GetAllIdeaVotesQueryHandler>();
 

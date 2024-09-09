@@ -8,6 +8,7 @@ public class UserResultDto
     public string UserName { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public Roles Role { get; set; }
+
     public DateTimeOffset DateOfBirth { get; set; }
 
     public long ImageId { get; set; }
