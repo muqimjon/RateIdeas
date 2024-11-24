@@ -1,35 +1,19 @@
 ﻿using RateIdeas.Application.SavedIdeas.Commands;
 using RateIdeas.Application.SavedIdeas.DTOs;
 using RateIdeas.Application.SavedIdeas.Queries;
+using RateIdeas.WebApi.Controllers.Commons;
 
 namespace RateIdeas.WebApi.Controllers.SavedIdeas;
 
 public class SavedIdeasController(IMediator mediator) : BaseController
 {
-    [HttpPost("create")]
-    [ProducesResponseType(typeof(SavedIdeaResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(CreateSavedIdeaCommand command,
+    [HttpPost("toggle-saved-idea")]
+    [ProducesResponseType(typeof(long), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Toggle(ToggleSavedIdeaCommand command,
         CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new CreateSavedIdeaCommand(command), cancellationToken)
-        });
-
-    [HttpPut("update")]
-    [ProducesResponseType(typeof(SavedIdeaResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Update(UpdateSavedIdeaCommand command,
-        CancellationToken cancellationToken)
-        => Ok(new Response
-        {
-            Data = await mediator.Send(new UpdateSavedIdeaCommand(command), cancellationToken)
-        });
-
-    [HttpDelete("delete/{id:long}")]
-    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Delete(long id, CancellationToken cancellationToken)
-        => Ok(new Response
-        {
-            Data = await mediator.Send(new DeleteSavedIdeaCommand(id), cancellationToken)
+            Data = await mediator.Send(command, cancellationToken)
         });
 
     [HttpGet("get/{savedIdeaId:long}")]
@@ -46,6 +30,6 @@ public class SavedIdeasController(IMediator mediator) : BaseController
         CancellationToken cancellationToken)
         => Ok(new Response
         {
-            Data = await mediator.Send(new GetAllSavedIdeasQuery(query), cancellationToken)
+            Data = await mediator.Send(query, cancellationToken)
         });
 }

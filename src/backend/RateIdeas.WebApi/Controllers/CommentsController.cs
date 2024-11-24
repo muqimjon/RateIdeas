@@ -1,6 +1,7 @@
 ﻿using RateIdeas.Application.Comments.Commands;
 using RateIdeas.Application.Comments.DTOs;
 using RateIdeas.Application.Comments.Queries;
+using RateIdeas.WebApi.Controllers.Commons;
 
 namespace RateIdeas.WebApi.Controllers.Comments;
 

@@ -1,8 +1,9 @@
-﻿using RateIdeas.Application.Categories.Commands;
+﻿namespace RateIdeas.WebApi.Controllers.Categories;
+
+using RateIdeas.Application.Categories.Commands;
 using RateIdeas.Application.Categories.DTOs;
 using RateIdeas.Application.Categories.Queries;
-
-namespace RateIdeas.WebApi.Controllers.Categories;
+using RateIdeas.WebApi.Controllers.Commons;
 
 public class CategoriesController(IMediator mediator) : BaseController
 {

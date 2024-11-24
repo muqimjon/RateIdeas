@@ -19,7 +19,10 @@ public class DeleteAssetCommandHendler(IRepository<Asset> repository)
         if (entity is null)
             return false;
 
-        string filePath = Path.Combine(PathHelper.WebRootPath, "Images", entity.FileName);
+        string filePath;
+
+        if (!Directory.Exists(filePath = Path.Combine(PathHelper.WebRootPath, "Images", entity.FileName)))
+            return false;
 
         if (!File.Exists(filePath))
             File.Delete(filePath);

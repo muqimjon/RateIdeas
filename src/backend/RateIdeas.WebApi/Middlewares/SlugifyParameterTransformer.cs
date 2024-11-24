@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Nabeey.Web.Middlewares;
+namespace RateIdeas.WebApi.Middlewares;
 
 #nullable disable
 public partial class SlugifyParameterTransformer : IOutboundParameterTransformer

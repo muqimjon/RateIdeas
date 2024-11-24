@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Nabeey.Web.Middlewares;
 using RateIdeas.Application.Commons.Extensions;
 using RateIdeas.WebApi.Middlewares;
+using System.Reflection;
 using System.Text;
 
 namespace RateIdeas.WebApi;
@@ -28,32 +28,43 @@ public static class DependencyInjection
                 });
         });
 
-        // Authentication button    ------- Manual
-        services.AddSwaggerGen(setup =>
+        services.AddSwaggerGen(option =>
         {
-            var jwtSecurityScheme = new OpenApiSecurityScheme
+            option.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Version = "v1",
+                Title = "RateIdeas.WebApi",
+                Description = "RateIdeas collect ideas",
+            });
+
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            option.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+
+            option.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
             {
                 BearerFormat = "JWT",
                 Name = "JWT Authentication",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.Http,
                 Scheme = JwtBearerDefaults.AuthenticationScheme,
-                Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
+                Description = "Put **_ONLY_** your JWT Bearer token on textbox below!"
+            });
 
-                Reference = new OpenApiReference
+            option.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
                 {
-                    Id = JwtBearerDefaults.AuthenticationScheme,
-                    Type = ReferenceType.SecurityScheme
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Id = JwtBearerDefaults.AuthenticationScheme,
+                            Type = ReferenceType.SecurityScheme
+                        }
+                    }, []
                 }
-            };
-
-            setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
-
-            setup.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    { jwtSecurityScheme, Array.Empty<string>() }
-                });
+            });
         });
+
 
         // Token generator          ------- Manual
         services.AddAuthentication(x =>

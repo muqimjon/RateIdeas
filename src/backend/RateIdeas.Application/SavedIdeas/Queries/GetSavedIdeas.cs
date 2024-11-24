@@ -2,16 +2,7 @@
 
 namespace RateIdeas.Application.SavedIdeas.Queries;
 
-public record GetAllSavedIdeasQuery : IRequest<IEnumerable<SavedIdeaResultDto>>
-{
-    public GetAllSavedIdeasQuery(GetAllSavedIdeasQuery query)
-    {
-        Size = query.Size;
-        Index = query.Index;
-    }
-    public int Size { get; set; }
-    public int Index { get; set; }
-}
+public record GetAllSavedIdeasQuery(int Size, int Index) : IRequest<IEnumerable<SavedIdeaResultDto>>;
 
 public class GetAllSavedIdeasQueryHandler(IMapper mapper, IRepository<SavedIdea> repository)
     : IRequestHandler<GetAllSavedIdeasQuery, IEnumerable<SavedIdeaResultDto>>
@@ -19,7 +10,11 @@ public class GetAllSavedIdeasQueryHandler(IMapper mapper, IRepository<SavedIdea>
     public async Task<IEnumerable<SavedIdeaResultDto>> Handle(GetAllSavedIdeasQuery request,
         CancellationToken cancellationToken)
     {
+        if (HttpContextHelper.GetUserId is null)
+            throw new AuthenticationException("Authentication has not been completed");
+
         var entities = await repository.SelectAll(
+            si => si.UserId == HttpContextHelper.GetUserId,
             includes: [
                 "Idea.Image",
                 "Idea.User.Image",
